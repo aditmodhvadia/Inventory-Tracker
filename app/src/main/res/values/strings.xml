@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">My Inventory Tracker</string>
+    <string name="item_name">Item Name</string>
+    <string name="add">Add</string>
+    <string name="bag_name">Bag Name</string>
+    <string name="item_quantity">Item Quantity</string>
+    <string name="desc">Description</string>
+    <string name="action_add">Add</string>
+    <string name="update">Update</string>
+    <string name="search">Search</string>
+    <string name="search_here">Search here</string>
+    <string name="add_bag">Add Bag</string>
+    <string name="choose_color">Choose Color</string>
+    <string name="bag_description">Bag Description</string>
+    <string name="add_item">Add Item</string>
+    <string name="delete_icon_content_desc">Delete Icon</string>
+</resources>

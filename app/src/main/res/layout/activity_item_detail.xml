@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable name="viewModel" type="com.fazemeright.myinventorytracker.itemdetail.ItemDetailViewModel"/>
+        <variable name="item" type="com.fazemeright.myinventorytracker.database.InventoryItem"/>
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Item"
+                app:layout_constraintVertical_chainStyle="packed"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintHorizontal_bias="0.5" app:layout_constraintEnd_toEndOf="parent"
+                android:id="@+id/textView"
+                app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toTopOf="@+id/edtItemName"
+                android:layout_marginBottom="@dimen/spacing_normal"/>
+        <EditText
+                android:layout_marginBottom="@dimen/spacing_normal"
+                android:id="@+id/edtItemName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                tools:text="Item Name"
+                android:hint="@string/item_name"
+                android:text="@{viewModel.item.itemName}"
+                android:ems="10" android:layout_marginEnd="@dimen/spacing_normal"
+                app:layout_constraintEnd_toEndOf="parent" android:layout_marginStart="@dimen/spacing_normal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView"
+                app:layout_constraintHorizontal_bias="0.5" app:layout_constraintBottom_toTopOf="@+id/spinnerBag"
+        />
+
+        <Spinner
+                android:layout_marginBottom="@dimen/spacing_normal"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                tools:text="Bag Name"
+                android:id="@+id/spinnerBag" android:layout_marginEnd="@dimen/spacing_normal"
+                app:layout_constraintEnd_toEndOf="parent" android:layout_marginStart="@dimen/spacing_normal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/edtItemName"
+                app:layout_constraintHorizontal_bias="0.5" app:layout_constraintBottom_toTopOf="@+id/edtItemDesc"
+        />
+
+        <EditText
+                android:layout_marginBottom="@dimen/spacing_normal"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine"
+                tools:text="Item Desc"
+                android:hint="@string/desc"
+                android:text="@{viewModel.item.itemDesc}"
+                android:maxLines="10"
+                android:minLines="6"
+                android:lines="8"
+                android:ems="10"
+                android:id="@+id/edtItemDesc" android:layout_marginEnd="@dimen/spacing_normal"
+                app:layout_constraintEnd_toEndOf="parent" android:layout_marginStart="@dimen/spacing_normal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintHorizontal_bias="0.5" app:layout_constraintTop_toBottomOf="@+id/spinnerBag"
+                app:layout_constraintBottom_toTopOf="@+id/edtItemQuantity"/>
+
+        <EditText
+                android:layout_marginBottom="@dimen/spacing_normal"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                tools:text="Item Quantity"
+                android:hint="@string/item_quantity"
+                android:text="@{String.valueOf(viewModel.item.itemQuantity)}"
+                android:maxLines="4"
+                android:minLines="2"
+                android:ems="10"
+                android:id="@+id/edtItemQuantity" android:layout_marginEnd="@dimen/spacing_normal"
+                app:layout_constraintEnd_toEndOf="parent" android:layout_marginStart="@dimen/spacing_normal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintTop_toBottomOf="@+id/edtItemDesc"
+                app:layout_constraintBottom_toTopOf="@+id/button"/>
+
+        <Button android:layout_width="0dp" android:layout_height="wrap_content"
+                android:text="@string/update"
+                android:layout_marginBottom="@dimen/spacing_normal"
+                android:layout_marginEnd="@dimen/spacing_normal" app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="@dimen/spacing_normal"
+                android:id="@+id/button"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/edtItemQuantity" app:layout_constraintHorizontal_bias="0.5"
+        />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
+
+        <!--android:onClick="@{() -> viewModel.onUpdateClicked(edtItemName.getText().toString(),edtBagName.getText().toString(),edtItemDesc.getText().toString(),edtItemQuantity.getText().toString())}"-->
+
