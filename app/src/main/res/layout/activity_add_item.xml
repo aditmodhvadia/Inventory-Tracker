@@ -8,28 +8,20 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/add_item"
-                app:layout_constraintVertical_chainStyle="packed"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintHorizontal_bias="0.5" app:layout_constraintEnd_toEndOf="parent"
-                android:id="@+id/textView"
-                app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toTopOf="@+id/edtItemName"
-                android:layout_marginBottom="@dimen/spacing_normal"/>
         <EditText
                 android:id="@+id/edtItemName"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"
+                android:imeOptions="actionNext"
                 tools:text="Item Name"
                 android:hint="@string/item_name"
                 android:text="@{viewModel.itemName}"
+                app:layout_constraintVertical_chainStyle="packed"
                 android:ems="10" android:layout_marginEnd="@dimen/spacing_normal"
                 app:layout_constraintEnd_toEndOf="parent" android:layout_marginStart="@dimen/spacing_normal"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView"
+                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintHorizontal_bias="0.5" app:layout_constraintBottom_toTopOf="@+id/spinnerBag"
                 android:layout_marginBottom="@dimen/spacing_normal"/>
 
@@ -46,14 +38,15 @@
 
         <EditText
                 android:layout_width="0dp"
+                android:imeOptions="actionNext"
                 android:layout_height="wrap_content"
                 android:inputType="textMultiLine"
                 tools:text="Item Desc"
                 android:hint="@string/desc"
                 android:text="@{viewModel.desc}"
                 android:maxLines="10"
-                android:minLines="6"
-                android:lines="8"
+                android:minLines="2"
+                android:lines="4"
                 android:ems="10"
                 android:id="@+id/edtItemDesc" android:layout_marginEnd="@dimen/spacing_normal"
                 app:layout_constraintEnd_toEndOf="parent" android:layout_marginStart="@dimen/spacing_normal"
@@ -69,23 +62,14 @@
                 tools:text="Item Quantity"
                 android:hint="@string/item_quantity"
                 android:text="@{String.valueOf(viewModel.itemQuantity)}"
-                android:maxLines="4"
-                android:minLines="2"
+                android:imeOptions="actionDone"
                 android:ems="10"
                 android:id="@+id/edtItemQuantity" android:layout_marginEnd="@dimen/spacing_normal"
                 app:layout_constraintEnd_toEndOf="parent" android:layout_marginStart="@dimen/spacing_normal"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/edtItemDesc"
-                app:layout_constraintHorizontal_bias="0.5" app:layout_constraintBottom_toTopOf="@+id/btnAddItem"
-                android:layout_marginBottom="@dimen/spacing_normal"/>
-
-        <Button android:layout_width="0dp" android:layout_height="wrap_content"
-                android:text="@string/add"
-                android:layout_marginEnd="@dimen/spacing_normal" app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="@dimen/spacing_normal"
-                android:id="@+id/btnAddItem" app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/edtItemQuantity" app:layout_constraintHorizontal_bias="0.5"
-                android:layout_marginBottom="@dimen/spacing_normal"/>
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintBottom_toBottomOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

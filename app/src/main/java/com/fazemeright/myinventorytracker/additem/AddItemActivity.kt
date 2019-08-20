@@ -2,6 +2,8 @@ package com.fazemeright.myinventorytracker.additem
 
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -12,11 +14,12 @@ import androidx.lifecycle.ViewModelProviders
 import com.fazemeright.myinventorytracker.R
 import com.fazemeright.myinventorytracker.database.InventoryDatabase
 import com.fazemeright.myinventorytracker.databinding.ActivityAddItemBinding
+import kotlinx.android.synthetic.main.activity_add_item.*
 
 class AddItemActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
     private var selectedBagName: String? = null
-    lateinit var viewModelFactory: AddItemViewModelFactory
+    private lateinit var viewModelFactory: AddItemViewModelFactory
     lateinit var viewModel: AddItemViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,6 +38,12 @@ class AddItemActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener 
         binding.viewModel = viewModel
 
         binding.lifecycleOwner = this
+
+        supportActionBar?.apply {
+            setHomeButtonEnabled(true)
+            setDisplayHomeAsUpEnabled(true)
+            title = getString(R.string.add_item_title)
+        }
 
         viewModel.bagNames.observe(this, Observer { bagNames ->
             Log.d("##DebugData", bagNames.size.toString())
@@ -56,17 +65,30 @@ class AddItemActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener 
             }
         })
 
-        binding.btnAddItem.setOnClickListener {
-            selectedBagName?.let { bagName ->
-                viewModel.onAddClicked(
-                    binding.edtItemName.text.toString(),
-                    bagName,
-                    binding.edtItemDesc.text.toString(),
-                    binding.edtItemQuantity.text.toString()
-                )
-            }
-        }
+    }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.action_add_item -> addBag()
+            android.R.id.home -> finish()
+        }
+        return true
+    }
+
+    private fun addBag() {
+        selectedBagName?.let { bagName ->
+            viewModel.onAddClicked(
+                edtItemName.text.toString(),
+                bagName,
+                edtItemDesc.text.toString(),
+                edtItemQuantity.text.toString()
+            )
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_add_item, menu)
+        return true
     }
 
     override fun onNothingSelected(p0: AdapterView<*>?) {
