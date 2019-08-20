@@ -1,6 +1,7 @@
 package com.fazemeright.myinventorytracker.itemdetail
 
 import android.os.Bundle
+import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
@@ -21,17 +22,21 @@ class ItemDetailActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val binding: ActivityItemDetailBinding = DataBindingUtil.setContentView(this, R.layout.activity_item_detail)
+        val binding: ActivityItemDetailBinding =
+            DataBindingUtil.setContentView(this, R.layout.activity_item_detail)
 
         val application = requireNotNull(this).application
 
         val dataSource = InventoryDatabase.getInstance(application)
 
-        val viewModelFactory = ItemDetailViewModelFactory(dataSource, application, intent.getLongExtra("itemId", 0))
+        val viewModelFactory =
+            ItemDetailViewModelFactory(dataSource, application, intent.getLongExtra("itemId", 0))
 
-        viewModel = ViewModelProviders.of(this, viewModelFactory).get(ItemDetailViewModel::class.java)
+        viewModel =
+            ViewModelProviders.of(this, viewModelFactory).get(ItemDetailViewModel::class.java)
 
         binding.viewModel = viewModel
+
 
         binding.lifecycleOwner = this
 
@@ -52,15 +57,17 @@ class ItemDetailActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
 
         })
 
-//        binding.spinnerBag.set
-
-
         viewModel.navigateBackToItemList.observe(this, Observer { navigate ->
             if (navigate) {
                 finish()
                 viewModel.onNavigationToAddItemFinished()
             }
         })
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_update_item, menu)
+        return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
