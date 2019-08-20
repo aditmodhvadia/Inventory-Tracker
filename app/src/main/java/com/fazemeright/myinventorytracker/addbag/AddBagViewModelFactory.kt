@@ -1,4 +1,4 @@
-package com.fazemeright.myinventorytracker.bag
+package com.fazemeright.myinventorytracker.addbag
 
 import android.app.Application
 import androidx.lifecycle.ViewModel

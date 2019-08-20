@@ -1,4 +1,4 @@
-package com.fazemeright.myinventorytracker.bag
+package com.fazemeright.myinventorytracker.addbag
 
 import android.graphics.Color
 import android.os.Bundle

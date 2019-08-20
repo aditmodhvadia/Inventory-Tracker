@@ -13,7 +13,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fazemeright.myinventorytracker.R
 import com.fazemeright.myinventorytracker.additem.AddItemActivity
-import com.fazemeright.myinventorytracker.bag.AddBagActivity
+import com.fazemeright.myinventorytracker.addbag.AddBagActivity
 import com.fazemeright.myinventorytracker.database.InventoryDatabase
 import com.fazemeright.myinventorytracker.databinding.ActivityItemListBinding
 import com.fazemeright.myinventorytracker.itemdetail.ItemDetailActivity
