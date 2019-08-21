@@ -37,12 +37,12 @@ class ItemDetailActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
 
         binding.viewModel = viewModel
 
-
         binding.lifecycleOwner = this
 
         supportActionBar?.apply {
             setHomeButtonEnabled(true)
             setDisplayHomeAsUpEnabled(true)
+            setTitle(getString(R.string.item))
         }
 
         viewModel.bagNames.observe(this, Observer { bagNames ->
@@ -86,6 +86,6 @@ class ItemDetailActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
 
     override fun onItemSelected(p0: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
         selectedBagName = viewModel.bagNames.value?.get(position)
-//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        viewModel.updateBagDesc(selectedBagName)
     }
 }

@@ -1,10 +1,10 @@
 package com.fazemeright.myinventorytracker.itemdetail
 
 import android.app.Application
-import android.provider.SyncStateContract.Helpers.update
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import com.fazemeright.myinventorytracker.database.BagItem
 import com.fazemeright.myinventorytracker.database.InventoryDatabase
 import com.fazemeright.myinventorytracker.database.InventoryItem
 import kotlinx.coroutines.*
@@ -21,6 +21,8 @@ class ItemDetailViewModel(
     private var viewModelJob = Job()
 
     val item = MutableLiveData<InventoryItem>()
+
+    val bag = MutableLiveData<BagItem>()
 
     val navigateBackToItemList = MutableLiveData<Boolean>()
 
@@ -42,6 +44,13 @@ class ItemDetailViewModel(
     init {
         uiScope.launch {
             item.value = getItemFromId(itemId)
+            bag.value = getBagFromId(item.value?.bagId)
+        }
+    }
+
+    private suspend fun getBagFromId(bagId: Long?): BagItem? {
+        return withContext(Dispatchers.IO) {
+            bagId?.let { database.bagItemDao.get(it) }
         }
     }
 
@@ -78,6 +87,20 @@ class ItemDetailViewModel(
 
     fun onNavigationToAddItemFinished() {
         navigateBackToItemList.value = false
+    }
+
+    fun updateBagDesc(selectedBagName: String?) {
+        uiScope.launch {
+            bag.value = selectedBagName?.let {
+                getBagFromName(it)
+            }
+        }
+    }
+
+    private suspend fun getBagFromName(bagName: String): BagItem? {
+        return withContext(Dispatchers.IO) {
+            getBagFromId(database.bagItemDao.getBagIdWithName(bagName))
+        }
     }
 
 }
