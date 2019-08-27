@@ -18,6 +18,7 @@ package com.fazemeright.myinventorytracker.database
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
+import java.io.Serializable
 
 /**
  * Defines methods for using the InventoryItem class with Room.
@@ -62,8 +63,8 @@ interface InventoryItemDao {
     fun getAllItems(): LiveData<List<InventoryItem>>
 
     //    @Query("SELECT * FROM my_inventory_table WHERE itemName LIKE :searchText ORDER BY itemName")
-    @Query("SELECT * FROM my_inventory_table WHERE itemName LIKE :searchText OR itemDesc LIKE :searchText ORDER BY itemName")
-    fun getSearchItems(searchText: String): List<InventoryItem>
+    @Query("SELECT * FROM my_inventory_table INNER JOIN my_bag_table WHERE itemName LIKE :searchText OR itemDesc LIKE :searchText ORDER BY itemName")
+    fun getSearchItems(searchText: String): List<ItemInBag>
 
     /*@Query("SELECT * FROM my_inventory_table INNER JOIN my_bag_table ON bagId = bagId")
     fun getAllItemsAndBags()*/
@@ -74,10 +75,34 @@ interface InventoryItemDao {
     @Query("SELECT * from my_inventory_table WHERE itemId = :key")
     fun getNightWithId(key: Long): LiveData<InventoryItem>
 
+    @Query("SELECT  * from my_bag_table INNER JOIN my_inventory_table")
+    fun getAllItemsWithBag(): LiveData<List<ItemInBag>>
+
+    data class ItemInBag(
+        var itemId: Long,
+
+        var itemName: String,
+
+        var itemDesc: String,
+
+        var itemQuantity: Int,
+
+        var bagId: Long,
+
+        var bagName: String,
+
+        var bagColor: Int,
+
+        var bagDesc: String
+    ) : Serializable
+
     @Delete
     fun deleteItem(item: InventoryItem)
 
     @Query("DELETE FROM my_inventory_table WHERE itemId =:itemId")
     fun delete(itemId: Long)
+
+    @Query("SELECT * FROM my_inventory_table INNER JOIN my_bag_table WHERE itemId = :itemId")
+    fun getItemInBagFromId(itemId: Long): ItemInBag
 }
 

@@ -1,6 +1,8 @@
 package com.fazemeright.myinventorytracker.itemdetail
 
 import android.os.Bundle
+import android.util.Log
+import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
@@ -11,6 +13,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.fazemeright.myinventorytracker.R
 import com.fazemeright.myinventorytracker.database.InventoryDatabase
+import com.fazemeright.myinventorytracker.database.InventoryItemDao
 import com.fazemeright.myinventorytracker.databinding.ActivityItemDetailBinding
 
 class ItemDetailActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
@@ -21,15 +24,21 @@ class ItemDetailActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val binding: ActivityItemDetailBinding = DataBindingUtil.setContentView(this, R.layout.activity_item_detail)
+        val binding: ActivityItemDetailBinding =
+            DataBindingUtil.setContentView(this, R.layout.activity_item_detail)
 
         val application = requireNotNull(this).application
 
         val dataSource = InventoryDatabase.getInstance(application)
 
-        val viewModelFactory = ItemDetailViewModelFactory(dataSource, application, intent.getLongExtra("itemId", 0))
+        val viewModelFactory =
+            ItemDetailViewModelFactory(
+                dataSource, application,
+                intent.getSerializableExtra("itemInBag") as InventoryItemDao.ItemInBag
+            )
 
-        viewModel = ViewModelProviders.of(this, viewModelFactory).get(ItemDetailViewModel::class.java)
+        viewModel =
+            ViewModelProviders.of(this, viewModelFactory).get(ItemDetailViewModel::class.java)
 
         binding.viewModel = viewModel
 
@@ -38,9 +47,26 @@ class ItemDetailActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
         supportActionBar?.apply {
             setHomeButtonEnabled(true)
             setDisplayHomeAsUpEnabled(true)
+            title = getString(R.string.item)
         }
 
-        viewModel.bagNames.observe(this, Observer { bagNames ->
+        viewModel.item.observe(this, Observer { item ->
+            Log.d("DebugData", "Detail Item: $item")
+            item?.let {
+                // Create an ArrayAdapter using a simple spinner layout and languages array
+                val aa =
+                    ArrayAdapter(this, android.R.layout.simple_spinner_item, listOf(it.bagName))
+                // Set layout to use when the list of choices appear
+                aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                // Set Adapter to Spinner
+                binding.spinnerBag.adapter = aa
+
+                binding.spinnerBag.onItemSelectedListener = this
+
+                binding.item = it
+            }
+        })
+        /*viewModel.bagNames.observe(this, Observer { bagNames ->
             // Create an ArrayAdapter using a simple spinner layout and languages array
             val aa = ArrayAdapter(this, android.R.layout.simple_spinner_item, bagNames)
             // Set layout to use when the list of choices appear
@@ -50,10 +76,7 @@ class ItemDetailActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
 
             binding.spinnerBag.onItemSelectedListener = this
 
-        })
-
-//        binding.spinnerBag.set
-
+        })*/
 
         viewModel.navigateBackToItemList.observe(this, Observer { navigate ->
             if (navigate) {
@@ -61,6 +84,11 @@ class ItemDetailActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
                 viewModel.onNavigationToAddItemFinished()
             }
         })
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_update_item, menu)
+        return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -78,7 +106,8 @@ class ItemDetailActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
     }
 
     override fun onItemSelected(p0: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
-        selectedBagName = viewModel.bagNames.value?.get(position)
-//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+//        TODO: Update the Bag description once user changes/updates the bag
+//        selectedBagName = viewModel.bagNames.value?.get(position)
+//        viewModel.updateBagDesc(selectedBagName)
     }
 }

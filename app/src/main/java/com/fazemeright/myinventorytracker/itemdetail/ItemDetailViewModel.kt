@@ -1,18 +1,18 @@
 package com.fazemeright.myinventorytracker.itemdetail
 
 import android.app.Application
-import android.provider.SyncStateContract.Helpers.update
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.fazemeright.myinventorytracker.database.InventoryDatabase
 import com.fazemeright.myinventorytracker.database.InventoryItem
+import com.fazemeright.myinventorytracker.database.InventoryItemDao
 import kotlinx.coroutines.*
 
 class ItemDetailViewModel(
     val database: InventoryDatabase,
     application: Application,
-    itemId: Long
+    itemInBag: InventoryItemDao.ItemInBag
 ) : AndroidViewModel(application) {
 
     /**
@@ -20,7 +20,7 @@ class ItemDetailViewModel(
      */
     private var viewModelJob = Job()
 
-    val item = MutableLiveData<InventoryItem>()
+    val item = MutableLiveData<InventoryItemDao.ItemInBag>()
 
     val navigateBackToItemList = MutableLiveData<Boolean>()
 
@@ -36,18 +36,15 @@ class ItemDetailViewModel(
      */
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
-    val bagNames = database.bagItemDao.getAllBagNames()
-
-
     init {
         uiScope.launch {
-            item.value = getItemFromId(itemId)
+            item.value = getItemInBagFromId(itemInBag.itemId)
         }
     }
 
-    private suspend fun getItemFromId(itemId: Long): InventoryItem? {
+    private suspend fun getItemInBagFromId(itemId: Long): InventoryItemDao.ItemInBag? {
         return withContext(Dispatchers.IO) {
-            database.inventoryItemDao.get(itemId)
+            database.inventoryItemDao.getItemInBagFromId(itemId)
         }
     }
 
@@ -59,13 +56,13 @@ class ItemDetailViewModel(
     ) {
         uiScope.launch {
             //            val updateItem =
-//                item.value?.itemId?.let { InventoryItem(it, itemName, bagName, itemDesc, itemQuantity.toInt()) }
-//            upDateItem(updateItem)
+//                item.value?.itemInBag?.let { InventoryItem(it, itemName, bagName, itemDesc, itemQuantity.toInt()) }
+//            updateItem(updateItem)
             navigateBackToItemList()
         }
     }
 
-    private suspend fun upDateItem(item: InventoryItem?) {
+    private suspend fun updateItem(item: InventoryItem?) {
         withContext(Dispatchers.IO) {
             item?.let { database.inventoryItemDao.update(it) }
         }
@@ -79,5 +76,13 @@ class ItemDetailViewModel(
     fun onNavigationToAddItemFinished() {
         navigateBackToItemList.value = false
     }
+
+    /*fun updateBagDesc(selectedBagName: String?) {
+        uiScope.launch {
+            bag.value = selectedBagName?.let {
+                getBagFromName(it)
+            }
+        }
+    }*/
 
 }

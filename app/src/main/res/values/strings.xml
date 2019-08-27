@@ -14,4 +14,7 @@
     <string name="bag_description">Bag Description</string>
     <string name="add_item">Add Item</string>
     <string name="delete_icon_content_desc">Delete Icon</string>
+    <string name="add_item_title">Add Item</string>
+    <string name="action_update">Update</string>
+    <string name="item">Item</string>
 </resources>

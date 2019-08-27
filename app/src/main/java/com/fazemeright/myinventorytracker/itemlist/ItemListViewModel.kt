@@ -22,6 +22,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.fazemeright.myinventorytracker.database.InventoryDatabase
 import com.fazemeright.myinventorytracker.database.InventoryItem
+import com.fazemeright.myinventorytracker.database.InventoryItemDao
 import kotlinx.coroutines.*
 
 /**
@@ -48,16 +49,18 @@ class ItemListViewModel(
      */
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
-    val searchItems: LiveData<List<InventoryItem>>
+    val searchItems: LiveData<List<InventoryItemDao.ItemInBag>>
         get() = _searchItems
 
-    private val _searchItems = MutableLiveData<List<InventoryItem>>()
+    private val _searchItems = MutableLiveData<List<InventoryItemDao.ItemInBag>>()
 
-    val items = database.inventoryItemDao.getAllItems()
+//    val items = database.inventoryItemDao.getAllItems()
+
+    val items = database.inventoryItemDao.getAllItemsWithBag()
 
     val bags = database.bagItemDao.getAllBags()
 
-    val navigateToItemDetailActivity = MutableLiveData<Long>()
+    val navigateToItemDetailActivity = MutableLiveData<InventoryItemDao.ItemInBag>()
 
     val navigateToAddItemActivity = MutableLiveData<Boolean>()
 
@@ -79,7 +82,7 @@ class ItemListViewModel(
         }
     }
 
-    private suspend fun updateItems(newItems: List<InventoryItem>) {
+    private suspend fun updateItems(newItems: List<InventoryItemDao.ItemInBag>) {
         withContext(Dispatchers.Main) {
             _searchItems.value = newItems
         }
@@ -93,8 +96,8 @@ class ItemListViewModel(
         navigateToAddItemActivity.value = false
     }
 
-    fun onItemClicked(itemId: Long) {
-        navigateToItemDetailActivity.value = itemId
+    fun onItemClicked(item: InventoryItemDao.ItemInBag) {
+        navigateToItemDetailActivity.value = item
     }
 
     fun onNavigationToItemDetailFinished() {

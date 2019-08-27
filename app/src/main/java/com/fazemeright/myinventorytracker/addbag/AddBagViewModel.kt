@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.fazemeright.myinventorytracker.bag
+package com.fazemeright.myinventorytracker.addbag
 
 import android.app.Application
 import android.util.Log

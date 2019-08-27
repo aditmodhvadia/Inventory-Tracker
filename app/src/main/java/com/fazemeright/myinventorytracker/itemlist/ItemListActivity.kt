@@ -13,7 +13,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fazemeright.myinventorytracker.R
 import com.fazemeright.myinventorytracker.additem.AddItemActivity
-import com.fazemeright.myinventorytracker.bag.AddBagActivity
+import com.fazemeright.myinventorytracker.addbag.AddBagActivity
 import com.fazemeright.myinventorytracker.database.InventoryDatabase
 import com.fazemeright.myinventorytracker.databinding.ActivityItemListBinding
 import com.fazemeright.myinventorytracker.itemdetail.ItemDetailActivity
@@ -46,8 +46,8 @@ class ItemListActivity : AppCompatActivity() {
         binding.itemList.layoutManager = manager
 
         val adapter = ItemListAdapter(ItemListAdapter.ItemListener(
-            clickListener = { itemId ->
-                viewModel.onItemClicked(itemId)
+            clickListener = { item ->
+                viewModel.onItemClicked(item)
             },
             deleteClickListener = { itemId ->
                 showConfirmationDialog(itemId)
@@ -92,10 +92,10 @@ class ItemListActivity : AppCompatActivity() {
             }
         })
 
-        viewModel.navigateToItemDetailActivity.observe(this, Observer { navigate ->
-            navigate?.let {
+        viewModel.navigateToItemDetailActivity.observe(this, Observer { itemInBag ->
+            itemInBag?.let {
                 val intent = Intent(this, ItemDetailActivity::class.java)
-                    .apply { putExtra("itemId", it) }
+                    .apply { putExtra("itemInBag", it) }
                 startActivity(intent)
                 viewModel.onNavigationToItemDetailFinished()
             }
