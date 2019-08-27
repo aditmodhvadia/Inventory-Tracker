@@ -38,7 +38,7 @@ class ItemDetailViewModel(
 
     init {
         uiScope.launch {
-            item.value = itemInBag
+            item.value = getItemInBagFromId(itemInBag.itemId)
         }
     }
 
@@ -57,12 +57,12 @@ class ItemDetailViewModel(
         uiScope.launch {
             //            val updateItem =
 //                item.value?.itemInBag?.let { InventoryItem(it, itemName, bagName, itemDesc, itemQuantity.toInt()) }
-//            upDateItem(updateItem)
+//            updateItem(updateItem)
             navigateBackToItemList()
         }
     }
 
-    private suspend fun upDateItem(item: InventoryItem?) {
+    private suspend fun updateItem(item: InventoryItem?) {
         withContext(Dispatchers.IO) {
             item?.let { database.inventoryItemDao.update(it) }
         }

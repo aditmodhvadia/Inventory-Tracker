@@ -52,16 +52,19 @@ class ItemDetailActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
 
         viewModel.item.observe(this, Observer { item ->
             Log.d("DebugData", "Detail Item: $item")
-            // Create an ArrayAdapter using a simple spinner layout and languages array
-            val aa = ArrayAdapter(this, android.R.layout.simple_spinner_item, listOf(item.bagName))
-            // Set layout to use when the list of choices appear
-            aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            // Set Adapter to Spinner
-            binding.spinnerBag.adapter = aa
+            item?.let {
+                // Create an ArrayAdapter using a simple spinner layout and languages array
+                val aa =
+                    ArrayAdapter(this, android.R.layout.simple_spinner_item, listOf(it.bagName))
+                // Set layout to use when the list of choices appear
+                aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                // Set Adapter to Spinner
+                binding.spinnerBag.adapter = aa
 
-            binding.spinnerBag.onItemSelectedListener = this
+                binding.spinnerBag.onItemSelectedListener = this
 
-            binding.item = item
+                binding.item = it
+            }
         })
         /*viewModel.bagNames.observe(this, Observer { bagNames ->
             // Create an ArrayAdapter using a simple spinner layout and languages array
@@ -103,6 +106,7 @@ class ItemDetailActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
     }
 
     override fun onItemSelected(p0: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
+//        TODO: Update the Bag description once user changes/updates the bag
 //        selectedBagName = viewModel.bagNames.value?.get(position)
 //        viewModel.updateBagDesc(selectedBagName)
     }
