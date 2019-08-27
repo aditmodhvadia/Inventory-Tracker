@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+                name="item"
+                type="com.fazemeright.myinventorytracker.database.InventoryItemDao.ItemInBag" />
+
+        <variable
+                name="clickListener"
+                type="com.fazemeright.myinventorytracker.baglist.BagListAdapter.BagListener" />
+    </data>
+
+    <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/spacing_normal"
+            android:background="@drawable/curved_edges"
+            android:onClick="@{() -> clickListener.onClick(item)}"
+            app:bgColor="@{item.bagName}"
+            app:cardBackgroundColor="@{item.bagColor}">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:background="@android:color/black">
+
+            <TextView
+                    android:id="@+id/tvItemName"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_small"
+                    android:layout_marginTop="@dimen/spacing_normal"
+                    android:text="@{item.itemName}"
+                    android:textColor="@android:color/white"
+                    app:layout_constraintEnd_toStartOf="@+id/tvBagName"
+                    app:layout_constraintHorizontal_chainStyle="spread_inside"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="Item Name" />
+
+            <TextView
+                    android:id="@+id/tvBagName"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_small"
+                    android:layout_marginTop="@dimen/spacing_normal"
+                    android:textColor="@android:color/white"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/tvItemName"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:setBagName="@{item.bagName}"
+                    tools:text="Bag Name" />
+
+            <TextView
+                    android:id="@+id/tvItemQuantity"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_normal"
+                    android:layout_marginBottom="@dimen/spacing_normal"
+                    android:text="@{String.valueOf(item.itemQuantity)}"
+                    android:textColor="@android:color/white"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/tvItemName"
+                    app:layout_constraintTop_toBottomOf="@+id/tvItemName"
+                    tools:text="Item Quantity" />
+
+            <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/spacing_normal"
+                    android:layout_marginBottom="@dimen/spacing_normal"
+                    android:contentDescription="@string/delete_icon_content_desc"
+                    android:onClick="@{() -> clickListener.onDeleteClick(item)}"
+                    android:src="@drawable/ic_delete"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+</layout>

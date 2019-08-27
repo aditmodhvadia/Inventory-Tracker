@@ -38,7 +38,8 @@ class ItemDetailViewModel(
 
     init {
         uiScope.launch {
-            item.value = getItemInBagFromId(itemInBag.itemId)
+            item.value = itemInBag
+//            item.value = getItemInBagFromId(itemInBag.itemId) TODO: Check Implementation in @BagItemDao
         }
     }
 

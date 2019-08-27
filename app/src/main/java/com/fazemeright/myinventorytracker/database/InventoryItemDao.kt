@@ -102,6 +102,7 @@ interface InventoryItemDao {
     @Query("DELETE FROM my_inventory_table WHERE itemId =:itemId")
     fun delete(itemId: Long)
 
+    //    TODO: Check why it does not return the correct bag and also update it to return LiveData
     @Query("SELECT * FROM my_inventory_table INNER JOIN my_bag_table WHERE itemId = :itemId")
     fun getItemInBagFromId(itemId: Long): ItemInBag
 }

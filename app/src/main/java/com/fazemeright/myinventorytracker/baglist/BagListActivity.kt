@@ -1,4 +1,4 @@
-package com.fazemeright.myinventorytracker.itemlist
+package com.fazemeright.myinventorytracker.baglist
 
 import android.content.Intent
 import android.os.Bundle
@@ -14,30 +14,29 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.fazemeright.myinventorytracker.R
 import com.fazemeright.myinventorytracker.addbag.AddBagActivity
 import com.fazemeright.myinventorytracker.additem.AddItemActivity
-import com.fazemeright.myinventorytracker.baglist.BagListActivity
 import com.fazemeright.myinventorytracker.database.InventoryDatabase
-import com.fazemeright.myinventorytracker.databinding.ActivityItemListBinding
+import com.fazemeright.myinventorytracker.databinding.ActivityBagListBinding
 import com.fazemeright.myinventorytracker.itemdetail.ItemDetailActivity
 import com.google.android.material.snackbar.Snackbar
 
-class ItemListActivity : AppCompatActivity() {
+class BagListActivity : AppCompatActivity() {
 
     private lateinit var searchView: SearchView
-    private lateinit var viewModel: ItemListViewModel
+    private lateinit var viewModel: BagListViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val binding: ActivityItemListBinding =
-            DataBindingUtil.setContentView(this, R.layout.activity_item_list)
+        val binding: ActivityBagListBinding =
+            DataBindingUtil.setContentView(this, R.layout.activity_bag_list)
 
         val application = requireNotNull(this).application
 
         val dataSource = InventoryDatabase.getInstance(application)
 
-        val viewModelFactory = ItemListViewModelFactory(dataSource, application)
+        val viewModelFactory = BagListViewModelFactory(dataSource, application)
 
-        viewModel = ViewModelProviders.of(this, viewModelFactory).get(ItemListViewModel::class.java)
+        viewModel = ViewModelProviders.of(this, viewModelFactory).get(BagListViewModel::class.java)
 
         binding.viewModel = viewModel
 
@@ -45,10 +44,10 @@ class ItemListActivity : AppCompatActivity() {
 
         val manager = LinearLayoutManager(this)
 
-        binding.itemList.layoutManager = manager
+//        binding.itemList.layoutManager = manager
 
-        val adapter = ItemListAdapter(
-            ItemListAdapter.ItemListener(
+        val adapter = BagListAdapter(
+            BagListAdapter.BagListener(
                 clickListener = { item ->
                     viewModel.onItemClicked(item)
                 },
@@ -59,7 +58,7 @@ class ItemListActivity : AppCompatActivity() {
                 }
             ))
 
-        binding.itemList.adapter = adapter
+//        binding.itemList.adapter = adapter
 
         viewModel.items.observe(this, Observer {
             it?.let {
@@ -161,7 +160,6 @@ class ItemListActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_add_bag -> startActivity(Intent(this, AddBagActivity::class.java))
-            R.id.action_bag_list -> startActivity(Intent(this, BagListActivity::class.java))
         }
         return true
     }
