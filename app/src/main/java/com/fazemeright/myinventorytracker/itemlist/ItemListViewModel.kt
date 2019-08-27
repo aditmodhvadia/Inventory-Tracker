@@ -60,7 +60,7 @@ class ItemListViewModel(
 
     val bags = database.bagItemDao.getAllBags()
 
-    val navigateToItemDetailActivity = MutableLiveData<Long>()
+    val navigateToItemDetailActivity = MutableLiveData<InventoryItemDao.ItemInBag>()
 
     val navigateToAddItemActivity = MutableLiveData<Boolean>()
 
@@ -96,8 +96,8 @@ class ItemListViewModel(
         navigateToAddItemActivity.value = false
     }
 
-    fun onItemClicked(itemId: Long) {
-        navigateToItemDetailActivity.value = itemId
+    fun onItemClicked(item: InventoryItemDao.ItemInBag) {
+        navigateToItemDetailActivity.value = item
     }
 
     fun onNavigationToItemDetailFinished() {

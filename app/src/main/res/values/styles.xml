@@ -8,4 +8,8 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="Base.Widget.AppCompat.EditText.Centred">
+        <item name="android:textAlignment">center</item>
+    </style>
+
 </resources>

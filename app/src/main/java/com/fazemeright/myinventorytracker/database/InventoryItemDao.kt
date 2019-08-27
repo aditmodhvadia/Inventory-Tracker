@@ -18,6 +18,7 @@ package com.fazemeright.myinventorytracker.database
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
+import java.io.Serializable
 
 /**
  * Defines methods for using the InventoryItem class with Room.
@@ -93,12 +94,15 @@ interface InventoryItemDao {
         var bagColor: Int,
 
         var bagDesc: String
-    )
+    ) : Serializable
 
     @Delete
     fun deleteItem(item: InventoryItem)
 
     @Query("DELETE FROM my_inventory_table WHERE itemId =:itemId")
     fun delete(itemId: Long)
+
+    @Query("SELECT * FROM my_inventory_table INNER JOIN my_bag_table WHERE itemId = :itemId")
+    fun getItemInBagFromId(itemId: Long): ItemInBag
 }
 

@@ -11,7 +11,7 @@
 
         <variable
                 name="item"
-                type="com.fazemeright.myinventorytracker.database.InventoryItem" />
+                type="com.fazemeright.myinventorytracker.database.InventoryItemDao.ItemInBag" />
 
     </data>
 
@@ -33,6 +33,7 @@
 
         <EditText
                 android:id="@+id/edtItemName"
+                style="@style/Base.Widget.AppCompat.EditText.Centred"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/spacing_normal"
@@ -73,7 +74,7 @@
                 android:ems="10"
                 android:enabled="false"
                 android:padding="@dimen/spacing_normal"
-                android:text="@{viewModel.bag.bagDesc}"
+                android:text="@{viewModel.item.bagDesc}"
                 android:textAlignment="center"
                 android:textColor="@android:color/black"
                 app:layout_constraintBottom_toTopOf="@+id/edtItemDesc"
@@ -106,6 +107,7 @@
 
         <EditText
                 android:id="@+id/edtItemQuantity"
+                style="@style/Base.Widget.AppCompat.EditText.Centred"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/spacing_normal"

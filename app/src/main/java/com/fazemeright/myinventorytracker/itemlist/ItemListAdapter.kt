@@ -95,10 +95,10 @@ class ItemListAdapter(private val clickListener: ItemListener) :
     }
 
     class ItemListener(
-        val clickListener: (sleepId: Long) -> Unit,
-        val deleteClickListener: (sleepId: Long) -> Unit
+        val clickListener: (item: InventoryItemDao.ItemInBag) -> Unit,
+        val deleteClickListener: (itemId: Long) -> Unit
     ) {
-        fun onClick(item: InventoryItemDao.ItemInBag) = clickListener(item.itemId)
+        fun onClick(item: InventoryItemDao.ItemInBag) = clickListener(item)
         fun onDeleteClick(item: InventoryItemDao.ItemInBag) = deleteClickListener(item.itemId)
     }
 }
