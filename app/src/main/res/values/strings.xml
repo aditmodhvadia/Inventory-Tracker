@@ -17,4 +17,5 @@
     <string name="add_item_title">Add Item</string>
     <string name="action_update">Update</string>
     <string name="item">Item</string>
+    <string name="bag_list">Bag List</string>
 </resources>

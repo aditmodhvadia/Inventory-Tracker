@@ -1,9 +1,8 @@
-package com.fazemeright.myinventorytracker.itemlist
+package com.fazemeright.myinventorytracker.baglist
 
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
-import android.view.MenuItem
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
@@ -12,44 +11,47 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fazemeright.myinventorytracker.R
-import com.fazemeright.myinventorytracker.additem.AddItemActivity
-import com.fazemeright.myinventorytracker.baglist.BagListActivity
+import com.fazemeright.myinventorytracker.addbag.AddBagActivity
 import com.fazemeright.myinventorytracker.database.InventoryDatabase
-import com.fazemeright.myinventorytracker.databinding.ActivityItemListBinding
-import com.fazemeright.myinventorytracker.itemdetail.ItemDetailActivity
-import com.google.android.material.snackbar.Snackbar
+import com.fazemeright.myinventorytracker.databinding.ActivityBagListBinding
 
-class ItemListActivity : AppCompatActivity() {
+class BagListActivity : AppCompatActivity() {
 
     private lateinit var searchView: SearchView
-    private lateinit var viewModel: ItemListViewModel
+    private lateinit var viewModel: BagListViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val binding: ActivityItemListBinding =
-            DataBindingUtil.setContentView(this, R.layout.activity_item_list)
+        val binding: ActivityBagListBinding =
+            DataBindingUtil.setContentView(this, R.layout.activity_bag_list)
 
         val application = requireNotNull(this).application
 
         val dataSource = InventoryDatabase.getInstance(application)
 
-        val viewModelFactory = ItemListViewModelFactory(dataSource, application)
+        val viewModelFactory = BagListViewModelFactory(dataSource, application)
 
-        viewModel = ViewModelProviders.of(this, viewModelFactory).get(ItemListViewModel::class.java)
+        viewModel = ViewModelProviders.of(this, viewModelFactory).get(BagListViewModel::class.java)
 
         binding.viewModel = viewModel
 
         binding.lifecycleOwner = this
 
+        supportActionBar?.apply {
+            setHomeButtonEnabled(true)
+            setDisplayHomeAsUpEnabled(true)
+            title = getString(R.string.bag_list)
+        }
+
         val manager = LinearLayoutManager(this)
 
-        binding.itemList.layoutManager = manager
+        binding.bagList.layoutManager = manager
 
-        val adapter = ItemListAdapter(
-            ItemListAdapter.ItemListener(
+        val adapter = BagListAdapter(
+            BagListAdapter.BagListener(
                 clickListener = { item ->
-                    viewModel.onItemClicked(item)
+                    viewModel.onBagClicked(item)
                 },
                 deleteClickListener = { itemId ->
                     showConfirmationDialog(itemId)
@@ -58,9 +60,9 @@ class ItemListActivity : AppCompatActivity() {
                 }
             ))
 
-        binding.itemList.adapter = adapter
+        binding.bagList.adapter = adapter
 
-        viewModel.items.observe(this, Observer {
+        viewModel.bags.observe(this, Observer {
             it?.let {
                 adapter.updateList(it)
             }
@@ -72,7 +74,7 @@ class ItemListActivity : AppCompatActivity() {
             }
         })
 
-        viewModel.deletedItem.observe(this, Observer { deletedItem ->
+        /*viewModel.deletedItem.observe(this, Observer { deletedItem ->
             // Show a snack bar for undo option
             Snackbar.make(
                 binding.root, // Parent view
@@ -85,20 +87,20 @@ class ItemListActivity : AppCompatActivity() {
                 // Do something when undo action button clicked
                 viewModel.undoDeleteItem(deletedItem)
             }.show()
-        })
+        })*/
 
-        viewModel.navigateToAddItemActivity.observe(this, Observer { navigate ->
+        viewModel.navigateToAddBagActivity.observe(this, Observer { navigate ->
             if (navigate) {
-                startActivity(Intent(this, AddItemActivity::class.java))
-                viewModel.onNavigationToAddItemFinished()
+                startActivity(Intent(this, AddBagActivity::class.java))
+                viewModel.onNavigationToAddBagFinished()
             }
         })
 
-        viewModel.navigateToItemDetailActivity.observe(this, Observer { itemInBag ->
+        viewModel.navigateToBagDetailActivity.observe(this, Observer { itemInBag ->
             itemInBag?.let {
-                val intent = Intent(this, ItemDetailActivity::class.java)
+                /*val intent = Intent(this, ItemDetailActivity::class.java)
                     .apply { putExtra("itemInBag", it) }
-                startActivity(intent)
+                startActivity(intent) TODO: Navigate to BagDetailActivity*/
                 viewModel.onNavigationToItemDetailFinished()
             }
         })
@@ -138,7 +140,7 @@ class ItemListActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val inflater = menuInflater
-        inflater.inflate(R.menu.menu_item_list, menu)
+        inflater.inflate(R.menu.menu_bag_list, menu)
         val searchItem = menu!!.findItem(R.id.action_search)
         searchView = searchItem.actionView as SearchView
         searchView.isSubmitButtonEnabled = true
@@ -155,12 +157,5 @@ class ItemListActivity : AppCompatActivity() {
             }
         })
         return super.onCreateOptionsMenu(menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.action_bag_list -> startActivity(Intent(this, BagListActivity::class.java))
-        }
-        return true
     }
 }

@@ -1,4 +1,4 @@
-package com.fazemeright.myinventorytracker.itemlist
+package com.fazemeright.myinventorytracker.baglist
 
 import android.app.Application
 import androidx.lifecycle.ViewModel
@@ -10,14 +10,14 @@ import com.fazemeright.myinventorytracker.database.InventoryDatabase
  *
  * Provides the SleepDatabaseDao and context to the ViewModel.
  */
-class ItemListViewModelFactory(
+class BagListViewModelFactory(
     private val dataSource: InventoryDatabase,
     private val application: Application
 ) : ViewModelProvider.Factory {
     @Suppress("unchecked_cast")
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(ItemListViewModel::class.java)) {
-            return ItemListViewModel(dataSource, application) as T
+        if (modelClass.isAssignableFrom(BagListViewModel::class.java)) {
+            return BagListViewModel(dataSource, application) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

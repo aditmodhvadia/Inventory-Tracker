@@ -19,6 +19,7 @@
         <activity android:name=".itemdetail.ItemDetailActivity"/>
         <activity android:name=".additem.AddItemActivity"/>
         <activity android:name=".addbag.AddBagActivity"/>
+        <activity android:name=".baglist.BagListActivity" />
     </application>
 
 </manifest>

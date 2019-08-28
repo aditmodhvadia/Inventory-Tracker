@@ -66,6 +66,9 @@ interface InventoryItemDao {
     @Query("SELECT * FROM my_inventory_table INNER JOIN my_bag_table WHERE itemName LIKE :searchText OR itemDesc LIKE :searchText ORDER BY itemName")
     fun getSearchItems(searchText: String): List<ItemInBag>
 
+    @Query("SELECT * FROM my_bag_table WHERE bagName LIKE :searchText OR bagDesc LIKE :searchText ORDER BY bagName")
+    fun getSearchBags(searchText: String): List<BagItem>
+
     /*@Query("SELECT * FROM my_inventory_table INNER JOIN my_bag_table ON bagId = bagId")
     fun getAllItemsAndBags()*/
 
@@ -102,6 +105,7 @@ interface InventoryItemDao {
     @Query("DELETE FROM my_inventory_table WHERE itemId =:itemId")
     fun delete(itemId: Long)
 
+    //    TODO: Check why it does not return the correct bag and also update it to return LiveData
     @Query("SELECT * FROM my_inventory_table INNER JOIN my_bag_table WHERE itemId = :itemId")
     fun getItemInBagFromId(itemId: Long): ItemInBag
 }
