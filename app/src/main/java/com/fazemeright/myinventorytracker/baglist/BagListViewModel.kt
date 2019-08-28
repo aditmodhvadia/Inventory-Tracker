@@ -1,32 +1,16 @@
-/*
- * Copyright 2018, The Android Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package com.fazemeright.myinventorytracker.baglist
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.fazemeright.myinventorytracker.database.BagItem
 import com.fazemeright.myinventorytracker.database.InventoryDatabase
 import com.fazemeright.myinventorytracker.database.InventoryItem
-import com.fazemeright.myinventorytracker.database.InventoryItemDao
 import kotlinx.coroutines.*
 
 /**
- * ViewModel for SleepTrackerFragment.
+ * ViewModel for BagListActivity.
  */
 class BagListViewModel(
     val database: InventoryDatabase,
@@ -45,26 +29,22 @@ class BagListViewModel(
      *
      * By default, all coroutines started in uiScope will launch in [Dispatchers.Main] which is
      * the main thread on Android. This is a sensible default because most coroutines started by
-     * a [ViewModel] update the UI after performing some processing.
+     * a [BagListViewModel] update the UI after performing some processing.
      */
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
-    val searchItems: LiveData<List<InventoryItemDao.ItemInBag>>
+    val searchItems: LiveData<List<BagItem>>
         get() = _searchItems
 
-    private val _searchItems = MutableLiveData<List<InventoryItemDao.ItemInBag>>()
-
-//    val items = database.inventoryItemDao.getAllItems()
-
-    val items = database.inventoryItemDao.getAllItemsWithBag()
+    private val _searchItems = MutableLiveData<List<BagItem>>()
 
     val bags = database.bagItemDao.getAllBags()
 
-    val navigateToItemDetailActivity = MutableLiveData<InventoryItemDao.ItemInBag>()
+    val navigateToBagDetailActivity = MutableLiveData<BagItem>()
 
-    val navigateToAddItemActivity = MutableLiveData<Boolean>()
+    val navigateToAddBagActivity = MutableLiveData<Boolean>()
 
-    val deletedItem = MutableLiveData<InventoryItem>()
+//    val deletedItem = MutableLiveData<InventoryItem>()
 
     init {
         onSearchClicked("")
@@ -78,39 +58,40 @@ class BagListViewModel(
 
     private suspend fun fetchSearchResults(searchText: String) {
         withContext(Dispatchers.IO) {
-            updateItems(database.inventoryItemDao.getSearchItems("%$searchText%"))
+            updateItems(database.inventoryItemDao.getSearchBags("%$searchText%"))
         }
     }
 
-    private suspend fun updateItems(newItems: List<InventoryItemDao.ItemInBag>) {
+    private suspend fun updateItems(newItems: List<BagItem>) {
         withContext(Dispatchers.Main) {
             _searchItems.value = newItems
         }
     }
 
-    fun addItemClicked() {
-        navigateToAddItemActivity.value = true
+    fun addBagClicked() {
+        navigateToAddBagActivity.value = true
     }
 
-    fun onNavigationToAddItemFinished() {
-        navigateToAddItemActivity.value = false
+    fun onNavigationToAddBagFinished() {
+        navigateToAddBagActivity.value = false
     }
 
-    fun onItemClicked(item: InventoryItemDao.ItemInBag) {
-        navigateToItemDetailActivity.value = item
+    fun onBagClicked(item: BagItem) {
+        navigateToBagDetailActivity.value = item
     }
 
     fun onNavigationToItemDetailFinished() {
-        navigateToItemDetailActivity.value = null
+        navigateToBagDetailActivity.value = null
     }
 
+    //    TODO: Update all delete, undo and insert functions with BagItem
     fun onDeleteItemClicked(itemId: Long) {
         uiScope.launch {
-            deletedItem.value = deleteItem(itemId)
+            //            deletedItem.value = deleteItem(itemId)
         }
     }
 
-    private suspend fun deleteItem(itemId: Long): InventoryItem? {
+    /*private suspend fun deleteItem(itemId: Long): InventoryItem? {
         return withContext(Dispatchers.IO) {
             val deleteItem = database.inventoryItemDao.get(itemId)
             deleteItem?.let {
@@ -118,7 +99,7 @@ class BagListViewModel(
             }
             deleteItem
         }
-    }
+    }*/
 
     fun undoDeleteItem(deletedItem: InventoryItem?) {
         uiScope.launch {

@@ -7,14 +7,12 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.fazemeright.myinventorytracker.database.BagItem
-import com.fazemeright.myinventorytracker.database.InventoryItemDao
 import com.fazemeright.myinventorytracker.databinding.ListBagItemBinding
-import com.fazemeright.myinventorytracker.databinding.ListInventoryItemBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 
 class BagListAdapter(private val clickListener: BagListener) :
-    ListAdapter<InventoryItemDao.ItemInBag,
+    ListAdapter<BagItem,
             BagListAdapter.ViewHolder>(ItemListDiffCallback()) {
 
     private lateinit var bagsList: List<BagItem>
@@ -25,7 +23,7 @@ class BagListAdapter(private val clickListener: BagListener) :
         return ViewHolder.from(parent)
     }
 
-    fun updateList(list: List<InventoryItemDao.ItemInBag>?) {
+    fun updateList(list: List<BagItem>?) {
         Log.d("##DebugData", list.toString())
         submitList(list)
     }
@@ -44,7 +42,7 @@ class BagListAdapter(private val clickListener: BagListener) :
 
 
         fun bind(
-            item: InventoryItemDao.ItemInBag,
+            item: BagItem,
             clickListener: BagListener
         ) {
             binding.item = item
@@ -62,28 +60,28 @@ class BagListAdapter(private val clickListener: BagListener) :
     }
 
     class ItemListDiffCallback :
-        DiffUtil.ItemCallback<InventoryItemDao.ItemInBag>() {
+        DiffUtil.ItemCallback<BagItem>() {
         override fun areItemsTheSame(
-            oldItem: InventoryItemDao.ItemInBag,
-            newItem: InventoryItemDao.ItemInBag
+            oldBag: BagItem,
+            newBag: BagItem
         ): Boolean {
-            return oldItem.itemId == newItem.itemId
+            return oldBag.bagId == newBag.bagId
         }
 
         override fun areContentsTheSame(
-            oldItem: InventoryItemDao.ItemInBag,
-            newItem: InventoryItemDao.ItemInBag
+            oldBag: BagItem,
+            newBag: BagItem
         ): Boolean {
-            return oldItem == newItem
+            return oldBag == newBag
         }
 
     }
 
     class BagListener(
-        val clickListener: (item: InventoryItemDao.ItemInBag) -> Unit,
-        val deleteClickListener: (itemId: Long) -> Unit
+        val clickListener: (bag: BagItem) -> Unit,
+        val deleteClickListener: (bagId: Long) -> Unit
     ) {
-        fun onClick(item: InventoryItemDao.ItemInBag) = clickListener(item)
-        fun onDeleteClick(item: InventoryItemDao.ItemInBag) = deleteClickListener(item.itemId)
+        fun onClick(bag: BagItem) = clickListener(bag)
+        fun onDeleteClick(bag: BagItem) = deleteClickListener(bag.bagId)
     }
 }

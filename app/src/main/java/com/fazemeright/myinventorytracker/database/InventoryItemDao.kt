@@ -66,6 +66,9 @@ interface InventoryItemDao {
     @Query("SELECT * FROM my_inventory_table INNER JOIN my_bag_table WHERE itemName LIKE :searchText OR itemDesc LIKE :searchText ORDER BY itemName")
     fun getSearchItems(searchText: String): List<ItemInBag>
 
+    @Query("SELECT * FROM my_bag_table WHERE bagName LIKE :searchText OR bagDesc LIKE :searchText ORDER BY bagName")
+    fun getSearchBags(searchText: String): List<BagItem>
+
     /*@Query("SELECT * FROM my_inventory_table INNER JOIN my_bag_table ON bagId = bagId")
     fun getAllItemsAndBags()*/
 

@@ -12,7 +12,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fazemeright.myinventorytracker.R
-import com.fazemeright.myinventorytracker.addbag.AddBagActivity
 import com.fazemeright.myinventorytracker.additem.AddItemActivity
 import com.fazemeright.myinventorytracker.baglist.BagListActivity
 import com.fazemeright.myinventorytracker.database.InventoryDatabase
@@ -139,7 +138,7 @@ class ItemListActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val inflater = menuInflater
-        inflater.inflate(R.menu.menu_search, menu)
+        inflater.inflate(R.menu.menu_item_list, menu)
         val searchItem = menu!!.findItem(R.id.action_search)
         searchView = searchItem.actionView as SearchView
         searchView.isSubmitButtonEnabled = true
@@ -160,7 +159,6 @@ class ItemListActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.action_add_bag -> startActivity(Intent(this, AddBagActivity::class.java))
             R.id.action_bag_list -> startActivity(Intent(this, BagListActivity::class.java))
         }
         return true

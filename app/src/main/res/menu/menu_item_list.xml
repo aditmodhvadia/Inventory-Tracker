@@ -10,12 +10,8 @@
             app:showAsAction="ifRoom|collapseActionView" />
 
     <item
-            android:id="@+id/action_add_bag"
-            android:title="@string/add_bag"
-            app:showAsAction="never" />
-
-    <item
             android:id="@+id/action_bag_list"
             android:title="@string/bag_list"
             app:showAsAction="never" />
+
 </menu>
