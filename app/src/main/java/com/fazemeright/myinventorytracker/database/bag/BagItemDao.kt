@@ -1,4 +1,4 @@
-package com.fazemeright.myinventorytracker.database
+package com.fazemeright.myinventorytracker.database.bag
 
 import androidx.lifecycle.LiveData
 import androidx.room.*

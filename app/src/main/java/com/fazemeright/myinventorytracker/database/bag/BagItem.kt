@@ -1,4 +1,4 @@
-package com.fazemeright.myinventorytracker.database
+package com.fazemeright.myinventorytracker.database.bag
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

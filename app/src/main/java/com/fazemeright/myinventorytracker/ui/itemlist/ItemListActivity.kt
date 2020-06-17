@@ -1,41 +1,41 @@
-package com.fazemeright.myinventorytracker.itemlist
+package com.fazemeright.myinventorytracker.ui.itemlist
 
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fazemeright.myinventorytracker.R
-import com.fazemeright.myinventorytracker.additem.AddItemActivity
-import com.fazemeright.myinventorytracker.addbag.AddBagActivity
 import com.fazemeright.myinventorytracker.database.InventoryDatabase
 import com.fazemeright.myinventorytracker.databinding.ActivityItemListBinding
-import com.fazemeright.myinventorytracker.itemdetail.ItemDetailActivity
+import com.fazemeright.myinventorytracker.ui.addbag.AddBagActivity
+import com.fazemeright.myinventorytracker.ui.additem.AddItemActivity
+import com.fazemeright.myinventorytracker.ui.itemdetail.ItemDetailActivity
 import com.google.android.material.snackbar.Snackbar
+
 
 class ItemListActivity : AppCompatActivity() {
 
     private lateinit var searchView: SearchView
-    private lateinit var viewModel: ItemListViewModel
+
+    val viewModel: ItemListViewModel by viewModels {
+        BaseViewModelFactory(
+            application = application,
+            dataSource = InventoryDatabase.getInstance(application)
+        )
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val binding: ActivityItemListBinding = DataBindingUtil.setContentView(this, R.layout.activity_item_list)
-
-        val application = requireNotNull(this).application
-
-        val dataSource = InventoryDatabase.getInstance(application)
-
-        val viewModelFactory = ItemListViewModelFactory(dataSource, application)
-
-        viewModel = ViewModelProviders.of(this, viewModelFactory).get(ItemListViewModel::class.java)
+        val binding: ActivityItemListBinding =
+            DataBindingUtil.setContentView(this, R.layout.activity_item_list)
 
         binding.viewModel = viewModel
 

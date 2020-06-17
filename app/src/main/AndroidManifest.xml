@@ -9,16 +9,16 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme" tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".itemlist.ItemListActivity">
+        <activity android:name="com.fazemeright.myinventorytracker.ui.itemlist.ItemListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".itemdetail.ItemDetailActivity"/>
-        <activity android:name=".additem.AddItemActivity"/>
-        <activity android:name=".addbag.AddBagActivity"/>
+        <activity android:name="com.fazemeright.myinventorytracker.ui.itemdetail.ItemDetailActivity"/>
+        <activity android:name="com.fazemeright.myinventorytracker.ui.additem.AddItemActivity"/>
+        <activity android:name="com.fazemeright.myinventorytracker.ui.addbag.AddBagActivity"/>
     </application>
 
 </manifest>

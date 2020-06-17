@@ -7,11 +7,11 @@
 
         <variable
                 name="item"
-                type="com.fazemeright.myinventorytracker.database.InventoryItemDao.ItemInBag" />
+                type="com.fazemeright.myinventorytracker.database.inventoryitem.InventoryItemDao.ItemInBag" />
 
         <variable
                 name="clickListener"
-                type="com.fazemeright.myinventorytracker.itemlist.ItemListAdapter.ItemListener" />
+                type="com.fazemeright.myinventorytracker.ui.itemlist.ItemListAdapter.ItemListener" />
     </data>
 
     <androidx.cardview.widget.CardView

@@ -1,19 +1,19 @@
-package com.fazemeright.myinventorytracker.itemdetail
+package com.fazemeright.myinventorytracker.ui.itemdetail
 
 import android.app.Application
 import android.util.Log
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.fazemeright.myinventorytracker.database.InventoryDatabase
-import com.fazemeright.myinventorytracker.database.InventoryItem
-import com.fazemeright.myinventorytracker.database.InventoryItemDao
+import com.fazemeright.myinventorytracker.database.inventoryitem.InventoryItem
+import com.fazemeright.myinventorytracker.database.inventoryitem.InventoryItemDao
 import kotlinx.coroutines.*
 
 class ItemDetailViewModel(
     val database: InventoryDatabase,
     application: Application,
     itemInBag: InventoryItemDao.ItemInBag
-) : AndroidViewModel(application) {
+) : ViewModel() {
 
     /**
      * viewModelJob allows us to cancel all coroutines started by this ViewModel.

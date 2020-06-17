@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.fazemeright.myinventorytracker.database
+package com.fazemeright.myinventorytracker.database.inventoryitem
 
 import androidx.lifecycle.LiveData
 import androidx.room.*

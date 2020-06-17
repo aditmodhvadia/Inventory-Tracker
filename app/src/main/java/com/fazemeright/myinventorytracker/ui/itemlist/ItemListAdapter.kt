@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.fazemeright.myinventorytracker.itemlist
+package com.fazemeright.myinventorytracker.ui.itemlist
 
 import android.util.Log
 import android.view.LayoutInflater
@@ -22,8 +22,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.fazemeright.myinventorytracker.database.BagItem
-import com.fazemeright.myinventorytracker.database.InventoryItemDao
+import com.fazemeright.myinventorytracker.database.bag.BagItem
+import com.fazemeright.myinventorytracker.database.inventoryitem.InventoryItemDao
 import com.fazemeright.myinventorytracker.databinding.ListInventoryItemBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

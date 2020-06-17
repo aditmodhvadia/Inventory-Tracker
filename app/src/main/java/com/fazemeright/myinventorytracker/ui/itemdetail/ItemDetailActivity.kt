@@ -1,4 +1,4 @@
-package com.fazemeright.myinventorytracker.itemdetail
+package com.fazemeright.myinventorytracker.ui.itemdetail
 
 import android.os.Bundle
 import android.util.Log
@@ -7,38 +7,32 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import com.fazemeright.myinventorytracker.R
 import com.fazemeright.myinventorytracker.database.InventoryDatabase
-import com.fazemeright.myinventorytracker.database.InventoryItemDao
+import com.fazemeright.myinventorytracker.database.inventoryitem.InventoryItemDao
 import com.fazemeright.myinventorytracker.databinding.ActivityItemDetailBinding
 
 class ItemDetailActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
     private var selectedBagName: String? = null
-    lateinit var viewModel: ItemDetailViewModel
+
+    val viewModel: ItemDetailViewModel by viewModels {
+        ItemDetailViewModelFactory(
+            application = application,
+            dataSource = InventoryDatabase.getInstance(application),
+            itemInBag = intent.getSerializableExtra("itemInBag") as InventoryItemDao.ItemInBag
+        )
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         val binding: ActivityItemDetailBinding =
             DataBindingUtil.setContentView(this, R.layout.activity_item_detail)
-
-        val application = requireNotNull(this).application
-
-        val dataSource = InventoryDatabase.getInstance(application)
-
-        val viewModelFactory =
-            ItemDetailViewModelFactory(
-                dataSource, application,
-                intent.getSerializableExtra("itemInBag") as InventoryItemDao.ItemInBag
-            )
-
-        viewModel =
-            ViewModelProviders.of(this, viewModelFactory).get(ItemDetailViewModel::class.java)
 
         binding.viewModel = viewModel
 

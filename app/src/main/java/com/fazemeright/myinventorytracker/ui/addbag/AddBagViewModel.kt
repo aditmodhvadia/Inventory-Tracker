@@ -14,23 +14,23 @@
  * limitations under the License.
  */
 
-package com.fazemeright.myinventorytracker.additem
+package com.fazemeright.myinventorytracker.ui.addbag
 
 import android.app.Application
 import android.util.Log
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.fazemeright.myinventorytracker.database.InventoryDatabase
-import com.fazemeright.myinventorytracker.database.InventoryItem
+import com.fazemeright.myinventorytracker.database.bag.BagItem
 import kotlinx.coroutines.*
 
 /**
  * ViewModel for SleepTrackerFragment.
  */
-class AddItemViewModel(
+class AddBagViewModel(
     val database: InventoryDatabase,
     application: Application
-) : AndroidViewModel(application) {
+) : ViewModel() {
 
     /**
      * viewModelJob allows us to cancel all coroutines started by this ViewModel.
@@ -49,15 +49,6 @@ class AddItemViewModel(
      */
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
-    val bags = database.bagItemDao.getAllBags()
-
-    val bagNames = database.bagItemDao.getAllBagNames()
-
-    val itemName: String = ""
-    val bagName: String = "Black AT+"
-    val desc: String = ""
-    val itemQuantity: Int = 1
-
     val navigateBackToItemList = MutableLiveData<Boolean>()
 
     init {
@@ -66,7 +57,7 @@ class AddItemViewModel(
 
     private suspend fun clear() {
         withContext(Dispatchers.IO) {
-            database.inventoryItemDao.clear()
+            database.bagItemDao.clear()
         }
     }
 
@@ -78,31 +69,39 @@ class AddItemViewModel(
     ) {
         uiScope.launch {
             Log.d("##DebugData", itemName)
-            val newItem = InventoryItem(0, itemName, itemDesc, itemQuantity.toInt(), getBagId(bagName))
-            Log.d("##DebugData", newItem.toString())
-            insert(newItem)
+//            val newItem = InventoryItem(0, itemName, bagName, itemDesc, itemQuantity.toInt())
+//            Log.d("##DebugData", newItem.toString())
+//            insert(newItem)
             navigateBackToItemList()
         }
     }
 
-    private suspend fun getBagId(bagName: String): Long {
-        return withContext(Dispatchers.IO) {
-            database.bagItemDao.getBagIdWithName(bagName)
-        }
-    }
-
-    private suspend fun insert(night: InventoryItem) {
-        withContext(Dispatchers.IO) {
-            database.inventoryItemDao.insert(night)
-        }
-    }
 
     private fun navigateBackToItemList() {
-        Log.d("AddItemViewModel", "Clicked Fab")
         navigateBackToItemList.value = true
     }
 
     fun onNavigationToAddItemFinished() {
         navigateBackToItemList.value = false
+    }
+
+    fun onAddBagClicked(bagName: String, bagColor: Int, bagDesc: String) {
+        uiScope.launch {
+            val newBag = BagItem(
+                0,
+                bagName,
+                bagColor,
+                bagDesc
+            )
+            insertNewBag(newBag)
+            navigateBackToItemList()
+        }
+    }
+
+    private suspend fun insertNewBag(newBag: BagItem) {
+        withContext(Dispatchers.IO) {
+            database.bagItemDao.insert(newBag)
+            Log.d("##DebugData", database.bagItemDao.getAllBags().value?.size.toString())
+        }
     }
 }

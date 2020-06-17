@@ -4,6 +4,10 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.fazemeright.myinventorytracker.database.bag.BagItem
+import com.fazemeright.myinventorytracker.database.bag.BagItemDao
+import com.fazemeright.myinventorytracker.database.inventoryitem.InventoryItem
+import com.fazemeright.myinventorytracker.database.inventoryitem.InventoryItemDao
 
 /**
  * A database that stores InventoryItem information.

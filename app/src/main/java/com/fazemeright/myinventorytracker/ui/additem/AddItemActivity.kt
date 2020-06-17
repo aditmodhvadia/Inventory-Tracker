@@ -1,4 +1,4 @@
-package com.fazemeright.myinventorytracker.additem
+package com.fazemeright.myinventorytracker.ui.additem
 
 import android.os.Bundle
 import android.util.Log
@@ -7,33 +7,32 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import com.fazemeright.myinventorytracker.R
 import com.fazemeright.myinventorytracker.database.InventoryDatabase
 import com.fazemeright.myinventorytracker.databinding.ActivityAddItemBinding
+import com.fazemeright.myinventorytracker.ui.itemlist.BaseViewModelFactory
 import kotlinx.android.synthetic.main.activity_add_item.*
 
 class AddItemActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
     private var selectedBagName: String? = null
-    private lateinit var viewModelFactory: AddItemViewModelFactory
-    lateinit var viewModel: AddItemViewModel
+
+    val viewModel: AddItemViewModel by viewModels {
+        BaseViewModelFactory(
+            application = application,
+            dataSource = InventoryDatabase.getInstance(application)
+        )
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val binding: ActivityAddItemBinding = DataBindingUtil.setContentView(this, R.layout.activity_add_item)
-
-        val application = requireNotNull(this).application
-
-        val dataSource = InventoryDatabase.getInstance(application)
-
-        viewModelFactory = AddItemViewModelFactory(dataSource, application)
-
-        viewModel = ViewModelProviders.of(this, viewModelFactory).get(AddItemViewModel::class.java)
+        val binding: ActivityAddItemBinding =
+            DataBindingUtil.setContentView(this, R.layout.activity_add_item)
 
         binding.viewModel = viewModel
 

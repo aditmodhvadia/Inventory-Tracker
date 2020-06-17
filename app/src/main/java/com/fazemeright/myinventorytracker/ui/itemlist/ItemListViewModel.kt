@@ -14,15 +14,15 @@
  * limitations under the License.
  */
 
-package com.fazemeright.myinventorytracker.itemlist
+package com.fazemeright.myinventorytracker.ui.itemlist
 
 import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.fazemeright.myinventorytracker.database.InventoryDatabase
-import com.fazemeright.myinventorytracker.database.InventoryItem
-import com.fazemeright.myinventorytracker.database.InventoryItemDao
+import com.fazemeright.myinventorytracker.database.inventoryitem.InventoryItem
+import com.fazemeright.myinventorytracker.database.inventoryitem.InventoryItemDao
 import kotlinx.coroutines.*
 
 /**
@@ -31,12 +31,13 @@ import kotlinx.coroutines.*
 class ItemListViewModel(
     val database: InventoryDatabase,
     application: Application
-) : AndroidViewModel(application) {
+) : ViewModel() {
 
     /**
      * viewModelJob allows us to cancel all coroutines started by this ViewModel.
      */
     private var viewModelJob = Job()
+
     /**
      * A [CoroutineScope] keeps track of all coroutines started by this ViewModel.
      *
