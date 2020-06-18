@@ -22,9 +22,8 @@ class ItemDetailActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
 
     val viewModel: ItemDetailViewModel by viewModels {
         ItemDetailViewModelFactory(
-            application = application,
             dataSource = InventoryDatabase.getInstance(application),
-            itemInBag = intent.getSerializableExtra("itemInBag") as InventoryItemDao.ItemInBag
+            itemWithBag = intent.getSerializableExtra("itemInBag") as InventoryItemDao.ItemWithBag
         )
     }
 
@@ -49,7 +48,7 @@ class ItemDetailActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
             item?.let {
                 // Create an ArrayAdapter using a simple spinner layout and languages array
                 val aa =
-                    ArrayAdapter(this, android.R.layout.simple_spinner_item, listOf(it.bagName))
+                    ArrayAdapter(this, android.R.layout.simple_spinner_item, listOf(it.bag.bagName))
                 // Set layout to use when the list of choices appear
                 aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                 // Set Adapter to Spinner

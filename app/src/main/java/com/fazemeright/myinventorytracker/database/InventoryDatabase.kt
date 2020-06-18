@@ -16,7 +16,7 @@ import com.fazemeright.myinventorytracker.database.inventoryitem.InventoryItemDa
  * This pattern is pretty much the same for any database,
  * so you can reuse it.
  */
-@Database(entities = [InventoryItem::class, BagItem::class], version = 3, exportSchema = false)
+@Database(entities = [InventoryItem::class, BagItem::class], version = 4, exportSchema = false)
 abstract class InventoryDatabase : RoomDatabase() {
 
     /**

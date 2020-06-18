@@ -8,13 +8,12 @@ import com.fazemeright.myinventorytracker.database.inventoryitem.InventoryItemDa
 
 class ItemDetailViewModelFactory(
     private val dataSource: InventoryDatabase,
-    private val application: Application,
-    private val itemInBag: InventoryItemDao.ItemInBag
+    private val itemWithBag: InventoryItemDao.ItemWithBag
 ) : ViewModelProvider.Factory {
     @Suppress("unchecked_cast")
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(ItemDetailViewModel::class.java)) {
-            return ItemDetailViewModel(dataSource, application, itemInBag) as T
+            return ItemDetailViewModel(dataSource, itemWithBag) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

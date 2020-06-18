@@ -16,7 +16,6 @@
 
 package com.fazemeright.myinventorytracker.ui.addbag
 
-import android.app.Application
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -28,8 +27,7 @@ import kotlinx.coroutines.*
  * ViewModel for SleepTrackerFragment.
  */
 class AddBagViewModel(
-    val database: InventoryDatabase,
-    application: Application
+    val database: InventoryDatabase
 ) : ViewModel() {
 
     /**

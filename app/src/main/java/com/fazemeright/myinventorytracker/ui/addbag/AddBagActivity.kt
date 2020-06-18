@@ -23,7 +23,6 @@ class AddBagActivity : AppCompatActivity(), ColorPickerDialogListener {
     lateinit var binding: ActivityAddBagBinding
     val viewModel: AddBagViewModel by viewModels {
         BaseViewModelFactory(
-            application = application,
             dataSource = InventoryDatabase.getInstance(application)
         )
     }

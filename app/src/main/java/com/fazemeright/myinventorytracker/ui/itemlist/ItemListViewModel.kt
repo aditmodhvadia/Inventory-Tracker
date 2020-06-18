@@ -16,7 +16,6 @@
 
 package com.fazemeright.myinventorytracker.ui.itemlist
 
-import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -29,8 +28,7 @@ import kotlinx.coroutines.*
  * ViewModel for SleepTrackerFragment.
  */
 class ItemListViewModel(
-    val database: InventoryDatabase,
-    application: Application
+    val database: InventoryDatabase
 ) : ViewModel() {
 
     /**
@@ -57,11 +55,12 @@ class ItemListViewModel(
 
 //    val items = database.inventoryItemDao.getAllItems()
 
-    val items = database.inventoryItemDao.getAllItemsWithBag()
+    //    val items = database.inventoryItemDao.getAllItemsWithBag()
+    val items = database.inventoryItemDao.getItemsWithBagLive()
 
     val bags = database.bagItemDao.getAllBags()
 
-    val navigateToItemDetailActivity = MutableLiveData<InventoryItemDao.ItemInBag>()
+    val navigateToItemDetailActivity = MutableLiveData<InventoryItemDao.ItemWithBag>()
 
     val navigateToAddItemActivity = MutableLiveData<Boolean>()
 
@@ -97,7 +96,7 @@ class ItemListViewModel(
         navigateToAddItemActivity.value = false
     }
 
-    fun onItemClicked(item: InventoryItemDao.ItemInBag) {
+    fun onItemClicked(item: InventoryItemDao.ItemWithBag) {
         navigateToItemDetailActivity.value = item
     }
 
@@ -105,13 +104,13 @@ class ItemListViewModel(
         navigateToItemDetailActivity.value = null
     }
 
-    fun onDeleteItemClicked(itemId: Long) {
+    fun onDeleteItemClicked(itemId: Int) {
         uiScope.launch {
             deletedItem.value = deleteItem(itemId)
         }
     }
 
-    private suspend fun deleteItem(itemId: Long): InventoryItem? {
+    private suspend fun deleteItem(itemId: Int): InventoryItem? {
         return withContext(Dispatchers.IO) {
             val deleteItem = database.inventoryItemDao.get(itemId)
             deleteItem?.let {

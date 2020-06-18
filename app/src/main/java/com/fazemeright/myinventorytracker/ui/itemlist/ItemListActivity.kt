@@ -2,6 +2,7 @@ package com.fazemeright.myinventorytracker.ui.itemlist
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.viewModels
@@ -26,7 +27,6 @@ class ItemListActivity : AppCompatActivity() {
 
     val viewModel: ItemListViewModel by viewModels {
         BaseViewModelFactory(
-            application = application,
             dataSource = InventoryDatabase.getInstance(application)
         )
     }
@@ -52,7 +52,7 @@ class ItemListActivity : AppCompatActivity() {
             deleteClickListener = { itemId ->
                 showConfirmationDialog(itemId)
 //                TODO("Implement AlertDialog for confirmation before delete")
-//                viewModel.onDeleteItemClicked(itemId)
+                viewModel.onDeleteItemClicked(itemId)
             }
         ))
 
@@ -62,13 +62,14 @@ class ItemListActivity : AppCompatActivity() {
             it?.let {
                 adapter.updateList(it)
             }
+            Log.i("ItemListActivity", "onCreate: $it")
         })
 
-        viewModel.searchItems.observe(this, Observer {
+        /*viewModel.searchItems.observe(this, Observer {
             it?.let {
                 adapter.updateList(it)
             }
-        })
+        })*/
 
         viewModel.deletedItem.observe(this, Observer { deletedItem ->
             // Show a snack bar for undo option
@@ -108,7 +109,7 @@ class ItemListActivity : AppCompatActivity() {
         })
     }
 
-    private fun showConfirmationDialog(itemId: Long) {
+    private fun showConfirmationDialog(itemId: Int) {
         // build alert dialog
         val dialogBuilder = AlertDialog.Builder(this)
 

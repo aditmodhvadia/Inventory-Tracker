@@ -1,6 +1,5 @@
 package com.fazemeright.myinventorytracker.ui.itemdetail
 
-import android.app.Application
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -11,8 +10,7 @@ import kotlinx.coroutines.*
 
 class ItemDetailViewModel(
     val database: InventoryDatabase,
-    application: Application,
-    itemInBag: InventoryItemDao.ItemInBag
+    itemWithBag: InventoryItemDao.ItemWithBag
 ) : ViewModel() {
 
     /**
@@ -20,7 +18,7 @@ class ItemDetailViewModel(
      */
     private var viewModelJob = Job()
 
-    val item = MutableLiveData<InventoryItemDao.ItemInBag>()
+    val item = MutableLiveData<InventoryItemDao.ItemWithBag>()
 
     val navigateBackToItemList = MutableLiveData<Boolean>()
 
@@ -38,13 +36,13 @@ class ItemDetailViewModel(
 
     init {
         uiScope.launch {
-            item.value = getItemInBagFromId(itemInBag.itemId)
+            item.value = getItemWithBagFromId(itemWithBag.item.itemId)
         }
     }
 
-    private suspend fun getItemInBagFromId(itemId: Long): InventoryItemDao.ItemInBag? {
+    private suspend fun getItemWithBagFromId(itemId: Int): InventoryItemDao.ItemWithBag? {
         return withContext(Dispatchers.IO) {
-            database.inventoryItemDao.getItemInBagFromId(itemId)
+            database.inventoryItemDao.getItemWithBagFromId(itemId)
         }
     }
 

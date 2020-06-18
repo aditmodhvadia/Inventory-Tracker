@@ -23,7 +23,6 @@ class AddItemActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener 
 
     val viewModel: AddItemViewModel by viewModels {
         BaseViewModelFactory(
-            application = application,
             dataSource = InventoryDatabase.getInstance(application)
         )
     }
