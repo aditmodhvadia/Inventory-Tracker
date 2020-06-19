@@ -1,24 +1,9 @@
-/*
- * Copyright 2018, The Android Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package com.fazemeright.myinventorytracker.ui.itemlist
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.liveData
+import androidx.lifecycle.switchMap
 import com.fazemeright.myinventorytracker.database.InventoryDatabase
 import com.fazemeright.myinventorytracker.database.inventoryitem.InventoryItem
 import com.fazemeright.myinventorytracker.database.inventoryitem.InventoryItemDao
@@ -48,15 +33,21 @@ class ItemListViewModel(
      */
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
-    val searchItems: LiveData<List<InventoryItemDao.ItemInBag>>
-        get() = _searchItems
+    private val _searchString = MutableLiveData<String>()
 
-    private val _searchItems = MutableLiveData<List<InventoryItemDao.ItemInBag>>()
+    val items = _searchString.switchMap {
+        liveData {
+            emit(
+                withContext(Dispatchers.IO + viewModelJob) {
+                    database.inventoryItemDao.searchItems(it)
+                }
+            )
+        }
+    }
 
-//    val items = database.inventoryItemDao.getAllItems()
-
-    //    val items = database.inventoryItemDao.getAllItemsWithBag()
-    val items = database.inventoryItemDao.getItemsWithBagLive()
+    init {
+        _searchString.value = ""
+    }
 
     val bags = database.bagItemDao.getAllBags()
 
@@ -66,26 +57,8 @@ class ItemListViewModel(
 
     val deletedItem = MutableLiveData<InventoryItem>()
 
-    init {
-        onSearchClicked("")
-    }
-
     fun onSearchClicked(searchText: String) {
-        uiScope.launch {
-            fetchSearchResults(searchText)
-        }
-    }
-
-    private suspend fun fetchSearchResults(searchText: String) {
-        withContext(Dispatchers.IO) {
-            updateItems(database.inventoryItemDao.getSearchItems("%$searchText%"))
-        }
-    }
-
-    private suspend fun updateItems(newItems: List<InventoryItemDao.ItemInBag>) {
-        withContext(Dispatchers.Main) {
-            _searchItems.value = newItems
-        }
+        _searchString.value = searchText
     }
 
     fun addItemClicked() {
@@ -112,7 +85,7 @@ class ItemListViewModel(
 
     private suspend fun deleteItem(itemId: Int): InventoryItem? {
         return withContext(Dispatchers.IO) {
-            val deleteItem = database.inventoryItemDao.get(itemId)
+            val deleteItem = database.inventoryItemDao.getById(itemId)
             deleteItem?.let {
                 database.inventoryItemDao.deleteItem(it)
             }

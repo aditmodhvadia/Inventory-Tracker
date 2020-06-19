@@ -65,12 +65,6 @@ class ItemListActivity : AppCompatActivity() {
             Log.i("ItemListActivity", "onCreate: $it")
         })
 
-        /*viewModel.searchItems.observe(this, Observer {
-            it?.let {
-                adapter.updateList(it)
-            }
-        })*/
-
         viewModel.deletedItem.observe(this, Observer { deletedItem ->
             // Show a snack bar for undo option
             Snackbar.make(
