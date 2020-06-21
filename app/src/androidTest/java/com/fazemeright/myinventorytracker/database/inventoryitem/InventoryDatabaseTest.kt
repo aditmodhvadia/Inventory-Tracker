@@ -8,8 +8,8 @@ import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.fazemeright.myinventorytracker.database.InventoryDatabase
-import com.fazemeright.myinventorytracker.database.bag.BagItem
 import com.fazemeright.myinventorytracker.database.bag.BagItemDao
+import com.fazemeright.myinventorytracker.utils.TestUtils
 import junit.framework.Assert.*
 import junit.framework.AssertionFailedError
 import kotlinx.coroutines.runBlocking
@@ -57,9 +57,9 @@ class InventoryDatabaseTest {
     @Test
     @Throws(Exception::class)
     fun writeBagItemAndReadInList() {
-        val item = BagItem(bagId = 1, bagName = "AT", bagColor = 0)
+        val item = TestUtils.getBagItem(1)
         bagItemDao.insert(item)
-        val byName = bagItemDao.findItemsByName("AT")
+        val byName = bagItemDao.findItemsByName(item.bagName)
         assertTrue(byName[0] == item)
     }
 
@@ -67,15 +67,15 @@ class InventoryDatabaseTest {
     @Test
     //    @Throws(Exception::class)
     fun writeBagAndItemAssociation() = runBlocking {
-        var bag1 = BagItem(bagId = 1, bagName = "AT", bagColor = 0)
-        var bag2 = BagItem(bagId = 2, bagName = "Kamiliant", bagColor = 0)
+        var bag1 = TestUtils.getBagItem(1)
+        var bag2 = TestUtils.getBagItem(2)
         bagItemDao.insert(bag1)
         bagItemDao.insert(bag2)
 
         bag1 = bagItemDao.findItemsByName(bag1.bagName)[0]
         bag2 = bagItemDao.findItemsByName(bag2.bagName)[0]
 
-        var item = InventoryItem(itemId = 1, itemName = "Blazer", bagOwnerId = bag2.bagId)
+        var item = TestUtils.getInventoryItem(1, bag2.bagId)
         inventoryItemDao.insert(item)
         item = inventoryItemDao.findItemsByName("Blazer")[0]
         assertNotNull(item)

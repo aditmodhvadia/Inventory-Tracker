@@ -5,12 +5,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.fazemeright.myinventorytracker.database.InventoryDatabase
 import com.fazemeright.myinventorytracker.database.inventoryitem.InventoryItem
-import com.fazemeright.myinventorytracker.database.inventoryitem.InventoryItemDao
+import com.fazemeright.myinventorytracker.database.inventoryitem.ItemWithBag
 import kotlinx.coroutines.*
 
 class ItemDetailViewModel(
     val database: InventoryDatabase,
-    itemWithBag: InventoryItemDao.ItemWithBag
+    itemWithBag: ItemWithBag
 ) : ViewModel() {
 
     /**
@@ -18,7 +18,7 @@ class ItemDetailViewModel(
      */
     private var viewModelJob = Job()
 
-    val item = MutableLiveData<InventoryItemDao.ItemWithBag>()
+    val item = MutableLiveData<ItemWithBag>()
 
     val navigateBackToItemList = MutableLiveData<Boolean>()
 
@@ -40,7 +40,7 @@ class ItemDetailViewModel(
         }
     }
 
-    private suspend fun getItemWithBagFromId(itemId: Int): InventoryItemDao.ItemWithBag? {
+    private suspend fun getItemWithBagFromId(itemId: Int): ItemWithBag? {
         return withContext(Dispatchers.IO) {
             database.inventoryItemDao.getItemWithBagFromId(itemId)
         }

@@ -11,7 +11,7 @@
 
         <variable
                 name="item"
-                type="com.fazemeright.myinventorytracker.database.inventoryitem.InventoryItemDao.ItemWithBag" />
+                type="com.fazemeright.myinventorytracker.database.inventoryitem.ItemWithBag" />
 
     </data>
 

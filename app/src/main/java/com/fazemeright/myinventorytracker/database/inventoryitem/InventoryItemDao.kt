@@ -45,14 +45,4 @@ interface InventoryItemDao : BaseDao<InventoryItem> {
     @Transaction
     @Query("SELECT * FROM my_inventory_table WHERE itemName LIKE '%' || :searchString || '%' ORDER BY itemName")
     fun searchItems(searchString: String): List<ItemWithBag>
-
-    @Entity
-    data class ItemWithBag(
-        @Embedded val item: InventoryItem,
-        @Relation(
-            parentColumn = "bagOwnerId",
-            entityColumn = "bagId"
-        )
-        val bag: BagItem
-    ) : Serializable
 }

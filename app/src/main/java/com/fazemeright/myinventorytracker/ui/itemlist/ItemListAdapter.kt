@@ -1,19 +1,3 @@
-/*
- * Copyright 2018, The Android Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package com.fazemeright.myinventorytracker.ui.itemlist
 
 import android.util.Log
@@ -23,13 +7,13 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.fazemeright.myinventorytracker.database.bag.BagItem
-import com.fazemeright.myinventorytracker.database.inventoryitem.InventoryItemDao
+import com.fazemeright.myinventorytracker.database.inventoryitem.ItemWithBag
 import com.fazemeright.myinventorytracker.databinding.ListInventoryItemBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 
 class ItemListAdapter(private val clickListener: ItemListener) :
-    ListAdapter<InventoryItemDao.ItemWithBag,
+    ListAdapter<ItemWithBag,
             ItemListAdapter.ViewHolder>(ItemListDiffCallback()) {
 
     private lateinit var bagsList: List<BagItem>
@@ -40,12 +24,7 @@ class ItemListAdapter(private val clickListener: ItemListener) :
         return ViewHolder.from(parent)
     }
 
-    /*fun updateList(list: List<InventoryItemDao.ItemInBag>?) {
-        Log.d("##DebugData", list.toString())
-        submitList(list)
-    }*/
-
-    fun updateList(list: List<InventoryItemDao.ItemWithBag>?) {
+    fun updateList(list: List<ItemWithBag>?) {
         Log.d("##DebugData", list.toString())
         submitList(list)
     }
@@ -59,12 +38,10 @@ class ItemListAdapter(private val clickListener: ItemListener) :
         holder.bind(item, clickListener)
     }
 
-    class ViewHolder private constructor(val binding: ListInventoryItemBinding) :
+    class ViewHolder private constructor(private val binding: ListInventoryItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-
-
         fun bind(
-            item: InventoryItemDao.ItemWithBag,
+            item: ItemWithBag,
             clickListener: ItemListener
         ) {
             binding.item = item
@@ -82,17 +59,17 @@ class ItemListAdapter(private val clickListener: ItemListener) :
     }
 
     class ItemListDiffCallback :
-        DiffUtil.ItemCallback<InventoryItemDao.ItemWithBag>() {
+        DiffUtil.ItemCallback<ItemWithBag>() {
         override fun areItemsTheSame(
-            oldItem: InventoryItemDao.ItemWithBag,
-            newItem: InventoryItemDao.ItemWithBag
+            oldItem: ItemWithBag,
+            newItem: ItemWithBag
         ): Boolean {
             return oldItem.item.itemId == newItem.item.itemId
         }
 
         override fun areContentsTheSame(
-            oldItem: InventoryItemDao.ItemWithBag,
-            newItem: InventoryItemDao.ItemWithBag
+            oldItem: ItemWithBag,
+            newItem: ItemWithBag
         ): Boolean {
             return oldItem == newItem
         }
@@ -100,11 +77,11 @@ class ItemListAdapter(private val clickListener: ItemListener) :
     }
 
     class ItemListener(
-        val clickListener: (item: InventoryItemDao.ItemWithBag) -> Unit,
+        val clickListener: (item: ItemWithBag) -> Unit,
         val deleteClickListener: (itemId: Int) -> Unit
     ) {
-        fun onClick(item: InventoryItemDao.ItemWithBag) = clickListener(item)
-        fun onDeleteClick(item: InventoryItemDao.ItemWithBag) =
+        fun onClick(item: ItemWithBag) = clickListener(item)
+        fun onDeleteClick(item: ItemWithBag) =
             deleteClickListener(item.item.itemId)
     }
 }

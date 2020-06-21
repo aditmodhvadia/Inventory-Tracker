@@ -5,10 +5,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.fazemeright.myinventorytracker.database.InventoryDatabase
 import com.fazemeright.myinventorytracker.database.inventoryitem.InventoryItemDao
+import com.fazemeright.myinventorytracker.database.inventoryitem.ItemWithBag
 
 class ItemDetailViewModelFactory(
     private val dataSource: InventoryDatabase,
-    private val itemWithBag: InventoryItemDao.ItemWithBag
+    private val itemWithBag: ItemWithBag
 ) : ViewModelProvider.Factory {
     @Suppress("unchecked_cast")
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {

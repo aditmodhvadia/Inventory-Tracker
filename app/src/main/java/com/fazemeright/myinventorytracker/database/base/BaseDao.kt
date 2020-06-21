@@ -14,6 +14,12 @@ interface BaseDao<T> {
     fun insert(item: T)
 
     /**
+     * Inserts the given items into the database
+     */
+    @Insert
+    fun insertAll(item: List<T>)
+
+    /**
      * When updating a row with a value already set in a column,
      * replaces the old value with the new one.
      *

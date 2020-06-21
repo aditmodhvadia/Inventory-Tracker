@@ -6,7 +6,7 @@ import androidx.lifecycle.liveData
 import androidx.lifecycle.switchMap
 import com.fazemeright.myinventorytracker.database.InventoryDatabase
 import com.fazemeright.myinventorytracker.database.inventoryitem.InventoryItem
-import com.fazemeright.myinventorytracker.database.inventoryitem.InventoryItemDao
+import com.fazemeright.myinventorytracker.database.inventoryitem.ItemWithBag
 import kotlinx.coroutines.*
 
 /**
@@ -39,7 +39,8 @@ class ItemListViewModel(
         liveData {
             emit(
                 withContext(Dispatchers.IO + viewModelJob) {
-                    database.inventoryItemDao.searchItems(it)
+                    if (it.isEmpty()) database.inventoryItemDao.getItemsWithBag()
+                    else database.inventoryItemDao.searchItems(it)
                 }
             )
         }
@@ -51,7 +52,7 @@ class ItemListViewModel(
 
     val bags = database.bagItemDao.getAllBags()
 
-    val navigateToItemDetailActivity = MutableLiveData<InventoryItemDao.ItemWithBag>()
+    val navigateToItemDetailActivity = MutableLiveData<ItemWithBag>()
 
     val navigateToAddItemActivity = MutableLiveData<Boolean>()
 
@@ -69,7 +70,7 @@ class ItemListViewModel(
         navigateToAddItemActivity.value = false
     }
 
-    fun onItemClicked(item: InventoryItemDao.ItemWithBag) {
+    fun onItemClicked(item: ItemWithBag) {
         navigateToItemDetailActivity.value = item
     }
 

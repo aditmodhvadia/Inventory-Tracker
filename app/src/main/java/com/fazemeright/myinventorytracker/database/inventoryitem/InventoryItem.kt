@@ -1,9 +1,6 @@
 package com.fazemeright.myinventorytracker.database.inventoryitem
 
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.ForeignKey
-import androidx.room.PrimaryKey
+import androidx.room.*
 import com.fazemeright.myinventorytracker.database.bag.BagItem
 import java.io.Serializable
 
@@ -28,3 +25,17 @@ data class InventoryItem(
     @ColumnInfo(name = "bagOwnerId")
     var bagOwnerId: Int
 ) : Serializable
+
+@Entity
+data class ItemWithBag(
+    @Embedded val item: InventoryItem,
+    @Relation(
+        parentColumn = "bagOwnerId",
+        entityColumn = "bagId"
+    )
+    val bag: BagItem
+) : Serializable
+
+//@Fts4(contentEntity = InventoryItem::class)
+//@Entity(tableName = "inventoryItemFts")
+//data class InventoryItemFts(val itemId: Int, val itemName: String, val itemDesc: String)

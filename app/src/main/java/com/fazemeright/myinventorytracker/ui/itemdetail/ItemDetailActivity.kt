@@ -13,7 +13,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import com.fazemeright.myinventorytracker.R
 import com.fazemeright.myinventorytracker.database.InventoryDatabase
-import com.fazemeright.myinventorytracker.database.inventoryitem.InventoryItemDao
+import com.fazemeright.myinventorytracker.database.inventoryitem.ItemWithBag
 import com.fazemeright.myinventorytracker.databinding.ActivityItemDetailBinding
 
 class ItemDetailActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
@@ -23,7 +23,7 @@ class ItemDetailActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
     val viewModel: ItemDetailViewModel by viewModels {
         ItemDetailViewModelFactory(
             dataSource = InventoryDatabase.getInstance(application),
-            itemWithBag = intent.getSerializableExtra("itemInBag") as InventoryItemDao.ItemWithBag
+            itemWithBag = intent.getSerializableExtra("itemInBag") as ItemWithBag
         )
     }
 

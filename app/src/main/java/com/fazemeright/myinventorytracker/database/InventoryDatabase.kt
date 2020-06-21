@@ -1,13 +1,19 @@
 package com.fazemeright.myinventorytracker.database
 
 import android.content.Context
+import android.util.Log
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.sqlite.db.SupportSQLiteDatabase
 import com.fazemeright.myinventorytracker.database.bag.BagItem
 import com.fazemeright.myinventorytracker.database.bag.BagItemDao
 import com.fazemeright.myinventorytracker.database.inventoryitem.InventoryItem
 import com.fazemeright.myinventorytracker.database.inventoryitem.InventoryItemDao
+import com.fazemeright.myinventorytracker.utils.TestUtils
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 /**
  * A database that stores InventoryItem information.
@@ -16,7 +22,11 @@ import com.fazemeright.myinventorytracker.database.inventoryitem.InventoryItemDa
  * This pattern is pretty much the same for any database,
  * so you can reuse it.
  */
-@Database(entities = [InventoryItem::class, BagItem::class], version = 4, exportSchema = false)
+@Database(
+    entities = [InventoryItem::class, BagItem::class/*, InventoryItemFts::class*/],
+    version = 6,
+    exportSchema = false
+)
 abstract class InventoryDatabase : RoomDatabase() {
 
     /**
@@ -25,6 +35,8 @@ abstract class InventoryDatabase : RoomDatabase() {
     abstract val inventoryItemDao: InventoryItemDao
 
     abstract val bagItemDao: BagItemDao
+
+//    abstract val inventoryItemFtsDao: InventoryItemFtsDao
 
     /**
      * Define a companion object, this allows us to add functions on the InventoryDatabase class.
@@ -82,6 +94,25 @@ abstract class InventoryDatabase : RoomDatabase() {
                         // migration with Room in this blog post:
                         // https://medium.com/androiddevelopers/understanding-migrations-with-room-f01e04b07929
                         .fallbackToDestructiveMigration()
+                        .addCallback(object : Callback() {
+                            override fun onCreate(db: SupportSQLiteDatabase) {
+                                super.onCreate(db)
+                                // moving to a new thread
+//                                Temporary add dummy bag data
+                                CoroutineScope(Dispatchers.IO).launch {
+                                    val items = listOf(
+                                        TestUtils.getBagItem(1),
+                                        TestUtils.getBagItem(2),
+                                        TestUtils.getBagItem(3)
+                                    )
+                                    getInstance(context).bagItemDao
+                                        .insertAll(
+                                            items
+                                        )
+                                    Log.d("InventoryDatabase", "Sample Bag data inserted")
+                                }
+                            }
+                        })
                         .build()
                     // Assign INSTANCE to the newly created database.
                     INSTANCE = instance
