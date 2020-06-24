@@ -1,10 +1,10 @@
 package com.fazemeright.myinventorytracker.database.inventoryitem
 
 import androidx.lifecycle.LiveData
-import androidx.room.*
-import com.fazemeright.myinventorytracker.database.bag.BagItem
+import androidx.room.Dao
+import androidx.room.Query
+import androidx.room.Transaction
 import com.fazemeright.myinventorytracker.database.base.BaseDao
-import java.io.Serializable
 
 /**
  * Defines methods for using the InventoryItem class with Room.
@@ -29,7 +29,7 @@ interface InventoryItemDao : BaseDao<InventoryItem> {
     fun clear()
 
     @Query("SELECT * FROM my_inventory_table WHERE itemId = :itemId")
-    fun getItemWithBagFromId(itemId: Int): ItemWithBag
+    fun getItemWithBagFromId(itemId: Int): LiveData<ItemWithBag>
 
     @Query("SELECT * FROM my_inventory_table WHERE itemName =:name")
     fun findItemsByName(name: String): List<InventoryItem>

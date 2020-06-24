@@ -10,11 +10,11 @@ import java.io.Serializable
 data class BagItem(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "bagId")
-    val bagId: Int,
+    val bagId: Int = 0,
 
-    var bagName: String,
+    var bagName: String = "",
 
-    var bagColor: Int,
+    var bagColor: Int = 0,
 
     var bagDesc: String = ""
 ) : Serializable

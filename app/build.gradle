@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'dagger.hilt.android.plugin'
 apply plugin: 'kotlin-kapt'
 
 android {
@@ -33,9 +34,14 @@ android {
     dataBinding {
         enabled = true
     }
+
+    kapt {
+        correctErrorTypes true
+    }
 }
 
 dependencies {
+    implementation 'androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha01'
     def lifecycle_version = "2.2.0"
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
@@ -55,6 +61,20 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
     // Test helpers
     testImplementation "androidx.room:room-testing:2.2.5"
+
+    // Dagger Hilt (DI)
+    implementation 'com.google.dagger:hilt-android:2.28.1-alpha'
+    kapt 'com.google.dagger:hilt-android-compiler:2.28.1-alpha'
+    implementation 'androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha01'
+    kapt 'androidx.hilt:hilt-compiler:1.0.0-alpha01'
+
+    // For instrumentation tests
+    androidTestImplementation 'com.google.dagger:hilt-android-testing:2.28.1-alpha'
+    kaptAndroidTest 'com.google.dagger:hilt-android-compiler:2.28.1-alpha'
+
+    // For local unit tests
+    testImplementation 'com.google.dagger:hilt-android-testing:2.28.1-alpha'
+    kaptTest 'com.google.dagger:hilt-android-compiler:2.28.1-alpha'
 
     // ViewModel
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
@@ -90,7 +110,7 @@ dependencies {
     // Assertions
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.ext:truth:1.2.0'
-    androidTestImplementation 'com.google.truth:truth:0.42'
+    androidTestImplementation 'com.google.truth:truth:1.0.1'
 
     // Espresso dependencies
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'

@@ -1,39 +1,28 @@
 package com.fazemeright.myinventorytracker.ui.additem
 
 import android.util.Log
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.fazemeright.myinventorytracker.database.InventoryDatabase
+import androidx.lifecycle.viewModelScope
+import com.fazemeright.myinventorytracker.database.bag.BagItemDao
 import com.fazemeright.myinventorytracker.database.inventoryitem.InventoryItem
-import kotlinx.coroutines.*
+import com.fazemeright.myinventorytracker.database.inventoryitem.InventoryItemDao
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 /**
  * ViewModel for SleepTrackerFragment.
  */
-class AddItemViewModel(
-    val database: InventoryDatabase
+class AddItemViewModel @ViewModelInject constructor(
+    private val bagItemDao: BagItemDao,
+    private val inventoryItemDao: InventoryItemDao
 ) : ViewModel() {
 
-    /**
-     * viewModelJob allows us to cancel all coroutines started by this ViewModel.
-     */
-    private var viewModelJob = Job()
+    val bags = bagItemDao.getAllBags()
 
-    /**
-     * A [CoroutineScope] keeps track of all coroutines started by this ViewModel.
-     *
-     * Because we pass it [viewModelJob], any coroutine started in this uiScope can be cancelled
-     * by calling `viewModelJob.cancel()`
-     *
-     * By default, all coroutines started in uiScope will launch in [Dispatchers.Main] which is
-     * the main thread on Android. This is a sensible default because most coroutines started by
-     * a [ViewModel] update the UI after performing some processing.
-     */
-    private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
-
-    val bags = database.bagItemDao.getAllBags()
-
-    val bagNames = database.bagItemDao.getAllBagNames()
+    val bagNames = bagItemDao.getAllBagNames()
 
     val itemName: String = ""
     val bagName: String = "Black AT+"
@@ -42,13 +31,9 @@ class AddItemViewModel(
 
     val navigateBackToItemList = MutableLiveData<Boolean>()
 
-    init {
-
-    }
-
     private suspend fun clear() {
         withContext(Dispatchers.IO) {
-            database.inventoryItemDao.clear()
+            inventoryItemDao.clear()
         }
     }
 
@@ -58,7 +43,7 @@ class AddItemViewModel(
         itemDesc: String,
         itemQuantity: String
     ) {
-        uiScope.launch {
+        viewModelScope.launch {
             Log.d("##DebugData", itemName)
             val newItem =
                 InventoryItem(
@@ -76,13 +61,13 @@ class AddItemViewModel(
 
     private suspend fun getBagId(bagName: String): Int {
         return withContext(Dispatchers.IO) {
-            database.bagItemDao.getBagIdWithName(bagName)
+            bagItemDao.getBagIdWithName(bagName)
         }
     }
 
     private suspend fun insert(night: InventoryItem) {
         withContext(Dispatchers.IO) {
-            database.inventoryItemDao.insert(night)
+            inventoryItemDao.insert(night)
         }
     }
 

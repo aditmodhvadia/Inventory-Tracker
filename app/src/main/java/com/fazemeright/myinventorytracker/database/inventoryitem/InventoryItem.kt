@@ -14,26 +14,26 @@ import java.io.Serializable
 data class InventoryItem(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "itemId")
-    val itemId: Int,
+    val itemId: Int = 0,
 
-    var itemName: String,
+    var itemName: String = "",
 
     var itemDesc: String = "",
 
     var itemQuantity: Int = 1,
 
     @ColumnInfo(name = "bagOwnerId")
-    var bagOwnerId: Int
+    var bagOwnerId: Int = 0
 ) : Serializable
 
 @Entity
 data class ItemWithBag(
-    @Embedded val item: InventoryItem,
+    @Embedded var item: InventoryItem,
     @Relation(
         parentColumn = "bagOwnerId",
         entityColumn = "bagId"
     )
-    val bag: BagItem
+    var bag: BagItem
 ) : Serializable
 
 //@Fts4(contentEntity = InventoryItem::class)

@@ -13,23 +13,24 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fazemeright.myinventorytracker.R
-import com.fazemeright.myinventorytracker.database.InventoryDatabase
+import com.fazemeright.myinventorytracker.database.inventoryitem.ItemWithBag
 import com.fazemeright.myinventorytracker.databinding.ActivityItemListBinding
 import com.fazemeright.myinventorytracker.ui.addbag.AddBagActivity
 import com.fazemeright.myinventorytracker.ui.additem.AddItemActivity
 import com.fazemeright.myinventorytracker.ui.itemdetail.ItemDetailActivity
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
-
+@AndroidEntryPoint
 class ItemListActivity : AppCompatActivity() {
 
     private lateinit var searchView: SearchView
 
-    val viewModel: ItemListViewModel by viewModels {
-        BaseViewModelFactory(
-            dataSource = InventoryDatabase.getInstance(application)
-        )
-    }
+    val viewModel: ItemListViewModel by viewModels()
+
+    @Inject
+    lateinit var selectedItem: ItemWithBag
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -90,7 +91,8 @@ class ItemListActivity : AppCompatActivity() {
         viewModel.navigateToItemDetailActivity.observe(this, Observer { itemInBag ->
             itemInBag?.let {
                 val intent = Intent(this, ItemDetailActivity::class.java)
-                    .apply { putExtra("itemInBag", it) }
+                selectedItem.item = itemInBag.item
+                selectedItem.bag = itemInBag.bag
                 startActivity(intent)
                 viewModel.onNavigationToItemDetailFinished()
             }

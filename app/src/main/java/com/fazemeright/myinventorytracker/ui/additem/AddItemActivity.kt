@@ -12,20 +12,16 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import com.fazemeright.myinventorytracker.R
-import com.fazemeright.myinventorytracker.database.InventoryDatabase
 import com.fazemeright.myinventorytracker.databinding.ActivityAddItemBinding
-import com.fazemeright.myinventorytracker.ui.itemlist.BaseViewModelFactory
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_add_item.*
 
+@AndroidEntryPoint
 class AddItemActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
     private var selectedBagName: String? = null
 
-    val viewModel: AddItemViewModel by viewModels {
-        BaseViewModelFactory(
-            dataSource = InventoryDatabase.getInstance(application)
-        )
-    }
+    val viewModel: AddItemViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

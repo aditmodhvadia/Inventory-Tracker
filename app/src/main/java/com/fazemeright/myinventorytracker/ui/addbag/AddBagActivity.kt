@@ -9,23 +9,18 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import com.fazemeright.myinventorytracker.R
-import com.fazemeright.myinventorytracker.database.InventoryDatabase
 import com.fazemeright.myinventorytracker.databinding.ActivityAddBagBinding
-import com.fazemeright.myinventorytracker.ui.itemlist.BaseViewModelFactory
 import com.jaredrummler.android.colorpicker.ColorPickerDialog
 import com.jaredrummler.android.colorpicker.ColorPickerDialogListener
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class AddBagActivity : AppCompatActivity(), ColorPickerDialogListener {
 
     private var bagColor: Int = 0
     private val dialogId: Int = 1001
     lateinit var binding: ActivityAddBagBinding
-    val viewModel: AddBagViewModel by viewModels {
-        BaseViewModelFactory(
-            dataSource = InventoryDatabase.getInstance(application)
-        )
-    }
+    val viewModel: AddBagViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

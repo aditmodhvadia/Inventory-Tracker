@@ -12,20 +12,18 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import com.fazemeright.myinventorytracker.R
-import com.fazemeright.myinventorytracker.database.InventoryDatabase
 import com.fazemeright.myinventorytracker.database.inventoryitem.ItemWithBag
 import com.fazemeright.myinventorytracker.databinding.ActivityItemDetailBinding
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class ItemDetailActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
-    private var selectedBagName: String? = null
+    val viewModel: ItemDetailViewModel by viewModels()
 
-    val viewModel: ItemDetailViewModel by viewModels {
-        ItemDetailViewModelFactory(
-            dataSource = InventoryDatabase.getInstance(application),
-            itemWithBag = intent.getSerializableExtra("itemInBag") as ItemWithBag
-        )
-    }
+    @Inject
+    lateinit var selectedBag: ItemWithBag
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
