@@ -1,41 +1,42 @@
-package com.fazemeright.myinventorytracker.itemlist
+package com.fazemeright.myinventorytracker.ui.itemlist
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fazemeright.myinventorytracker.R
-import com.fazemeright.myinventorytracker.additem.AddItemActivity
-import com.fazemeright.myinventorytracker.addbag.AddBagActivity
-import com.fazemeright.myinventorytracker.database.InventoryDatabase
+import com.fazemeright.myinventorytracker.database.inventoryitem.ItemWithBag
 import com.fazemeright.myinventorytracker.databinding.ActivityItemListBinding
-import com.fazemeright.myinventorytracker.itemdetail.ItemDetailActivity
+import com.fazemeright.myinventorytracker.ui.addbag.AddBagActivity
+import com.fazemeright.myinventorytracker.ui.additem.AddItemActivity
+import com.fazemeright.myinventorytracker.ui.itemdetail.ItemDetailActivity
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class ItemListActivity : AppCompatActivity() {
 
     private lateinit var searchView: SearchView
-    private lateinit var viewModel: ItemListViewModel
+
+    val viewModel: ItemListViewModel by viewModels()
+
+    @Inject
+    lateinit var selectedItem: ItemWithBag
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val binding: ActivityItemListBinding = DataBindingUtil.setContentView(this, R.layout.activity_item_list)
-
-        val application = requireNotNull(this).application
-
-        val dataSource = InventoryDatabase.getInstance(application)
-
-        val viewModelFactory = ItemListViewModelFactory(dataSource, application)
-
-        viewModel = ViewModelProviders.of(this, viewModelFactory).get(ItemListViewModel::class.java)
+        val binding: ActivityItemListBinding =
+            DataBindingUtil.setContentView(this, R.layout.activity_item_list)
 
         binding.viewModel = viewModel
 
@@ -52,7 +53,7 @@ class ItemListActivity : AppCompatActivity() {
             deleteClickListener = { itemId ->
                 showConfirmationDialog(itemId)
 //                TODO("Implement AlertDialog for confirmation before delete")
-//                viewModel.onDeleteItemClicked(itemId)
+                viewModel.onDeleteItemClicked(itemId)
             }
         ))
 
@@ -62,12 +63,7 @@ class ItemListActivity : AppCompatActivity() {
             it?.let {
                 adapter.updateList(it)
             }
-        })
-
-        viewModel.searchItems.observe(this, Observer {
-            it?.let {
-                adapter.updateList(it)
-            }
+            Log.i("ItemListActivity", "onCreate: $it")
         })
 
         viewModel.deletedItem.observe(this, Observer { deletedItem ->
@@ -95,7 +91,8 @@ class ItemListActivity : AppCompatActivity() {
         viewModel.navigateToItemDetailActivity.observe(this, Observer { itemInBag ->
             itemInBag?.let {
                 val intent = Intent(this, ItemDetailActivity::class.java)
-                    .apply { putExtra("itemInBag", it) }
+                selectedItem.item = itemInBag.item
+                selectedItem.bag = itemInBag.bag
                 startActivity(intent)
                 viewModel.onNavigationToItemDetailFinished()
             }
@@ -108,7 +105,7 @@ class ItemListActivity : AppCompatActivity() {
         })
     }
 
-    private fun showConfirmationDialog(itemId: Long) {
+    private fun showConfirmationDialog(itemId: Int) {
         // build alert dialog
         val dialogBuilder = AlertDialog.Builder(this)
 

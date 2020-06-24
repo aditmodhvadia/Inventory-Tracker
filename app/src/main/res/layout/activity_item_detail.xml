@@ -7,11 +7,11 @@
 
         <variable
                 name="viewModel"
-                type="com.fazemeright.myinventorytracker.itemdetail.ItemDetailViewModel" />
+                type="com.fazemeright.myinventorytracker.ui.itemdetail.ItemDetailViewModel" />
 
         <variable
                 name="item"
-                type="com.fazemeright.myinventorytracker.database.InventoryItemDao.ItemInBag" />
+                type="com.fazemeright.myinventorytracker.database.inventoryitem.ItemWithBag" />
 
     </data>
 
@@ -42,7 +42,7 @@
                 android:ems="10"
                 android:hint="@string/item_name"
                 android:inputType="textPersonName"
-                android:text="@{item.itemName}"
+                android:text="@{item.item.itemName}"
                 app:layout_constraintBottom_toTopOf="@+id/spinnerBag"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -74,7 +74,7 @@
                 android:ems="10"
                 android:enabled="false"
                 android:padding="@dimen/spacing_normal"
-                android:text="@{item.bagDesc}"
+                android:text="@{item.bag.bagDesc}"
                 android:textAlignment="center"
                 android:textColor="@android:color/black"
                 app:layout_constraintBottom_toTopOf="@+id/edtItemDesc"
@@ -97,7 +97,7 @@
                 android:lines="8"
                 android:maxLines="10"
                 android:minLines="6"
-                android:text="@{item.itemDesc}"
+                android:text="@{item.item.itemDesc}"
                 app:layout_constraintBottom_toTopOf="@+id/edtItemQuantity"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -118,7 +118,7 @@
                 android:inputType="number"
                 android:maxLines="4"
                 android:minLines="2"
-                android:text="@{String.valueOf(item.itemQuantity)}"
+                android:text="@{String.valueOf(item.item.itemQuantity)}"
                 app:layout_constraintBottom_toTopOf="@+id/button"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -142,6 +142,3 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
-
-        <!--android:onClick="@{() -> viewModel.onUpdateClicked(edtItemName.getText().toString(),edtBagName.getText().toString(),edtItemDesc.getText().toString(),edtItemQuantity.getText().toString())}"-->
-

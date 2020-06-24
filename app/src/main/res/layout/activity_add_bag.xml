@@ -6,7 +6,7 @@
 
         <variable
                 name="viewModel"
-                type="com.fazemeright.myinventorytracker.addbag.AddBagViewModel" />
+                type="com.fazemeright.myinventorytracker.ui.addbag.AddBagViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

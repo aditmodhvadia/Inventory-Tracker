@@ -1,23 +1,12 @@
-package com.fazemeright.myinventorytracker.database
+package com.fazemeright.myinventorytracker.database.bag
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
+import com.fazemeright.myinventorytracker.database.base.BaseDao
+import com.fazemeright.myinventorytracker.database.inventoryitem.InventoryItem
 
 @Dao
-interface BagItemDao {
-
-    @Insert
-    fun insert(item: BagItem)
-
-    /**
-     * When updating a row with a value already set in a column,
-     * replaces the old value with the new one.
-     *
-     * @param item new value to write
-     */
-    @Update
-    fun update(item: BagItem)
-
+interface BagItemDao : BaseDao<BagItem> {
     /**
      * Selects and returns the row that matches the supplied start time, which is our key.
      *
@@ -46,22 +35,25 @@ interface BagItemDao {
     fun getAllBagNames(): LiveData<List<String>>
 
     @Query("SELECT bagId FROM my_bag_table WHERE bagName =:bagName LIMIT 1")
-    fun getBagIdWithName(bagName: String): Long
+    fun getBagIdWithName(bagName: String): Int
 
-/*
-    //    @Query("SELECT * FROM my_inventory_table WHERE itemName LIKE :searchText ORDER BY itemName")
-    @Query("SELECT * FROM my_inventory_table WHERE itemName LIKE :searchText OR itemDesc LIKE :searchText ORDER BY itemName")
-    fun getSearchItems(searchText: String): List<InventoryItem>
-*/
+    @Transaction
+    @Query("SELECT * FROM my_bag_table WHERE bagId =:id")
+    fun getItemsAndBagsInBagWithId(id: Int): BagWithItems?
 
+    @Entity
+    data class BagWithItems(
+        @Embedded val bag: BagItem,
+        @Relation(
+            parentColumn = "bagId",
+            entityColumn = "bagOwnerId"
+        )
+        val items: List<InventoryItem?>?
+    )
 
-    /**
-     * Selects and returns the night with given nightId.
-     */
     @Query("SELECT * from my_bag_table WHERE bagId = :key")
     fun getBagWithId(key: Long): LiveData<BagItem>
 
-    @Delete
-    fun deleteItem(item: BagItem)
-
+    @Query("SELECT * FROM my_bag_table WHERE bagName =:name")
+    fun findItemsByName(name: String): List<BagItem>
 }

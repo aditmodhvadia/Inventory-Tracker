@@ -1,4 +1,4 @@
-package com.fazemeright.myinventorytracker.itemdetail
+package com.fazemeright.myinventorytracker.ui.itemdetail
 
 import android.os.Bundle
 import android.util.Log
@@ -7,38 +7,29 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import com.fazemeright.myinventorytracker.R
-import com.fazemeright.myinventorytracker.database.InventoryDatabase
-import com.fazemeright.myinventorytracker.database.InventoryItemDao
+import com.fazemeright.myinventorytracker.database.inventoryitem.ItemWithBag
 import com.fazemeright.myinventorytracker.databinding.ActivityItemDetailBinding
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class ItemDetailActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
-    private var selectedBagName: String? = null
-    lateinit var viewModel: ItemDetailViewModel
+    val viewModel: ItemDetailViewModel by viewModels()
+
+    @Inject
+    lateinit var selectedBag: ItemWithBag
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         val binding: ActivityItemDetailBinding =
             DataBindingUtil.setContentView(this, R.layout.activity_item_detail)
-
-        val application = requireNotNull(this).application
-
-        val dataSource = InventoryDatabase.getInstance(application)
-
-        val viewModelFactory =
-            ItemDetailViewModelFactory(
-                dataSource, application,
-                intent.getSerializableExtra("itemInBag") as InventoryItemDao.ItemInBag
-            )
-
-        viewModel =
-            ViewModelProviders.of(this, viewModelFactory).get(ItemDetailViewModel::class.java)
 
         binding.viewModel = viewModel
 
@@ -55,7 +46,7 @@ class ItemDetailActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
             item?.let {
                 // Create an ArrayAdapter using a simple spinner layout and languages array
                 val aa =
-                    ArrayAdapter(this, android.R.layout.simple_spinner_item, listOf(it.bagName))
+                    ArrayAdapter(this, android.R.layout.simple_spinner_item, listOf(it.bag.bagName))
                 // Set layout to use when the list of choices appear
                 aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                 // Set Adapter to Spinner

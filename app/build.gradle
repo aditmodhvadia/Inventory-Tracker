@@ -1,9 +1,7 @@
 apply plugin: 'com.android.application'
-
 apply plugin: 'kotlin-android'
-
 apply plugin: 'kotlin-android-extensions'
-
+apply plugin: 'dagger.hilt.android.plugin'
 apply plugin: 'kotlin-kapt'
 
 android {
@@ -12,8 +10,8 @@ android {
         applicationId "com.fazemeright.myinventorytracker"
         minSdkVersion 23
         targetSdkVersion 29
-        versionCode 1
-        versionName "1.0"
+        versionCode 2
+        versionName "2.0.0-alpha001"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -23,33 +21,73 @@ android {
         }
     }
 
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
+
     // Enables data binding.
     dataBinding {
         enabled = true
     }
+
+    kapt {
+        correctErrorTypes true
+    }
 }
 
 dependencies {
+    implementation 'androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha01'
+    def lifecycle_version = "2.2.0"
+
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.41"
-    implementation 'androidx.appcompat:appcompat:1.0.2'
-    implementation 'androidx.core:core-ktx:1.0.2'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.72"
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.core:core-ktx:1.3.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test:runner:1.2.0'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
     // Android KTX
-    implementation "androidx.core:core-ktx:1.0.2"
+    implementation "androidx.core:core-ktx:1.3.0"
 
-// Room and Lifecycle dependencies
-    implementation "androidx.room:room-runtime:2.1.0"
-    kapt "androidx.room:room-compiler:2.1.0"
-    implementation "androidx.lifecycle:lifecycle-extensions:2.0.0"
+
+    // Room and Lifecycle dependencies
+    implementation "androidx.room:room-runtime:2.2.5"
+    kapt "androidx.room:room-compiler:2.2.5"
+    implementation "androidx.room:room-ktx:2.2.5"
+    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
+    // Test helpers
+    testImplementation "androidx.room:room-testing:2.2.5"
+
+    // Dagger Hilt (DI)
+    implementation 'com.google.dagger:hilt-android:2.28.1-alpha'
+    kapt 'com.google.dagger:hilt-android-compiler:2.28.1-alpha'
+    implementation 'androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha01'
+    kapt 'androidx.hilt:hilt-compiler:1.0.0-alpha01'
+
+    // For instrumentation tests
+    androidTestImplementation 'com.google.dagger:hilt-android-testing:2.28.1-alpha'
+    kaptAndroidTest 'com.google.dagger:hilt-android-compiler:2.28.1-alpha'
+
+    // For local unit tests
+    testImplementation 'com.google.dagger:hilt-android-testing:2.28.1-alpha'
+    kaptTest 'com.google.dagger:hilt-android-compiler:2.28.1-alpha'
+
+    // ViewModel
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
+    implementation "androidx.activity:activity-ktx:1.1.0"
+
+    // LiveData
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
+    // Annotation processor
+    kapt "androidx.lifecycle:lifecycle-compiler:$lifecycle_version"
 
     // Coroutines
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.1.1"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.1.0"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.7"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.4"
 
     // Navigation
     implementation "android.arch.navigation:navigation-fragment-ktx:1.0.0"
@@ -57,4 +95,23 @@ dependencies {
 
 //    Color Picker Library
     implementation 'com.jaredrummler:colorpicker:1.1.0'
+
+
+    // Testing libraries
+    testImplementation 'junit:junit:4.13'
+
+    // Core library
+    androidTestImplementation 'androidx.test:core:1.2.0'
+
+    // AndroidJUnitRunner and JUnit Rules
+    androidTestImplementation 'androidx.test:runner:1.2.0'
+    androidTestImplementation 'androidx.test:rules:1.2.0'
+
+    // Assertions
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'androidx.test.ext:truth:1.2.0'
+    androidTestImplementation 'com.google.truth:truth:1.0.1'
+
+    // Espresso dependencies
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 }
