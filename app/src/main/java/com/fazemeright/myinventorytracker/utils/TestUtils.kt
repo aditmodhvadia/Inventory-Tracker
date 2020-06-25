@@ -10,11 +10,11 @@ object TestUtils {
     /**
      * Get a Bag Item with the given Id
      */
-    fun getBagItem(id: Int): BagItem {
+    fun getBagItem(id: Int, color: Int = Color.parseColor(getRandomColor())): BagItem {
         return BagItem(
             id,
             "Test Bag $id",
-            bagColor = Color.parseColor(getRandomColor())
+            bagColor = color
         )
     }
 

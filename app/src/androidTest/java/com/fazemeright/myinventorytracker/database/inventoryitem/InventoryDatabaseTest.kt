@@ -77,7 +77,7 @@ class InventoryDatabaseTest {
 
         var item = TestUtils.getInventoryItem(1, bag2.bagId)
         inventoryItemDao.insert(item)
-        item = inventoryItemDao.findItemsByName("Blazer")[0]
+        item = inventoryItemDao.findItemsByName("Item 1 inside bag 2")[0]
         assertNotNull(item)
 
         val itemsInBag2 =
