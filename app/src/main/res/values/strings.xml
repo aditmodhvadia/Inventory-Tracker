@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">My Inventory Tracker</string>
+    <string name="app_name">Track Items</string>
     <string name="item_name">Item Name</string>
     <string name="add">Add</string>
     <string name="bag_name">Bag Name</string>
