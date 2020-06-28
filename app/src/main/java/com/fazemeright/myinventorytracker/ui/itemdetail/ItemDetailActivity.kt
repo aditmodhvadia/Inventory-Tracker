@@ -1,7 +1,6 @@
 package com.fazemeright.myinventorytracker.ui.itemdetail
 
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -15,6 +14,7 @@ import com.fazemeright.myinventorytracker.R
 import com.fazemeright.myinventorytracker.database.inventoryitem.ItemWithBag
 import com.fazemeright.myinventorytracker.databinding.ActivityItemDetailBinding
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -42,7 +42,7 @@ class ItemDetailActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
         }
 
         viewModel.item.observe(this, Observer { item ->
-            Log.d("DebugData", "Detail Item: $item")
+            Timber.d("Detail Item: $item")
             item?.let {
                 // Create an ArrayAdapter using a simple spinner layout and languages array
                 val aa =

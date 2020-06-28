@@ -1,6 +1,5 @@
 package com.fazemeright.myinventorytracker.ui.itemlist
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -9,8 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.fazemeright.myinventorytracker.database.bag.BagItem
 import com.fazemeright.myinventorytracker.database.inventoryitem.ItemWithBag
 import com.fazemeright.myinventorytracker.databinding.ListInventoryItemBinding
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
+import timber.log.Timber
 
 class ItemListAdapter(private val clickListener: ItemListener) :
     ListAdapter<ItemWithBag,
@@ -18,14 +16,14 @@ class ItemListAdapter(private val clickListener: ItemListener) :
 
     private lateinit var bagsList: List<BagItem>
 
-    private val adapterScope = CoroutineScope(Dispatchers.Default)
+//    private val adapterScope = CoroutineScope(Dispatchers.Default)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder.from(parent)
     }
 
     fun updateList(list: List<ItemWithBag>?) {
-        Log.d("##DebugData", list.toString())
+        Timber.d(list.toString())
         submitList(list)
     }
 

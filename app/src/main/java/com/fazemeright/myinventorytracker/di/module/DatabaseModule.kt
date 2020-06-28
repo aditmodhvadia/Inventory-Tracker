@@ -1,7 +1,6 @@
 package com.fazemeright.myinventorytracker.di.module
 
 import android.content.Context
-import android.util.Log
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
@@ -17,6 +16,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Singleton
 
 @Module
@@ -61,7 +61,7 @@ object DatabaseModule {
                             .insertAll(
                                 items
                             )
-                        Log.d("InventoryDatabase", "Sample Bag data inserted")
+                        Timber.d("Sample Bag data inserted")
                     }
                 }
             })

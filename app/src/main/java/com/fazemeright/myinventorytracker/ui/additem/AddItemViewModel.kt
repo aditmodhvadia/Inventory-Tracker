@@ -1,6 +1,5 @@
 package com.fazemeright.myinventorytracker.ui.additem
 
-import android.util.Log
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -11,6 +10,7 @@ import com.fazemeright.myinventorytracker.database.inventoryitem.InventoryItemDa
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import timber.log.Timber
 
 /**
  * ViewModel for SleepTrackerFragment.
@@ -45,13 +45,13 @@ class AddItemViewModel @ViewModelInject constructor(
         itemQuantity: String
     ) {
         viewModelScope.launch {
-            Log.d("##DebugData", itemName)
+            Timber.d(itemName)
             newInventoryItem.itemName = itemName
             newInventoryItem.itemDesc = itemDesc
             newInventoryItem.itemQuantity = itemQuantity.toInt()
             newInventoryItem.bagOwnerId = getBagId(bagName)
 
-            Log.d("##DebugData", newInventoryItem.toString())
+            Timber.d(newInventoryItem.toString())
             insert(newInventoryItem)
             navigateBackToItemList()
         }
@@ -70,7 +70,7 @@ class AddItemViewModel @ViewModelInject constructor(
     }
 
     private fun navigateBackToItemList() {
-        Log.d("AddItemViewModel", "Clicked Fab")
+        Timber.i("Clicked Fab")
         navigateBackToItemList.value = true
     }
 
