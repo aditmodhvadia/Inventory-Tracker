@@ -2,7 +2,6 @@ package com.fazemeright.myinventorytracker.database.inventoryitem
 
 import androidx.room.*
 import com.fazemeright.myinventorytracker.database.bag.BagItem
-import java.io.Serializable
 
 @Entity(
     tableName = "my_inventory_table", foreignKeys = [ForeignKey(
@@ -24,7 +23,7 @@ data class InventoryItem(
 
     @ColumnInfo(name = "bagOwnerId")
     var bagOwnerId: Int = 0
-) : Serializable
+)
 
 @Entity
 data class ItemWithBag(
@@ -34,7 +33,7 @@ data class ItemWithBag(
         entityColumn = "bagId"
     )
     var bag: BagItem
-) : Serializable
+)
 
 //@Fts4(contentEntity = InventoryItem::class)
 //@Entity(tableName = "inventoryItemFts")
