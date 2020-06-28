@@ -19,14 +19,10 @@ object ApplicationModule {
         ItemWithBag(item = inventoryItem, bag = bagItem)
 
     @Provides
-    @Singleton
     fun provideInventoryItem(): InventoryItem =
         InventoryItem()
 
     @Provides
-    @Singleton
     fun provideBagItem(): BagItem =
         BagItem()
-
-
 }

@@ -20,6 +20,7 @@ class AddItemViewModel @ViewModelInject constructor(
     private val inventoryItemDao: InventoryItemDao
 ) : ViewModel() {
 
+    private val newInventoryItem by lazy { InventoryItem() }
     val bags = bagItemDao.getAllBags()
 
     val bagNames = bagItemDao.getAllBagNames()
@@ -45,16 +46,13 @@ class AddItemViewModel @ViewModelInject constructor(
     ) {
         viewModelScope.launch {
             Log.d("##DebugData", itemName)
-            val newItem =
-                InventoryItem(
-                    0,
-                    itemName,
-                    itemDesc,
-                    itemQuantity.toInt(),
-                    getBagId(bagName)
-                )
-            Log.d("##DebugData", newItem.toString())
-            insert(newItem)
+            newInventoryItem.itemName = itemName
+            newInventoryItem.itemDesc = itemDesc
+            newInventoryItem.itemQuantity = itemQuantity.toInt()
+            newInventoryItem.bagOwnerId = getBagId(bagName)
+
+            Log.d("##DebugData", newInventoryItem.toString())
+            insert(newInventoryItem)
             navigateBackToItemList()
         }
     }
@@ -65,9 +63,9 @@ class AddItemViewModel @ViewModelInject constructor(
         }
     }
 
-    private suspend fun insert(night: InventoryItem) {
+    private suspend fun insert(newItem: InventoryItem) {
         withContext(Dispatchers.IO) {
-            inventoryItemDao.insert(night)
+            inventoryItemDao.insert(newItem)
         }
     }
 
