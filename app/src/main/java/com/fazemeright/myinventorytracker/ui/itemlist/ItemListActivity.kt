@@ -2,7 +2,6 @@ package com.fazemeright.myinventorytracker.ui.itemlist
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.viewModels
@@ -20,6 +19,7 @@ import com.fazemeright.myinventorytracker.ui.additem.AddItemActivity
 import com.fazemeright.myinventorytracker.ui.itemdetail.ItemDetailActivity
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -63,7 +63,7 @@ class ItemListActivity : AppCompatActivity() {
             it?.let {
                 adapter.updateList(it)
             }
-            Log.i("ItemListActivity", "onCreate: $it")
+            Timber.i("received in onCreate: $it")
         })
 
         viewModel.deletedItem.observe(this, Observer { deletedItem ->

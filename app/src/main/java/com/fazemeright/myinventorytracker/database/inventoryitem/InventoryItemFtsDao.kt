@@ -1,7 +1,6 @@
 package com.fazemeright.myinventorytracker.database.inventoryitem
 
 import androidx.room.Dao
-import androidx.room.Query
 
 @Dao
 interface InventoryItemFtsDao {

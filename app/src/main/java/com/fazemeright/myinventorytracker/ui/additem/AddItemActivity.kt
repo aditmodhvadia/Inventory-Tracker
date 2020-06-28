@@ -1,7 +1,6 @@
 package com.fazemeright.myinventorytracker.ui.additem
 
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -15,6 +14,7 @@ import com.fazemeright.myinventorytracker.R
 import com.fazemeright.myinventorytracker.databinding.ActivityAddItemBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_add_item.*
+import timber.log.Timber
 
 @AndroidEntryPoint
 class AddItemActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
@@ -40,7 +40,7 @@ class AddItemActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener 
         }
 
         viewModel.bagNames.observe(this, Observer { bagNames ->
-            Log.d("##DebugData", bagNames.size.toString())
+            Timber.d(bagNames.size.toString())
 
             // Create an ArrayAdapter using a simple spinner layout and languages array
             val aa = ArrayAdapter(this, android.R.layout.simple_spinner_item, bagNames)

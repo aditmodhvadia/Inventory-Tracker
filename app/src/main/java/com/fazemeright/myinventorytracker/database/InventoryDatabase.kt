@@ -9,10 +9,6 @@ import com.fazemeright.myinventorytracker.database.inventoryitem.InventoryItemDa
 
 /**
  * A database that stores InventoryItem information.
- * And a global method to get access to the database.
- *
- * This pattern is pretty much the same for any database,
- * so you can reuse it.
  */
 @Database(
     entities = [InventoryItem::class, BagItem::class/*, InventoryItemFts::class*/],

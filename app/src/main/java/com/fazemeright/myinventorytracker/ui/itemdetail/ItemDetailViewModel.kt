@@ -1,6 +1,5 @@
 package com.fazemeright.myinventorytracker.ui.itemdetail
 
-import android.util.Log
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -11,6 +10,7 @@ import com.fazemeright.myinventorytracker.database.inventoryitem.ItemWithBag
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import timber.log.Timber
 
 class ItemDetailViewModel @ViewModelInject constructor(
     private val inventoryItemDao: InventoryItemDao,
@@ -42,7 +42,7 @@ class ItemDetailViewModel @ViewModelInject constructor(
     }
 
     private fun navigateBackToItemList() {
-        Log.d("AddItemViewModel", "Clicked Fab")
+        Timber.i("Clicked Fab")
         navigateBackToItemList.value = true
     }
 
