@@ -18,9 +18,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/spacing_normal"
-            android:background="@drawable/curved_edges"
             android:onClick="@{() -> clickListener.onClick(item)}"
-            app:cardBackgroundColor="@{item.bag.bagColor}">
+            app:cardBackgroundColor="@{item.bag.bagColor}"
+            app:cardCornerRadius="@dimen/card_view_corner_radius_medium">
 
         <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
