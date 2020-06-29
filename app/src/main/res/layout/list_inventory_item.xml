@@ -18,14 +18,23 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/spacing_normal"
-            android:background="@drawable/curved_edges"
             android:onClick="@{() -> clickListener.onClick(item)}"
-            app:cardBackgroundColor="@{item.bag.bagColor}">
+            app:cardCornerRadius="@dimen/card_view_corner_radius_medium">
 
         <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                tools:background="@android:color/black">
+                tools:background="@android:color/white">
+
+            <View
+                    android:id="@+id/bagColorLabel"
+                    android:layout_width="8dp"
+                    android:layout_height="0dp"
+                    android:background="@{item.bag.bagColor}"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:background="@android:color/black" />
 
             <TextView
                     android:id="@+id/tvItemName"
@@ -34,12 +43,11 @@
                     android:layout_marginStart="@dimen/spacing_small"
                     android:layout_marginTop="@dimen/spacing_normal"
                     android:text="@{item.item.itemName}"
-                    android:textColor="@android:color/white"
                     app:layout_constraintEnd_toStartOf="@+id/tvBagName"
                     app:layout_constraintHorizontal_chainStyle="spread_inside"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/bagColorLabel"
                     app:layout_constraintTop_toTopOf="parent"
-                    tools:text="Item Name" />
+                    tools:text="@string/item_name" />
 
             <TextView
                     android:id="@+id/tvBagName"
@@ -47,12 +55,11 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/spacing_small"
                     android:layout_marginTop="@dimen/spacing_normal"
-                    android:textColor="@android:color/white"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/tvItemName"
                     app:layout_constraintTop_toTopOf="parent"
                     app:setBagName="@{item.bag.bagName}"
-                    tools:text="Bag Name" />
+                    tools:text="@string/bag_name" />
 
             <TextView
                     android:id="@+id/tvItemQuantity"
@@ -61,11 +68,10 @@
                     android:layout_marginTop="@dimen/spacing_normal"
                     android:layout_marginBottom="@dimen/spacing_normal"
                     android:text="@{String.valueOf(item.item.itemQuantity)}"
-                    android:textColor="@android:color/white"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/tvItemName"
                     app:layout_constraintTop_toBottomOf="@+id/tvItemName"
-                    tools:text="Item Quantity" />
+                    tools:text="@string/item_quantity" />
 
             <ImageView
                     android:layout_width="wrap_content"

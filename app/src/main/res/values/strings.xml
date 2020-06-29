@@ -13,8 +13,9 @@
     <string name="choose_color">Choose Color</string>
     <string name="bag_description">Bag Description</string>
     <string name="add_item">Add Item</string>
-    <string name="delete_icon_content_desc">Delete Icon</string>
+    <string name="delete_icon_content_desc">Delete item</string>
     <string name="add_item_title">Add Item</string>
     <string name="action_update">Update</string>
     <string name="item">Item</string>
+    <string name="action_add_new_item">Add new item</string>
 </resources>
