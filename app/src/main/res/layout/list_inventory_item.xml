@@ -47,7 +47,7 @@
                     app:layout_constraintHorizontal_chainStyle="spread_inside"
                     app:layout_constraintStart_toEndOf="@+id/bagColorLabel"
                     app:layout_constraintTop_toTopOf="parent"
-                    tools:text="Item Name" />
+                    tools:text="@string/item_name" />
 
             <TextView
                     android:id="@+id/tvBagName"
@@ -59,7 +59,7 @@
                     app:layout_constraintStart_toEndOf="@+id/tvItemName"
                     app:layout_constraintTop_toTopOf="parent"
                     app:setBagName="@{item.bag.bagName}"
-                    tools:text="Bag Name" />
+                    tools:text="@string/bag_name" />
 
             <TextView
                     android:id="@+id/tvItemQuantity"
@@ -71,7 +71,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/tvItemName"
                     app:layout_constraintTop_toBottomOf="@+id/tvItemName"
-                    tools:text="Item Quantity" />
+                    tools:text="@string/item_quantity" />
 
             <ImageView
                     android:layout_width="wrap_content"
