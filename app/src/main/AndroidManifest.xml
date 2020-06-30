@@ -12,16 +12,19 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name="com.fazemeright.myinventorytracker.ui.itemlist.ItemListActivity">
+        <activity
+                android:name=".ui.settings.SettingsActivity"
+                android:label="@string/title_activity_settings" />
+        <activity android:name=".ui.itemlist.ItemListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.fazemeright.myinventorytracker.ui.itemdetail.ItemDetailActivity" />
-        <activity android:name="com.fazemeright.myinventorytracker.ui.additem.AddItemActivity" />
-        <activity android:name="com.fazemeright.myinventorytracker.ui.addbag.AddBagActivity" />
+        <activity android:name=".ui.itemdetail.ItemDetailActivity" />
+        <activity android:name=".ui.additem.AddItemActivity" />
+        <activity android:name=".ui.addbag.AddBagActivity" />
     </application>
 
 </manifest>
