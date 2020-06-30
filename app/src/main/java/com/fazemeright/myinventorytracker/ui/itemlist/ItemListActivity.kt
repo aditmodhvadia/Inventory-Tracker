@@ -17,6 +17,7 @@ import com.fazemeright.myinventorytracker.databinding.ActivityItemListBinding
 import com.fazemeright.myinventorytracker.ui.addbag.AddBagActivity
 import com.fazemeright.myinventorytracker.ui.additem.AddItemActivity
 import com.fazemeright.myinventorytracker.ui.itemdetail.ItemDetailActivity
+import com.fazemeright.myinventorytracker.ui.settings.SettingsActivity
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
@@ -155,6 +156,7 @@ class ItemListActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_add_bag -> startActivity(Intent(this, AddBagActivity::class.java))
+            R.id.action_settings -> startActivity(Intent(this, SettingsActivity::class.java))
         }
         return true
     }
