@@ -6,6 +6,7 @@ import com.fazemeright.myinventorytracker.database.bag.BagItem
 import com.fazemeright.myinventorytracker.database.bag.BagItemDao
 import com.fazemeright.myinventorytracker.database.inventoryitem.InventoryItem
 import com.fazemeright.myinventorytracker.database.inventoryitem.InventoryItemDao
+import javax.inject.Singleton
 
 /**
  * A database that stores InventoryItem information.
@@ -15,6 +16,7 @@ import com.fazemeright.myinventorytracker.database.inventoryitem.InventoryItemDa
     version = 6,
     exportSchema = false
 )
+@Singleton
 abstract class InventoryDatabase :
     RoomDatabase() {
 

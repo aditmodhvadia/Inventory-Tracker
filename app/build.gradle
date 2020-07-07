@@ -128,6 +128,14 @@ dependencies {
     // Espresso dependencies
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
+//    Networking
+    implementation "com.squareup.retrofit2:retrofit:2.9.0"
+    implementation "com.squareup.retrofit2:converter-moshi:2.9.0"
+
+    implementation "com.squareup.moshi:moshi:1.8.0"
+    implementation "com.squareup.moshi:moshi-kotlin:1.8.0"
+
+
     //  FireBase
     implementation 'com.google.firebase:firebase-analytics:17.4.3'      // Analytics
     implementation 'com.google.firebase:firebase-auth:19.3.1'           //  Auth
