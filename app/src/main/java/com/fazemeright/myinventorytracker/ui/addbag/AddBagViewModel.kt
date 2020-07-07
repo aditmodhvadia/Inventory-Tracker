@@ -16,12 +16,14 @@
 
 package com.fazemeright.myinventorytracker.ui.addbag
 
+import android.content.Context
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.fazemeright.myinventorytracker.database.bag.BagItem
 import com.fazemeright.myinventorytracker.database.bag.BagItemDao
+import com.fazemeright.myinventorytracker.ui.base.BaseViewModel
+import dagger.hilt.android.qualifiers.ActivityContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -31,8 +33,9 @@ import timber.log.Timber
  * ViewModel for SleepTrackerFragment.
  */
 class AddBagViewModel @ViewModelInject constructor(
-    private val bagItemDao: BagItemDao
-) : ViewModel() {
+    private val bagItemDao: BagItemDao,
+    @ActivityContext context: Context
+) : BaseViewModel(context) {
 
     val navigateBackToItemList = MutableLiveData<Boolean>()
 

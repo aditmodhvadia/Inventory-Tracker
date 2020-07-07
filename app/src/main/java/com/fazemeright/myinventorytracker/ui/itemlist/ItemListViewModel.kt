@@ -1,11 +1,17 @@
 package com.fazemeright.myinventorytracker.ui.itemlist
 
+import android.content.Context
 import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.*
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.liveData
+import androidx.lifecycle.switchMap
+import androidx.lifecycle.viewModelScope
 import com.fazemeright.myinventorytracker.database.bag.BagItemDao
 import com.fazemeright.myinventorytracker.database.inventoryitem.InventoryItem
 import com.fazemeright.myinventorytracker.database.inventoryitem.InventoryItemDao
 import com.fazemeright.myinventorytracker.database.inventoryitem.ItemWithBag
+import com.fazemeright.myinventorytracker.ui.base.BaseViewModel
+import dagger.hilt.android.qualifiers.ActivityContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
@@ -16,8 +22,9 @@ import kotlinx.coroutines.withContext
  */
 class ItemListViewModel @ViewModelInject constructor(
     bagItemDao: BagItemDao,
-    private val inventoryItemDao: InventoryItemDao
-) : ViewModel() {
+    private val inventoryItemDao: InventoryItemDao,
+    @ActivityContext context: Context
+) : BaseViewModel(context) {
 
     private val _searchString = MutableLiveData<String>()
 

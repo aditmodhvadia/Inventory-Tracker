@@ -3,18 +3,18 @@ package com.fazemeright.myinventorytracker.ui.settings
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.MenuItem
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate.*
 import androidx.preference.PreferenceFragmentCompat
 import com.fazemeright.myinventorytracker.R
+import com.fazemeright.myinventorytracker.databinding.SettingsActivityBinding
+import com.fazemeright.myinventorytracker.ui.base.BaseActivity
 import timber.log.Timber
 
-class SettingsActivity : AppCompatActivity() {
+class SettingsActivity : BaseActivity<SettingsActivityBinding>() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.settings_activity)
         supportFragmentManager
             .beginTransaction()
             .replace(R.id.settings, SettingsFragment())
@@ -68,4 +68,6 @@ class SettingsActivity : AppCompatActivity() {
         }
         return true
     }
+
+    override fun getLayoutId(): Int = R.layout.settings_activity
 }
