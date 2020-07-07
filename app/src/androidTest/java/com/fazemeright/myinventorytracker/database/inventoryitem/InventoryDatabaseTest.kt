@@ -10,6 +10,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.fazemeright.myinventorytracker.database.InventoryDatabase
 import com.fazemeright.myinventorytracker.database.bag.BagItemDao
 import com.fazemeright.myinventorytracker.utils.TestUtils
+import dagger.hilt.android.testing.HiltAndroidTest
 import junit.framework.Assert.*
 import junit.framework.AssertionFailedError
 import kotlinx.coroutines.runBlocking
@@ -23,6 +24,7 @@ import java.util.concurrent.TimeUnit
 import java.util.concurrent.TimeoutException
 
 @RunWith(AndroidJUnit4::class)
+//@HiltAndroidTest
 class InventoryDatabaseTest {
     private lateinit var db: InventoryDatabase
     private lateinit var inventoryItemDao: InventoryItemDao
