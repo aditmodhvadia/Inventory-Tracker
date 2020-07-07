@@ -1,24 +1,24 @@
 package com.fazemeright.myinventorytracker.ui.additem
 
+import android.content.Context
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.fazemeright.myinventorytracker.database.bag.BagItemDao
 import com.fazemeright.myinventorytracker.database.inventoryitem.InventoryItem
 import com.fazemeright.myinventorytracker.database.inventoryitem.InventoryItemDao
+import com.fazemeright.myinventorytracker.ui.base.BaseViewModel
+import dagger.hilt.android.qualifiers.ActivityContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import timber.log.Timber
 
-/**
- * ViewModel for SleepTrackerFragment.
- */
 class AddItemViewModel @ViewModelInject constructor(
     private val bagItemDao: BagItemDao,
-    private val inventoryItemDao: InventoryItemDao
-) : ViewModel() {
+    private val inventoryItemDao: InventoryItemDao,
+    @ActivityContext private val context: Context
+) : BaseViewModel(context) {
 
     private val newInventoryItem by lazy { InventoryItem() }
     val bags = bagItemDao.getAllBags()

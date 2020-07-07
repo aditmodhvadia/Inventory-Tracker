@@ -7,18 +7,18 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import com.fazemeright.myinventorytracker.R
 import com.fazemeright.myinventorytracker.database.inventoryitem.ItemWithBag
 import com.fazemeright.myinventorytracker.databinding.ActivityItemDetailBinding
+import com.fazemeright.myinventorytracker.ui.base.BaseActivity
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class ItemDetailActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
+class ItemDetailActivity : BaseActivity<ActivityItemDetailBinding>(),
+    AdapterView.OnItemSelectedListener {
 
     val viewModel: ItemDetailViewModel by viewModels()
 
@@ -28,12 +28,7 @@ class ItemDetailActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val binding: ActivityItemDetailBinding =
-            DataBindingUtil.setContentView(this, R.layout.activity_item_detail)
-
         binding.viewModel = viewModel
-
-        binding.lifecycleOwner = this
 
         supportActionBar?.apply {
             setHomeButtonEnabled(true)
@@ -101,4 +96,6 @@ class ItemDetailActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
 //        selectedBagName = viewModel.bagNames.value?.get(position)
 //        viewModel.updateBagDesc(selectedBagName)
     }
+
+    override fun getLayoutId(): Int = R.layout.activity_item_detail
 }
