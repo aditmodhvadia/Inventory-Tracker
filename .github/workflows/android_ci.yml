@@ -27,8 +27,12 @@ jobs:
         with:
           java-version: ${{ matrix.java-version }}
 
-      - name: Test
+      - name: Make gradlew executable
+        run: chmod +x ./gradlew
+      - name: Build with Gradle
         run: sudo ./gradlew build
+#       - name: Test
+#         run: sudo ./gradlew build
 
   android:
     runs-on: macos-latest
