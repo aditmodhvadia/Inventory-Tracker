@@ -28,7 +28,7 @@ jobs:
           java-version: ${{ matrix.java-version }}
 
       - name: Test
-        run: ./gradlew build
+        run: sudo ./gradlew build
 
   android:
     runs-on: macos-latest
