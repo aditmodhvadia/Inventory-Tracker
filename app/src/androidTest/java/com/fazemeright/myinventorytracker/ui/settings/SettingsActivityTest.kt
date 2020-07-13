@@ -4,10 +4,12 @@ import androidx.test.core.app.ActivityScenario
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.intent.Intents
-import androidx.test.espresso.matcher.ViewMatchers.*
+import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
+import androidx.test.espresso.matcher.ViewMatchers.withContentDescription
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.fazemeright.myinventorytracker.R
 import com.fazemeright.myinventorytracker.isViewDisplayed
+import com.fazemeright.myinventorytracker.isViewWithTextDisplayed
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
@@ -33,10 +35,10 @@ class SettingsActivityTest {
         R.id.tvMadeWith.isViewDisplayed()
         R.id.settings.isViewDisplayed()
 
-        onView(withText(R.string.display)).check(matches(isDisplayed()))
-        onView(withText(R.string.theme)).check(matches(isDisplayed()))
-        onView(withText(R.string.sync_header)).check(matches(isDisplayed()))
-        onView(withText(R.string.sync_title)).check(matches(isDisplayed()))
+        R.string.display.isViewWithTextDisplayed()
+        R.string.theme.isViewWithTextDisplayed()
+        R.string.sync_header.isViewWithTextDisplayed()
+        R.string.sync_title.isViewWithTextDisplayed()
 
         onView(withContentDescription("Navigate up"))
             .check(matches(isDisplayed()))

@@ -9,6 +9,7 @@ import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.fazemeright.myinventorytracker.R
 import com.fazemeright.myinventorytracker.isViewDisplayed
+import com.fazemeright.myinventorytracker.isViewWithTextDisplayed
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
@@ -31,7 +32,7 @@ class AddBagActivityTest {
 
     @Test
     fun allViewsAreDisplayed() {
-        onView(withText(R.string.add_bag_title)).check(matches(isDisplayed()))
+        R.string.add_bag_title.isViewWithTextDisplayed()
         R.id.edtBagName.isViewDisplayed()
         R.id.btnChooseColor.isViewDisplayed()
         R.id.viewBagColorDisplay.isViewDisplayed()

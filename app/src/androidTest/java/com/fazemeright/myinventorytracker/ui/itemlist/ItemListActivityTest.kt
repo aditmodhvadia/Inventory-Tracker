@@ -11,6 +11,7 @@ import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.fazemeright.myinventorytracker.R
 import com.fazemeright.myinventorytracker.isViewDisplayed
+import com.fazemeright.myinventorytracker.isViewWithTextDisplayed
 import com.fazemeright.myinventorytracker.ui.addbag.AddBagActivity
 import com.fazemeright.myinventorytracker.ui.additem.AddItemActivity
 import org.junit.After
@@ -38,14 +39,14 @@ class ItemListActivityTest {
         R.id.fabAddItem.isViewDisplayed()
         R.id.item_list.isViewDisplayed()
         R.id.action_search.isViewDisplayed()
-        onView(withText(R.string.app_name)).check(matches(isDisplayed()))
 
+        R.string.app_name.isViewWithTextDisplayed()
 
         onView(withContentDescription("More options")).check(matches(isDisplayed()))
             .perform(click())
 
-        onView(withText(R.string.add_bag)).check(matches(isDisplayed()))
-        onView(withText(R.string.settings)).check(matches(isDisplayed()))
+        R.string.add_bag.isViewWithTextDisplayed()
+        R.string.settings.isViewWithTextDisplayed()
     }
 
     @Test
