@@ -5,9 +5,9 @@ import com.fazemeright.myinventorytracker.firebase.api.FireBaseApiManager
 import com.fazemeright.myinventorytracker.firebase.models.Failure
 import com.fazemeright.myinventorytracker.firebase.models.Success
 import com.google.firebase.auth.FirebaseUser
+import junit.framework.TestCase.assertFalse
+import junit.framework.TestCase.assertTrue
 import kotlinx.coroutines.runBlocking
-import org.junit.Assert.assertFalse
-import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.junit.runner.RunWith
 

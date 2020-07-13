@@ -1,7 +1,9 @@
 package com.fazemeright.myinventorytracker.database.inventoryitem
 
+import android.os.Parcelable
 import androidx.room.*
 import com.fazemeright.myinventorytracker.database.bag.BagItem
+import kotlinx.android.parcel.Parcelize
 
 @Entity(
     tableName = "my_inventory_table", foreignKeys = [ForeignKey(
@@ -10,6 +12,7 @@ import com.fazemeright.myinventorytracker.database.bag.BagItem
         parentColumns = ["bagId"]
     )]
 )
+@Parcelize
 data class InventoryItem(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "itemId")
@@ -23,8 +26,9 @@ data class InventoryItem(
 
     @ColumnInfo(name = "bagOwnerId")
     var bagOwnerId: Int = 0
-)
+) : Parcelable
 
+@Parcelize
 @Entity
 data class ItemWithBag(
     @Embedded var item: InventoryItem,
@@ -33,7 +37,7 @@ data class ItemWithBag(
         entityColumn = "bagId"
     )
     var bag: BagItem
-)
+) : Parcelable
 
 //@Fts4(contentEntity = InventoryItem::class)
 //@Entity(tableName = "inventoryItemFts")

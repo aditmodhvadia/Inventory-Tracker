@@ -7,17 +7,16 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import com.fazemeright.myinventorytracker.R
 import com.fazemeright.myinventorytracker.databinding.ActivityAddItemBinding
+import com.fazemeright.myinventorytracker.ui.base.BaseActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_add_item.*
 import timber.log.Timber
 
 @AndroidEntryPoint
-class AddItemActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
+class AddItemActivity : BaseActivity<ActivityAddItemBinding>(), AdapterView.OnItemSelectedListener {
 
     private var selectedBagName: String? = null
 
@@ -26,12 +25,7 @@ class AddItemActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val binding: ActivityAddItemBinding =
-            DataBindingUtil.setContentView(this, R.layout.activity_add_item)
-
         binding.viewModel = viewModel
-
-        binding.lifecycleOwner = this
 
         supportActionBar?.apply {
             setHomeButtonEnabled(true)
@@ -93,4 +87,6 @@ class AddItemActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener 
         selectedBagName = viewModel.bagNames.value?.get(position)
 //        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
+
+    override fun getLayoutId(): Int = R.layout.activity_add_item
 }

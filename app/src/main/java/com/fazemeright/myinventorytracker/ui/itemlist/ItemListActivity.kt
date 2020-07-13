@@ -6,9 +6,7 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
-import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fazemeright.myinventorytracker.R
@@ -16,6 +14,7 @@ import com.fazemeright.myinventorytracker.database.inventoryitem.ItemWithBag
 import com.fazemeright.myinventorytracker.databinding.ActivityItemListBinding
 import com.fazemeright.myinventorytracker.ui.addbag.AddBagActivity
 import com.fazemeright.myinventorytracker.ui.additem.AddItemActivity
+import com.fazemeright.myinventorytracker.ui.base.BaseActivity
 import com.fazemeright.myinventorytracker.ui.itemdetail.ItemDetailActivity
 import com.fazemeright.myinventorytracker.ui.settings.SettingsActivity
 import com.google.android.material.snackbar.Snackbar
@@ -24,7 +23,7 @@ import timber.log.Timber
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class ItemListActivity : AppCompatActivity() {
+class ItemListActivity : BaseActivity<ActivityItemListBinding>() {
 
     private lateinit var searchView: SearchView
 
@@ -36,12 +35,7 @@ class ItemListActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val binding: ActivityItemListBinding =
-            DataBindingUtil.setContentView(this, R.layout.activity_item_list)
-
         binding.viewModel = viewModel
-
-        binding.lifecycleOwner = this
 
         val manager = LinearLayoutManager(this)
 
@@ -160,4 +154,6 @@ class ItemListActivity : AppCompatActivity() {
         }
         return true
     }
+
+    override fun getLayoutId(): Int = R.layout.activity_item_list
 }

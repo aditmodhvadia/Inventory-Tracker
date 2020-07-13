@@ -5,27 +5,24 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import com.fazemeright.myinventorytracker.R
 import com.fazemeright.myinventorytracker.databinding.ActivityAddBagBinding
+import com.fazemeright.myinventorytracker.ui.base.BaseActivity
 import com.jaredrummler.android.colorpicker.ColorPickerDialog
 import com.jaredrummler.android.colorpicker.ColorPickerDialogListener
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class AddBagActivity : AppCompatActivity(), ColorPickerDialogListener {
+class AddBagActivity : BaseActivity<ActivityAddBagBinding>(), ColorPickerDialogListener {
 
     private var bagColor: Int = 0
     private val dialogId: Int = 1001
-    lateinit var binding: ActivityAddBagBinding
-    val viewModel: AddBagViewModel by viewModels()
+
+    private val viewModel: AddBagViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_add_bag)
 
         binding.viewModel = viewModel
 
@@ -34,7 +31,7 @@ class AddBagActivity : AppCompatActivity(), ColorPickerDialogListener {
         supportActionBar?.apply {
             setHomeButtonEnabled(true)
             setDisplayHomeAsUpEnabled(true)
-            title = "Add Bag"
+            title = getString(R.string.add_bag_title)
         }
 
         binding.btnChooseColor.setOnClickListener {
@@ -81,4 +78,6 @@ class AddBagActivity : AppCompatActivity(), ColorPickerDialogListener {
         }
         return true
     }
+
+    override fun getLayoutId(): Int = R.layout.activity_add_bag
 }

@@ -24,10 +24,6 @@
     <string name="messages_header">Messages</string>
     <string name="sync_header">Sync</string>
 
-    <!-- Messages Preferences -->
-    <string name="signature_title">Your signature</string>
-    <string name="reply_title">Default reply action</string>
-
     <!-- Sync Preferences -->
     <string name="sync_title">Sync items periodically with cloud</string>
     <string name="attachment_title">Download incoming attachments</string>
@@ -51,4 +47,6 @@
     <string name="password_hint">Password</string>
     <string name="email_address_hint">Email Address</string>
     <string name="login_button_text">Login</string>
+    <string name="add_bag_title">Add Bag</string>
+    <string name="item_detail_title">Item</string>
 </resources>
