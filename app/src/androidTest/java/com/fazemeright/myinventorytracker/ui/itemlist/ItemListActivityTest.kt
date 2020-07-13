@@ -1,41 +1,26 @@
 package com.fazemeright.myinventorytracker.ui.itemlist
 
-import androidx.test.core.app.ActivityScenario
+import androidx.appcompat.app.AppCompatActivity
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.*
 import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.intent.Intents.intended
 import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
 import androidx.test.espresso.matcher.ViewMatchers.*
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.fazemeright.myinventorytracker.R
 import com.fazemeright.myinventorytracker.isViewDisplayed
 import com.fazemeright.myinventorytracker.isViewWithTextDisplayed
 import com.fazemeright.myinventorytracker.ui.addbag.AddBagActivity
 import com.fazemeright.myinventorytracker.ui.additem.AddItemActivity
-import org.junit.After
-import org.junit.Before
+import com.fazemeright.myinventorytracker.ui.base.BaseUiTest
 import org.junit.Test
-import org.junit.runner.RunWith
 
-@RunWith(AndroidJUnit4::class)
-class ItemListActivityTest {
-
-    @Before
-    fun setUp() {
-        Intents.init()
-        ActivityScenario.launch(ItemListActivity::class.java)
-    }
-
-    @After
-    fun tearDown() {
-        Intents.release()
-    }
-
+class ItemListActivityTest : BaseUiTest() {
+    override fun getActivity(): Class<AppCompatActivity> =
+        ItemListActivity::class.java as Class<AppCompatActivity>
 
     @Test
-    fun allViewsAreDisplayed() {
+    override fun allViewsAreDisplayed() {
         R.id.fabAddItem.isViewDisplayed()
         R.id.item_list.isViewDisplayed()
         R.id.action_search.isViewDisplayed()
