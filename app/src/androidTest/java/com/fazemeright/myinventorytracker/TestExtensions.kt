@@ -9,3 +9,9 @@ internal fun Int.isViewDisplayed() {
     Espresso.onView(ViewMatchers.withId(this))
         .check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
 }
+
+
+internal fun Int.isViewWithTextDisplayed() {
+    Espresso.onView(ViewMatchers.withText(this))
+        .check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
+}
