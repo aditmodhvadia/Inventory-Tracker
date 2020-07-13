@@ -33,7 +33,7 @@ class ItemDetailActivity : BaseActivity<ActivityItemDetailBinding>(),
         supportActionBar?.apply {
             setHomeButtonEnabled(true)
             setDisplayHomeAsUpEnabled(true)
-            title = getString(R.string.item)
+            title = getString(R.string.item_detail_title)
         }
 
         viewModel.item.observe(this, Observer { item ->
