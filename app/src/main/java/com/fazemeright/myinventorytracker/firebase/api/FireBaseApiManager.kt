@@ -1,8 +1,6 @@
 package com.fazemeright.myinventorytracker.firebase.api
 
-import com.fazemeright.myinventorytracker.firebase.models.Failure
 import com.fazemeright.myinventorytracker.firebase.models.Result
-import com.fazemeright.myinventorytracker.firebase.models.Success
 import com.fazemeright.myinventorytracker.utils.Validator.isEmailValid
 import com.fazemeright.myinventorytracker.utils.Validator.isPasswordValid
 import com.google.firebase.auth.FirebaseUser
@@ -27,10 +25,10 @@ object FireBaseApiManager : FireBaseApiWrapper() {
         return withContext(Dispatchers.IO) {
             try {
                 val result = signIn(email, password).await()
-                if (result.user != null) Success(data = result.user!!) else Failure(msg = "Some error occurred")
+                if (result.user != null) Result.Success(data = result.user!!) else Result.Error(msg = "Some error occurred")
             } catch (e: Exception) {
                 Timber.e(e)
-                Failure(msg = "")
+                Result.Error(msg = "")
             }
         }
     }
@@ -46,19 +44,19 @@ object FireBaseApiManager : FireBaseApiWrapper() {
         return withContext(Dispatchers.IO) {
             try {
                 val result = register(email, password).await()
-                if (result.user != null) Success(data = result.user!!) else Failure(msg = "Some error occurred")
+                if (result.user != null) Result.Success(data = result.user!!) else Result.Error(msg = "Some error occurred")
             } catch (e: Exception) {
                 Timber.e(e)
-                Failure(msg = "")
+                Result.Error(msg = "")
             }
         }
     }
 
     fun isUserSignedIn(): Result<Boolean> {
         return if (userSignedIn()) {
-            Success(msg = "User is singed in", data = true)
+            Result.Success(msg = "User is singed in", data = true)
         } else {
-            Failure(msg = "User is not signed in")
+            Result.Error(msg = "User is not signed in")
         }
     }
 }
