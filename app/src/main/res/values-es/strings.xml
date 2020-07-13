@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">Pista Artículos</string>
+    <string name="item_name">Nombre del árticulo</string>
+    <string name="add">Añadir</string>
+    <string name="bag_name">Nombre del bolso</string>
+    <string name="item_quantity">cantidad de objetos</string>
+    <string name="desc">Descripción</string>
+    <string name="action_add">Agregar</string>
+    <string name="update">Actualizar</string>
+    <string name="search">Buscar</string>
+    <string name="search_here">Busca aquí</string>
+    <string name="add_bag">Agregar Bolsa</string>
+    <string name="choose_color">Elige color</string>
+    <string name="bag_description">Descripción del bolso</string>
+    <string name="add_item">Agregar ítem</string>
+    <string name="delete_icon_content_desc">Eliminar ítem</string>
+    <string name="add_item_title">Agregar ítem</string>
+    <string name="action_update">Actualizar</string>
+    <string name="item">Articulo</string>
+    <string name="action_add_new_item">Agregar ítem Nuevo</string>
+</resources>
