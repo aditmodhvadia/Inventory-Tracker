@@ -6,11 +6,11 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'com.google.gms.google-services'
 
 android {
-    compileSdkVersion 29
+    compileSdkVersion 30
     defaultConfig {
         applicationId "com.fazemeright.myinventorytracker"
         minSdkVersion 23
-        targetSdkVersion 29
+        targetSdkVersion 30
         versionCode 3
         versionName "2.0.0-alpha002"
 //        testInstrumentationRunner "com.fazemeright.myinventorytracker.CustomTestRunner"
