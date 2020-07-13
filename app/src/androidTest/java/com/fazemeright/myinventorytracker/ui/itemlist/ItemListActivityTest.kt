@@ -10,6 +10,7 @@ import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.fazemeright.myinventorytracker.R
+import com.fazemeright.myinventorytracker.isViewDisplayed
 import com.fazemeright.myinventorytracker.ui.addbag.AddBagActivity
 import com.fazemeright.myinventorytracker.ui.additem.AddItemActivity
 import org.junit.After
@@ -34,10 +35,11 @@ class ItemListActivityTest {
 
     @Test
     fun allViewsAreDisplayed() {
-        onView(withId(R.id.fabAddItem)).check(matches(isDisplayed()))
-        onView(withId(R.id.item_list)).check(matches(isDisplayed()))
+        R.id.fabAddItem.isViewDisplayed()
+        R.id.item_list.isViewDisplayed()
+        R.id.action_search.isViewDisplayed()
         onView(withText(R.string.app_name)).check(matches(isDisplayed()))
-        onView(withId(R.id.action_search)).check(matches(isDisplayed()))
+
 
         onView(withContentDescription("More options")).check(matches(isDisplayed()))
             .perform(click())

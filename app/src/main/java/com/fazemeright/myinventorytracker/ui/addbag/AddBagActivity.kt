@@ -31,7 +31,7 @@ class AddBagActivity : BaseActivity<ActivityAddBagBinding>(), ColorPickerDialogL
         supportActionBar?.apply {
             setHomeButtonEnabled(true)
             setDisplayHomeAsUpEnabled(true)
-            title = "Add Bag"
+            title = getString(R.string.add_bag_title)
         }
 
         binding.btnChooseColor.setOnClickListener {
