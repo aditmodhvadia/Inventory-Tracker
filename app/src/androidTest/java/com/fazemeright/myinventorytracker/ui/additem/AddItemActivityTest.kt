@@ -1,6 +1,5 @@
 package com.fazemeright.myinventorytracker.ui.additem
 
-import androidx.appcompat.app.AppCompatActivity
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
@@ -11,10 +10,9 @@ import com.fazemeright.myinventorytracker.isViewWithTextDisplayed
 import com.fazemeright.myinventorytracker.ui.base.BaseUiTest
 import org.junit.Test
 
-class AddItemActivityTest : BaseUiTest() {
+class AddItemActivityTest : BaseUiTest<AddItemActivity>() {
 
-    override fun getActivity(): Class<AppCompatActivity> =
-        AddItemActivity::class.java as Class<AppCompatActivity>
+    override fun getActivity(): Class<AddItemActivity> = AddItemActivity::class.java
 
     @Test
     override fun allViewsAreDisplayed() {

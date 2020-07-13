@@ -1,6 +1,5 @@
 package com.fazemeright.myinventorytracker.ui.itemlist
 
-import androidx.appcompat.app.AppCompatActivity
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.*
 import androidx.test.espresso.assertion.ViewAssertions.matches
@@ -15,9 +14,9 @@ import com.fazemeright.myinventorytracker.ui.additem.AddItemActivity
 import com.fazemeright.myinventorytracker.ui.base.BaseUiTest
 import org.junit.Test
 
-class ItemListActivityTest : BaseUiTest() {
-    override fun getActivity(): Class<AppCompatActivity> =
-        ItemListActivity::class.java as Class<AppCompatActivity>
+class ItemListActivityTest : BaseUiTest<ItemListActivity>() {
+
+    override fun getActivity(): Class<ItemListActivity> = ItemListActivity::class.java
 
     @Test
     override fun allViewsAreDisplayed() {

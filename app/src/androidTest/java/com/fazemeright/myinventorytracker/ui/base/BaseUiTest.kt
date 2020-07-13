@@ -10,14 +10,14 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
-abstract class BaseUiTest {
+abstract class BaseUiTest<A : AppCompatActivity> {
     @Before
     fun setUp() {
         Intents.init()
         ActivityScenario.launch(getActivity())
     }
 
-    abstract fun getActivity(): Class<AppCompatActivity>
+    abstract fun getActivity(): Class<A>
 
     @Test
     abstract fun allViewsAreDisplayed()

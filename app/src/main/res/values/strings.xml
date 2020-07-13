@@ -36,4 +36,5 @@
     <string name="made_with_from">Made with ❤ from 🏠</string>
     <string name="copyright">Copyright 2020 Adit Modhvadia</string>
     <string name="add_bag_title">Add Bag</string>
+    <string name="item_detail_title">Item</string>
 </resources>
