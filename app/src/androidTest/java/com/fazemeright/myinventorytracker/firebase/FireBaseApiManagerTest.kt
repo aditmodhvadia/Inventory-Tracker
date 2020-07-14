@@ -2,14 +2,12 @@ package com.fazemeright.myinventorytracker.firebase
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.fazemeright.myinventorytracker.firebase.api.FireBaseApiManager
-import com.fazemeright.myinventorytracker.firebase.models.Failure
-import com.fazemeright.myinventorytracker.firebase.models.Success
-import com.google.firebase.auth.FirebaseUser
 import junit.framework.TestCase.assertFalse
 import junit.framework.TestCase.assertTrue
 import kotlinx.coroutines.runBlocking
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.junit.runner.notification.Failure
 
 @RunWith(AndroidJUnit4::class)
 class FireBaseApiManagerTest {
@@ -22,17 +20,21 @@ class FireBaseApiManagerTest {
     fun userIsSignedIn() = runBlocking {
         val result =
             FireBaseApiManager.signInWithEmailPassword(VALID_EMAIL, VALID_PASSWORD)
-        assert(result is Success<FirebaseUser>) {
+        assert(result.isSuccessful) {
             "Could not sign in User"
         }
-        assertTrue("User is not signed in", (FireBaseApiManager.isUserSignedIn() as Success).data)
+        assertTrue(
+            "User is not signed in",
+            FireBaseApiManager.isUserSignedIn()
+        )
+        FireBaseApiManager.logout()
     }
 
     @Test
     fun userIsNotSignedIn() = runBlocking {
         assertFalse(
             "User is signed in without signing in first",
-            FireBaseApiManager.isUserSignedIn() is Failure
+            FireBaseApiManager.isUserSignedIn()
         )
         val result =
             FireBaseApiManager.signInWithEmailPassword(VALID_EMAIL, INVALID_PASSWORD)
