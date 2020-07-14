@@ -2,6 +2,7 @@ package com.fazemeright.myinventorytracker.data
 
 import com.fazemeright.myinventorytracker.database.bag.BagItem
 import com.fazemeright.myinventorytracker.database.bag.BagItemDao
+import com.fazemeright.myinventorytracker.database.inventoryitem.InventoryItem
 import com.fazemeright.myinventorytracker.database.inventoryitem.InventoryItemDao
 import com.fazemeright.myinventorytracker.firebase.api.FireBaseApiManager
 import com.fazemeright.myinventorytracker.firebase.models.Result
@@ -67,6 +68,27 @@ class InventoryRepository @Inject constructor(
         withContext(Dispatchers.IO) {
             Timber.d(newBag.toString())
             bagItemDao.insert(newBag)
+        }
+    }
+
+    fun getAllBags() = bagItemDao.getAllBags()
+    fun getAllBagNames() = bagItemDao.getAllBagNames()
+
+    suspend fun clearInventoryItems() {
+        withContext(Dispatchers.IO) {
+            inventoryItemDao.clear()
+        }
+    }
+
+    suspend fun getBagIdWithName(bagName: String): Int {
+        return withContext(Dispatchers.IO) {
+            bagItemDao.getBagIdWithName(bagName)
+        }
+    }
+
+    suspend fun insertNewInventoryItem(newItem: InventoryItem) {
+        withContext(Dispatchers.IO) {
+            inventoryItemDao.insert(newItem)
         }
     }
 }
