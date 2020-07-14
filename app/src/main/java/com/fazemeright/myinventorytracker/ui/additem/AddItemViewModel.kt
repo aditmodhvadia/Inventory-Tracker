@@ -4,26 +4,22 @@ import android.content.Context
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.fazemeright.myinventorytracker.database.bag.BagItemDao
+import com.fazemeright.myinventorytracker.data.InventoryRepository
 import com.fazemeright.myinventorytracker.database.inventoryitem.InventoryItem
-import com.fazemeright.myinventorytracker.database.inventoryitem.InventoryItemDao
 import com.fazemeright.myinventorytracker.ui.base.BaseViewModel
 import dagger.hilt.android.qualifiers.ActivityContext
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import timber.log.Timber
 
 class AddItemViewModel @ViewModelInject constructor(
-    private val bagItemDao: BagItemDao,
-    private val inventoryItemDao: InventoryItemDao,
+    private val repository: InventoryRepository,
     @ActivityContext private val context: Context
 ) : BaseViewModel(context) {
 
     private val newInventoryItem by lazy { InventoryItem() }
-    val bags = bagItemDao.getAllBags()
+    val bags = repository.getAllBags()
 
-    val bagNames = bagItemDao.getAllBagNames()
+    val bagNames = repository.getAllBagNames()
 
     val itemName: String = ""
     val bagName: String = "Black AT+"
@@ -33,9 +29,7 @@ class AddItemViewModel @ViewModelInject constructor(
     val navigateBackToItemList = MutableLiveData<Boolean>()
 
     private suspend fun clear() {
-        withContext(Dispatchers.IO) {
-            inventoryItemDao.clear()
-        }
+        repository.clearInventoryItems()
     }
 
     fun onAddClicked(
@@ -58,15 +52,11 @@ class AddItemViewModel @ViewModelInject constructor(
     }
 
     private suspend fun getBagId(bagName: String): Int {
-        return withContext(Dispatchers.IO) {
-            bagItemDao.getBagIdWithName(bagName)
-        }
+        return repository.getBagIdWithName(bagName)
     }
 
     private suspend fun insert(newItem: InventoryItem) {
-        withContext(Dispatchers.IO) {
-            inventoryItemDao.insert(newItem)
-        }
+        repository.insertNewInventoryItem(newItem)
     }
 
     private fun navigateBackToItemList() {
