@@ -1,9 +1,11 @@
 package com.fazemeright.myinventorytracker.data
 
+import androidx.lifecycle.LiveData
 import com.fazemeright.myinventorytracker.database.bag.BagItem
 import com.fazemeright.myinventorytracker.database.bag.BagItemDao
 import com.fazemeright.myinventorytracker.database.inventoryitem.InventoryItem
 import com.fazemeright.myinventorytracker.database.inventoryitem.InventoryItemDao
+import com.fazemeright.myinventorytracker.database.inventoryitem.ItemWithBag
 import com.fazemeright.myinventorytracker.firebase.api.FireBaseApiManager
 import com.fazemeright.myinventorytracker.firebase.models.Result
 import com.fazemeright.myinventorytracker.network.interfaces.SampleNetworkInterface
@@ -89,6 +91,56 @@ class InventoryRepository @Inject constructor(
     suspend fun insertNewInventoryItem(newItem: InventoryItem) {
         withContext(Dispatchers.IO) {
             inventoryItemDao.insert(newItem)
+        }
+    }
+
+    fun getItemWithBagFromId(itemId: Int): LiveData<ItemWithBag> =
+        inventoryItemDao.getItemWithBagFromId(itemId)
+
+    suspend fun updateItem(item: InventoryItem?) {
+        withContext(Dispatchers.IO) {
+            item?.let { inventoryItemDao.update(it) }
+        }
+    }
+
+    fun getItemsWithBagLive(): LiveData<List<ItemWithBag>> {
+        return inventoryItemDao.getItemsWithBagLive()
+    }
+
+    suspend fun searchInventoryItems(searchText: String): List<ItemWithBag> {
+        return withContext(Dispatchers.IO) {
+            inventoryItemDao.searchItems(searchText)
+        }
+
+    }
+
+    suspend fun getInventoryItemById(itemId: Int): InventoryItem? {
+        return withContext(Dispatchers.IO) {
+            inventoryItemDao.getById(itemId)
+        }
+    }
+
+    suspend fun deleteInventoryItem(item: InventoryItem) {
+        withContext(Dispatchers.IO) {
+            inventoryItemDao.deleteItem(item)
+        }
+    }
+
+    suspend fun insertInventoryItem(item: InventoryItem) {
+        withContext(Dispatchers.IO) {
+            inventoryItemDao.insert(item)
+        }
+    }
+
+    suspend fun performLogin(email: String, password: String): Result<FirebaseUser> {
+        return withContext(Dispatchers.IO) {
+            try {
+                val result = FireBaseApiManager.signInWithEmailPassword(email, password).await()
+                Result.Success(data = result.user!!, msg = "User Logged in Successfully")
+            } catch (e: Exception) {
+                Timber.e(e)
+                Result.Error(e, "Error occurred, user not logged in")
+            }
         }
     }
 }

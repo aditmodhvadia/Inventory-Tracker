@@ -6,36 +6,33 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.liveData
 import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
+import com.fazemeright.myinventorytracker.data.InventoryRepository
 import com.fazemeright.myinventorytracker.database.bag.BagItemDao
 import com.fazemeright.myinventorytracker.database.inventoryitem.InventoryItem
-import com.fazemeright.myinventorytracker.database.inventoryitem.InventoryItemDao
 import com.fazemeright.myinventorytracker.database.inventoryitem.ItemWithBag
 import com.fazemeright.myinventorytracker.ui.base.BaseViewModel
 import dagger.hilt.android.qualifiers.ActivityContext
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 /**
  * ViewModel for SleepTrackerFragment.
  */
 class ItemListViewModel @ViewModelInject constructor(
     bagItemDao: BagItemDao,
-    private val inventoryItemDao: InventoryItemDao,
+    private val repository: InventoryRepository,
     @ActivityContext context: Context
 ) : BaseViewModel(context) {
 
     private val _searchString = MutableLiveData<String>()
 
     val items = _searchString.switchMap {
-        if (it.isEmpty()) inventoryItemDao.getItemsWithBagLive()
+        if (it.isEmpty()) repository.getItemsWithBagLive()
         else
             liveData {
                 emit(
-                    withContext(Dispatchers.IO + Job()) {
-                        inventoryItemDao.searchItems(it)
-                    }
+//                    withContext(Dispatchers.IO + Job()) {
+                    repository.searchInventoryItems(it)
+//                    }
                 )
             }
     }
@@ -79,13 +76,11 @@ class ItemListViewModel @ViewModelInject constructor(
     }
 
     private suspend fun deleteItem(itemId: Int): InventoryItem? {
-        return withContext(Dispatchers.IO) {
-            val deleteItem = inventoryItemDao.getById(itemId)
-            deleteItem?.let {
-                inventoryItemDao.deleteItem(it)
-            }
-            deleteItem
+        val deleteItem = repository.getInventoryItemById(itemId)
+        deleteItem?.let {
+            repository.deleteInventoryItem(it)
         }
+        return deleteItem
     }
 
     fun undoDeleteItem(deletedItem: InventoryItem?) {
@@ -95,8 +90,6 @@ class ItemListViewModel @ViewModelInject constructor(
     }
 
     private suspend fun insertItemBack(deletedItem: InventoryItem?) {
-        withContext(Dispatchers.IO) {
-            deletedItem?.let { inventoryItemDao.insert(it) }
-        }
+        deletedItem?.let { repository.insertInventoryItem(it) }
     }
 }

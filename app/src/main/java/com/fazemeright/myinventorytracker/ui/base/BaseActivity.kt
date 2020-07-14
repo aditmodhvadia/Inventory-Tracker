@@ -1,9 +1,11 @@
 package com.fazemeright.myinventorytracker.ui.base
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -30,5 +32,13 @@ abstract class BaseActivity<V : ViewDataBinding> : AppCompatActivity() {
                 0
             )
         }
+    }
+
+    protected fun Context.showToast(msg: String) {
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
+    }
+
+    protected fun <T : AppCompatActivity> AppCompatActivity.open(java: Class<T>) {
+        startActivity(Intent(this, java))
     }
 }

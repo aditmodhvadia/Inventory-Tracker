@@ -4,23 +4,21 @@ import android.content.Context
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.fazemeright.myinventorytracker.data.InventoryRepository
 import com.fazemeright.myinventorytracker.database.inventoryitem.InventoryItem
-import com.fazemeright.myinventorytracker.database.inventoryitem.InventoryItemDao
 import com.fazemeright.myinventorytracker.database.inventoryitem.ItemWithBag
 import com.fazemeright.myinventorytracker.ui.base.BaseViewModel
 import dagger.hilt.android.qualifiers.ActivityContext
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import timber.log.Timber
 
 class ItemDetailViewModel @ViewModelInject constructor(
-    private val inventoryItemDao: InventoryItemDao,
+    private val repository: InventoryRepository,
     itemWithBag: ItemWithBag,
     @ActivityContext context: Context
 ) : BaseViewModel(context) {
 
-    val item = inventoryItemDao.getItemWithBagFromId(itemWithBag.item.itemId)
+    val item = repository.getItemWithBagFromId(itemWithBag.item.itemId)
 
     val navigateBackToItemList = MutableLiveData<Boolean>()
 
@@ -39,9 +37,7 @@ class ItemDetailViewModel @ViewModelInject constructor(
     }
 
     private suspend fun updateItem(item: InventoryItem?) {
-        withContext(Dispatchers.IO) {
-            item?.let { inventoryItemDao.update(it) }
-        }
+        repository.updateItem(item)
     }
 
     private fun navigateBackToItemList() {
