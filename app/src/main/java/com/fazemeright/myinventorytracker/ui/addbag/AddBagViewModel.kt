@@ -20,8 +20,8 @@ import android.content.Context
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.fazemeright.myinventorytracker.data.InventoryRepository
 import com.fazemeright.myinventorytracker.database.bag.BagItem
-import com.fazemeright.myinventorytracker.database.bag.BagItemDao
 import com.fazemeright.myinventorytracker.ui.base.BaseViewModel
 import dagger.hilt.android.qualifiers.ActivityContext
 import kotlinx.coroutines.Dispatchers
@@ -33,7 +33,7 @@ import timber.log.Timber
  * ViewModel for SleepTrackerFragment.
  */
 class AddBagViewModel @ViewModelInject constructor(
-    private val bagItemDao: BagItemDao,
+    private val repository: InventoryRepository,
     @ActivityContext context: Context
 ) : BaseViewModel(context) {
 
@@ -41,7 +41,7 @@ class AddBagViewModel @ViewModelInject constructor(
 
     private suspend fun clear() {
         withContext(Dispatchers.IO) {
-            bagItemDao.clear()
+            repository.clearBagItems()
         }
     }
 
@@ -83,9 +83,6 @@ class AddBagViewModel @ViewModelInject constructor(
     }
 
     private suspend fun insertNewBag(newBag: BagItem) {
-        withContext(Dispatchers.IO) {
-            bagItemDao.insert(newBag)
-            Timber.d(bagItemDao.getAllBags().value?.size.toString())
-        }
+        repository.addBag(newBag)
     }
 }

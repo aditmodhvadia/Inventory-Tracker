@@ -19,7 +19,7 @@ object NetworkModule {
     @Singleton
     fun getRetrofit(factory: MoshiConverterFactory): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("")
+            .baseUrl("http://placeholder.com/api/")
             .addConverterFactory(factory)
             .build()
     }

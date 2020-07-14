@@ -5,6 +5,7 @@ import com.fazemeright.myinventorytracker.firebase.api.FireBaseApiManager
 import junit.framework.TestCase.assertFalse
 import junit.framework.TestCase.assertTrue
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.tasks.await
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runner.notification.Failure
@@ -20,6 +21,7 @@ class FireBaseApiManagerTest {
     fun userIsSignedIn() = runBlocking {
         val result =
             FireBaseApiManager.signInWithEmailPassword(VALID_EMAIL, VALID_PASSWORD)
+        result.await()
         assert(result.isSuccessful) {
             "Could not sign in User"
         }

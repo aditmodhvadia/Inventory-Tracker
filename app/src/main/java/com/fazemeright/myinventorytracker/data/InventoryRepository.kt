@@ -1,5 +1,6 @@
 package com.fazemeright.myinventorytracker.data
 
+import com.fazemeright.myinventorytracker.database.bag.BagItem
 import com.fazemeright.myinventorytracker.database.bag.BagItemDao
 import com.fazemeright.myinventorytracker.database.inventoryitem.InventoryItemDao
 import com.fazemeright.myinventorytracker.firebase.api.FireBaseApiManager
@@ -53,6 +54,19 @@ class InventoryRepository @Inject constructor(
                 Timber.e(e)
                 Result.Error(msg = "")
             }
+        }
+    }
+
+    suspend fun clearBagItems() {
+        withContext(Dispatchers.IO) {
+            bagItemDao.clear()
+        }
+    }
+
+    suspend fun addBag(newBag: BagItem) {
+        withContext(Dispatchers.IO) {
+            Timber.d(newBag.toString())
+            bagItemDao.insert(newBag)
         }
     }
 }
