@@ -25,6 +25,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
 
         binding.btnLogin.setOnClickListener {
 //            TODO: Show Loading
+            hideKeyboard()
             viewModel.onLoginClicked(
                 binding.etEmail.text.toString().trim(),
                 binding.etPassword.text.toString().trim()
@@ -35,6 +36,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
 //            TODO: Hide Loading
             if (result is Result.Success) {
                 open(ItemListActivity::class.java)
+                finish()
             } else if (result is Result.Error) {
                 Timber.e(result.exception)
                 showToast(result.msg)
