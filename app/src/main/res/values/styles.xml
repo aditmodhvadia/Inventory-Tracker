@@ -19,4 +19,9 @@
     </style>
 
     <style name="TextView.Default" parent="Widget.AppCompat.TextView" />
+
+    <style name="FullscreenTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimaryDark">@android:color/transparent</item>
+    </style>
+
 </resources>
