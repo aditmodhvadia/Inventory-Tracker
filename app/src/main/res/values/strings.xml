@@ -36,6 +36,7 @@
     <string name="made_with_from">Made with ❤ from 🏠</string>
     <string name="copyright">Copyright 2020 Adit Modhvadia</string>
     <string name="title_activity_login">LoginActivity</string>
+    <string name="title_activity_splash">FullscreenActivity</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
     <string name="action_sign_in">Sign in or register</string>
@@ -49,4 +50,5 @@
     <string name="login_button_text">Login</string>
     <string name="add_bag_title">Add Bag</string>
     <string name="item_detail_title">Item</string>
+    <string name="app_tag_line">Store | Track | Forget</string>
 </resources>
