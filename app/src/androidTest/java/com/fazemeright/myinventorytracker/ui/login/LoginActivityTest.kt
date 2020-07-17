@@ -31,12 +31,14 @@ class LoginActivityTest : BaseUiTest<LoginActivity>() {
 
     @Test
     fun validLogin() = runBlocking {
+        delay(100)
         onView(withId(R.id.etEmail)).check(matches(isDisplayed())).perform(
             clearText(),
             typeText(
                 VALID_EMAIL
             )
         )
+        delay(100)
         onView(
             withId(R.id.etPassword)
         ).check(matches(isDisplayed())).perform(
@@ -52,12 +54,14 @@ class LoginActivityTest : BaseUiTest<LoginActivity>() {
 
     @Test
     fun invalidLogin() = runBlocking {
+        delay(100)
         onView(withId(R.id.etEmail)).check(matches(isDisplayed())).perform(
             clearText(),
             typeText(
                 VALID_EMAIL
             )
         )
+        delay(100)
         onView(
             withId(R.id.etPassword)
         ).check(matches(isDisplayed())).perform(

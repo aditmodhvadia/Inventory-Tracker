@@ -6,11 +6,11 @@ import android.content.pm.PackageManager
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.matcher.ViewMatchers.*
+import androidx.test.espresso.matcher.ViewMatchers.withId
+import androidx.test.espresso.matcher.ViewMatchers.withText
 import com.fazemeright.myinventorytracker.R
 import com.fazemeright.myinventorytracker.isViewDisplayed
 import com.fazemeright.myinventorytracker.ui.base.BaseUiTest
-import org.hamcrest.Matchers.allOf
 import timber.log.Timber
 
 class SplashActivityTest : BaseUiTest<SplashActivity>() {
@@ -28,9 +28,9 @@ class SplashActivityTest : BaseUiTest<SplashActivity>() {
             e.printStackTrace()
             "Debug Version"
         }
-        onView(allOf(withId(R.id.tvAppVersion), withText(expected))).check(
+        onView(withId(R.id.tvAppVersion)).check(
             matches(
-                isDisplayed()
+                withText(expected)
             )
         )
     }
