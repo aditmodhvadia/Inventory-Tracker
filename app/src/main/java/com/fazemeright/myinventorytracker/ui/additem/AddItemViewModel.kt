@@ -56,7 +56,7 @@ class AddItemViewModel @ViewModelInject constructor(
     }
 
     private suspend fun insert(newItem: InventoryItem) {
-        repository.insertNewInventoryItem(newItem)
+        repository.insertInventoryItem(newItem)
     }
 
     private fun navigateBackToItemList() {

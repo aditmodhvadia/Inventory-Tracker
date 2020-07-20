@@ -21,10 +21,14 @@ object TestUtils {
     /**
      * Get a Inventory Item with the given Id
      */
-    fun getInventoryItem(id: Int, bagId: Int): InventoryItem {
+    fun getInventoryItem(
+        id: Int,
+        bagId: Int,
+        itemName: String = "Item $id inside bag $bagId"
+    ): InventoryItem {
         return InventoryItem(
             itemId = id,
-            itemName = "Item $id inside bag $bagId",
+            itemName = itemName,
             bagOwnerId = bagId
         )
     }

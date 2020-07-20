@@ -41,4 +41,8 @@ abstract class FireBaseApiWrapper : FireBaseAuthUserInterface, FireBaseFireStore
     override fun writeData(data: Any, doc: DocumentReference): Task<Void> {
         return doc.set(data)
     }
+
+    override fun deleteDocument(doc: DocumentReference): Task<Void> {
+        return doc.delete()
+    }
 }

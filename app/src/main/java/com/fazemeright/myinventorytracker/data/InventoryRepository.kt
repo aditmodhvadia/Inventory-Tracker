@@ -33,18 +33,6 @@ class InventoryRepository @Inject constructor(
         }
     }
 
-    suspend fun signInWithEmailPassword(email: String, password: String): Result<FirebaseUser> {
-        return withContext(Dispatchers.IO) {
-            try {
-                val result = FireBaseApiManager.signInWithEmailPassword(email, password).await()
-                if (result.user != null) Result.Success(data = result.user!!) else Result.Error(msg = "Some error occurred")
-            } catch (e: Exception) {
-                Timber.e(e)
-                Result.Error(msg = "")
-            }
-        }
-    }
-
     suspend fun registerWithEmailPassword(email: String, password: String): Result<FirebaseUser> {
         return withContext(Dispatchers.IO) {
             try {
@@ -69,11 +57,16 @@ class InventoryRepository @Inject constructor(
     suspend fun addBag(newBag: BagItem) {
         withContext(Dispatchers.IO) {
             Timber.d(newBag.toString())
-            bagItemDao.insert(newBag)
+            val itemId = bagItemDao.insert(newBag)
+
+            val item = bagItemDao.get(itemId)
+
+            item?.let { FireBaseApiManager.storeBag(it) }
         }
     }
 
     fun getAllBags() = bagItemDao.getAllBags()
+
     fun getAllBagNames() = bagItemDao.getAllBagNames()
 
     suspend fun clearInventoryItems() {
@@ -88,9 +81,13 @@ class InventoryRepository @Inject constructor(
         }
     }
 
-    suspend fun insertNewInventoryItem(newItem: InventoryItem) {
+    suspend fun insertInventoryItem(newItem: InventoryItem) {
         withContext(Dispatchers.IO) {
-            inventoryItemDao.insert(newItem)
+            val itemId = inventoryItemDao.insert(newItem)
+
+            val item = inventoryItemDao.getById(itemId.toInt())
+
+            item?.let { FireBaseApiManager.storeInventoryItem(it) }
         }
     }
 
@@ -123,12 +120,8 @@ class InventoryRepository @Inject constructor(
     suspend fun deleteInventoryItem(item: InventoryItem) {
         withContext(Dispatchers.IO) {
             inventoryItemDao.deleteItem(item)
-        }
-    }
 
-    suspend fun insertInventoryItem(item: InventoryItem) {
-        withContext(Dispatchers.IO) {
-            inventoryItemDao.insert(item)
+            FireBaseApiManager.deleteInventoryItem(item)
         }
     }
 
