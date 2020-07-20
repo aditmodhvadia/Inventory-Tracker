@@ -10,7 +10,6 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.fazemeright.myinventorytracker.database.InventoryDatabase
 import com.fazemeright.myinventorytracker.database.bag.BagItemDao
 import com.fazemeright.myinventorytracker.utils.TestUtils
-import dagger.hilt.android.testing.HiltAndroidTest
 import junit.framework.Assert.*
 import junit.framework.AssertionFailedError
 import kotlinx.coroutines.runBlocking
@@ -63,11 +62,11 @@ class InventoryDatabaseTest {
         bagItemDao.insert(item)
         val byName = bagItemDao.findItemsByName(item.bagName)
         assertTrue(byName[0] == item)
+        bagItemDao.deleteItem(byName[0])
     }
 
 
     @Test
-    //    @Throws(Exception::class)
     fun writeBagAndItemAssociation() = runBlocking {
         var bag1 = TestUtils.getBagItem(1)
         var bag2 = TestUtils.getBagItem(2)
@@ -93,6 +92,11 @@ class InventoryDatabaseTest {
 
         val allItemsWithBag = inventoryItemDao.getItemsWithBag()
         assertEquals(1, allItemsWithBag.size)
+
+//        TODO: Remove the newly created items from the database
+//        bagItemDao.deleteItem(bag1)
+//        bagItemDao.deleteItem(bag2)
+//        inventoryItemDao.deleteItem(item)
     }
 }
 
