@@ -45,6 +45,12 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
+        <provider
+                android:name="androidx.work.impl.WorkManagerInitializer"
+                android:authorities="com.fazemeright.myinventorytracker.workmanager-init"
+                android:exported="false"
+                tools:node="remove" />
     </application>
 
 </manifest>

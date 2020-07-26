@@ -33,18 +33,6 @@ class InventoryRepository @Inject constructor(
         }
     }
 
-    suspend fun signInWithEmailPassword(email: String, password: String): Result<FirebaseUser> {
-        return withContext(Dispatchers.IO) {
-            try {
-                val result = FireBaseApiManager.signInWithEmailPassword(email, password).await()
-                if (result.user != null) Result.Success(data = result.user!!) else Result.Error(msg = "Some error occurred")
-            } catch (e: Exception) {
-                Timber.e(e)
-                Result.Error(msg = "")
-            }
-        }
-    }
-
     suspend fun registerWithEmailPassword(email: String, password: String): Result<FirebaseUser> {
         return withContext(Dispatchers.IO) {
             try {
@@ -69,11 +57,16 @@ class InventoryRepository @Inject constructor(
     suspend fun addBag(newBag: BagItem) {
         withContext(Dispatchers.IO) {
             Timber.d(newBag.toString())
-            bagItemDao.insert(newBag)
+            val itemId = bagItemDao.insert(newBag)
+
+            val item = bagItemDao.get(itemId)
+
+            item?.let { FireBaseApiManager.storeBag(it) }
         }
     }
 
     fun getAllBags() = bagItemDao.getAllBags()
+
     fun getAllBagNames() = bagItemDao.getAllBagNames()
 
     suspend fun clearInventoryItems() {
@@ -88,9 +81,13 @@ class InventoryRepository @Inject constructor(
         }
     }
 
-    suspend fun insertNewInventoryItem(newItem: InventoryItem) {
+    suspend fun insertInventoryItem(newItem: InventoryItem) {
         withContext(Dispatchers.IO) {
-            inventoryItemDao.insert(newItem)
+            val itemId = inventoryItemDao.insert(newItem)
+
+            val item = inventoryItemDao.getById(itemId.toInt())
+
+            item?.let { FireBaseApiManager.storeInventoryItem(it) }
         }
     }
 
@@ -123,12 +120,8 @@ class InventoryRepository @Inject constructor(
     suspend fun deleteInventoryItem(item: InventoryItem) {
         withContext(Dispatchers.IO) {
             inventoryItemDao.deleteItem(item)
-        }
-    }
 
-    suspend fun insertInventoryItem(item: InventoryItem) {
-        withContext(Dispatchers.IO) {
-            inventoryItemDao.insert(item)
+            FireBaseApiManager.deleteInventoryItem(item)
         }
     }
 
@@ -143,4 +136,55 @@ class InventoryRepository @Inject constructor(
             }
         }
     }
+
+    /**
+     * Sync the local database and cloud database with each other
+     */
+    suspend fun syncLocalAndCloud() {
+//        TODO: Make these asynchronous
+        withContext(Dispatchers.IO) {
+            val bagItemsInLocal = bagItemDao.getAllBagsList()
+            FireBaseApiManager.batchWriteBags(bagItemsInLocal)
+
+            val inventoryItemsInLocal = inventoryItemDao.getAllInventoryItemsList()
+            FireBaseApiManager.batchWriteInventoryItems(inventoryItemsInLocal)
+
+            when (val bagItemsInCloudResult = FireBaseApiManager.getAllBags()) {
+                is Result.Success -> {
+                    bagItemDao.insertAll(bagItemsInCloudResult.data)
+                }
+                is Result.Error -> {
+                    Timber.e(bagItemsInCloudResult.exception)
+                    throw InterruptedException("Did not fetch Bag items from the cloud")
+                }
+
+            }
+
+            when (val inventoryItemsInCloudResult = FireBaseApiManager.getAllInventoryItems()) {
+                is Result.Success -> {
+                    inventoryItemDao.insertAll(inventoryItemsInCloudResult.data)
+                }
+                is Result.Error -> {
+                    Timber.e(inventoryItemsInCloudResult.exception)
+                    throw InterruptedException("Did not fetch Inventory items from the cloud")
+                }
+            }
+        }
+    }
+
+    suspend fun logoutUser() {
+        FireBaseApiManager.logout()
+        withContext(Dispatchers.IO) {
+            inventoryItemDao.clear()
+            bagItemDao.clear()
+        }
+//        TODO: Clear Shared Preferences
+    }
 }
+
+
+
+
+
+
+

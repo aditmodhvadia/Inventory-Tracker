@@ -16,6 +16,7 @@ import com.fazemeright.myinventorytracker.ui.addbag.AddBagActivity
 import com.fazemeright.myinventorytracker.ui.additem.AddItemActivity
 import com.fazemeright.myinventorytracker.ui.base.BaseActivity
 import com.fazemeright.myinventorytracker.ui.itemdetail.ItemDetailActivity
+import com.fazemeright.myinventorytracker.ui.login.LoginActivity
 import com.fazemeright.myinventorytracker.ui.settings.SettingsActivity
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -98,6 +99,14 @@ class ItemListActivity : BaseActivity<ActivityItemListBinding>() {
                 adapter.updateBagList(bagList)
             }
         })
+
+        viewModel.logoutUser.observe(this, Observer { userLoggedOut ->
+            if (userLoggedOut) {
+                open(LoginActivity::class.java)
+                finish()
+                viewModel.logoutSuccessful()
+            }
+        })
     }
 
     private fun showConfirmationDialog(itemId: Int) {
@@ -151,6 +160,7 @@ class ItemListActivity : BaseActivity<ActivityItemListBinding>() {
         when (item.itemId) {
             R.id.action_add_bag -> startActivity(Intent(this, AddBagActivity::class.java))
             R.id.action_settings -> startActivity(Intent(this, SettingsActivity::class.java))
+            R.id.action_logout -> viewModel.logoutClicked()
         }
         return true
     }

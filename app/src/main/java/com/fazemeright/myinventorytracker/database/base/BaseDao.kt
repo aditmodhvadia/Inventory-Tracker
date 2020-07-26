@@ -1,22 +1,20 @@
 package com.fazemeright.myinventorytracker.database.base
 
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Update
+import androidx.room.*
+import com.fazemeright.myinventorytracker.database.bag.BagItem
 
 @Dao
 interface BaseDao<T> {
     /**
      * Inserts the given item into the database
      */
-    @Insert
-    fun insert(item: T)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insert(item: T): Long
 
     /**
      * Inserts the given items into the database
      */
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(item: List<T>)
 
     /**

@@ -1,6 +1,6 @@
 package com.fazemeright.myinventorytracker.utils
 
-import org.junit.Assert.assertTrue
+import junit.framework.TestCase.assertTrue
 import org.junit.Test
 import java.util.regex.Pattern
 

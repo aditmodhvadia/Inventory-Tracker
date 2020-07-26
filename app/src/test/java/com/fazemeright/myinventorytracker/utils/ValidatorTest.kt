@@ -2,8 +2,8 @@ package com.fazemeright.myinventorytracker.utils
 
 import com.fazemeright.myinventorytracker.utils.Validator.isEmailValid
 import com.fazemeright.myinventorytracker.utils.Validator.isPasswordValid
-import org.junit.Assert.assertFalse
-import org.junit.Assert.assertTrue
+import junit.framework.TestCase.assertFalse
+import junit.framework.TestCase.assertTrue
 import org.junit.Test
 
 class ValidatorTest {

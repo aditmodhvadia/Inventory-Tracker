@@ -21,4 +21,6 @@ interface FireBaseAuthUserInterface {
     fun sendPasswordResetEmail(): Task<Void>?
 
     fun isUserVerified(): Boolean
+
+    fun getCurrentUserUUID(): String?
 }

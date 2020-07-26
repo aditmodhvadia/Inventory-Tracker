@@ -34,6 +34,9 @@ interface InventoryItemDao : BaseDao<InventoryItem> {
     @Query("SELECT * FROM my_inventory_table WHERE itemName =:name")
     fun findItemsByName(name: String): List<InventoryItem>
 
+    @Query("SELECT * FROM my_inventory_table ORDER BY itemName")
+    fun getAllInventoryItemsList(): List<InventoryItem>
+
     @Transaction
     @Query("SELECT * FROM my_inventory_table")
     fun getItemsWithBagLive(): LiveData<List<ItemWithBag>>

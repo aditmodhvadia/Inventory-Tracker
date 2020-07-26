@@ -23,6 +23,9 @@ interface BagItemDao : BaseDao<BagItem> {
     @Query("DELETE FROM my_bag_table")
     fun clear()
 
+    @Query("SELECT * FROM my_bag_table ORDER BY bagName")
+    fun getAllBagsList(): List<BagItem>
+
     /**
      * Selects and returns all rows in the table,
      *
