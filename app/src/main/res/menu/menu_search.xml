@@ -18,4 +18,11 @@
             android:id="@+id/action_settings"
             android:title="@string/settings"
             app:showAsAction="never" />
+
+    <group android:id="@+id/group_logout">
+        <item
+                android:id="@+id/action_logout"
+                android:title="@string/logout_title"
+                app:showAsAction="never" />
+    </group>
 </menu>

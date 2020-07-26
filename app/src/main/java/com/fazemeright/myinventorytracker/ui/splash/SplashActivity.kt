@@ -26,7 +26,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
 
         viewModel.isUserSignedIn.observe(this, Observer { userIsSignedIn ->
             if (userIsSignedIn) {
-                viewModel.enqueueSyncWork()
+                viewModel.syncLocalAndCloudData()
                 open(ItemListActivity::class.java)
             } else {
                 open(LoginActivity::class.java)

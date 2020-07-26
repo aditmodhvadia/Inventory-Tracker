@@ -35,6 +35,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
         viewModel.loginResult.observe(this, Observer { result ->
 //            TODO: Hide Loading
             if (result is Result.Success) {
+                viewModel.syncLocalAndCloudData()
                 open(ItemListActivity::class.java)
                 finish()
             } else if (result is Result.Error) {

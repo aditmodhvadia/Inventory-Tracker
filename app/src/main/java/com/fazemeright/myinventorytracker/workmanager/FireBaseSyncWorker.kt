@@ -1,6 +1,7 @@
 package com.fazemeright.myinventorytracker.workmanager
 
 import android.content.Context
+import androidx.hilt.Assisted
 import androidx.hilt.work.WorkerInject
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
@@ -11,8 +12,8 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 
 class FireBaseSyncWorker @WorkerInject constructor(
-    context: Context,
-    workerParams: WorkerParameters,
+    @Assisted context: Context,
+    @Assisted workerParams: WorkerParameters,
     private val repository: InventoryRepository
 ) : CoroutineWorker(
     context,

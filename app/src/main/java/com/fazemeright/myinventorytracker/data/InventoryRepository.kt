@@ -171,6 +171,15 @@ class InventoryRepository @Inject constructor(
             }
         }
     }
+
+    suspend fun logoutUser() {
+        FireBaseApiManager.logout()
+        withContext(Dispatchers.IO) {
+            inventoryItemDao.clear()
+            bagItemDao.clear()
+        }
+//        TODO: Clear Shared Preferences
+    }
 }
 
 

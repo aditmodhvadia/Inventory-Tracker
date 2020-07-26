@@ -130,7 +130,7 @@ object FireBaseApiManager : FireBaseApiWrapper() {
     }
 
     suspend fun getAllInventoryItems(): Result<List<InventoryItem>> {
-        return getItems(bagsCollection)
+        return getItems(inventoryItemsCollection)
     }
 
     fun batchWriteBags(bagItems: List<BagItem>): Task<Void> {
