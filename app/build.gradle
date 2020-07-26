@@ -12,7 +12,7 @@ android {
         minSdkVersion 23
         targetSdkVersion 30
         versionCode 3
-        versionName "2.0.0-alpha002"
+        versionName "2.0.1"
 //        testInstrumentationRunner "com.fazemeright.myinventorytracker.CustomTestRunner"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

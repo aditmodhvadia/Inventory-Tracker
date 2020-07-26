@@ -116,6 +116,7 @@ class FireBaseApiManagerTest {
 
     @Test
     fun batchWriteBagItemsFromLocal() = runBlocking {
+        FireBaseApiManager.signIn(VALID_EMAIL, VALID_PASSWORD).await()
         val bagItems = (-10..-1).map { TestUtils.getBagItem(id = it) }
 
         FireBaseApiManager.batchWriteBags(bagItems).await()
