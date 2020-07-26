@@ -6,6 +6,7 @@ import com.fazemeright.myinventorytracker.firebase.models.Result
 import com.fazemeright.myinventorytracker.utils.Validator.isEmailValid
 import com.fazemeright.myinventorytracker.utils.Validator.isPasswordValid
 import com.google.android.gms.tasks.Task
+import com.google.android.gms.tasks.Tasks
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentReference
@@ -124,6 +125,34 @@ object FireBaseApiManager : FireBaseApiWrapper() {
         }
     }
 
+    suspend fun getAllBags(): Result<List<BagItem>> {
+        return getItems(bagsCollection)
+    }
+
+    suspend fun getAllInventoryItems(): Result<List<InventoryItem>> {
+        return getItems(bagsCollection)
+    }
+
+    fun batchWriteBags(bagItems: List<BagItem>): Task<Void> {
+        return if (bagsCollection != null) {
+            batchWriteData(bagItems.map { bagItem ->
+                bagsCollection!!.document(bagItem.bagId.toString()) to bagItem
+            }.toMap())
+        } else {
+            Tasks.forResult(null)
+        }
+    }
+
+    fun batchWriteInventoryItems(inventoryItems: List<InventoryItem>): Task<Void> {
+        return if (inventoryItemsCollection != null) {
+            batchWriteData(inventoryItems.map { inventoryItem ->
+                inventoryItemsCollection!!.document(inventoryItem.itemId.toString()) to inventoryItem
+            }.toMap())
+        } else {
+            Tasks.forResult(null)
+        }
+    }
+
 
     /*fun deleteItem(): Result<Boolean> {
 
@@ -137,7 +166,7 @@ object FireBaseApiManager : FireBaseApiWrapper() {
             return getUserDocument()?.collection(BaseUrl.INVENTORY_ITEMS)
         }
 
-    private val bagsCollection: CollectionReference?
+    val bagsCollection: CollectionReference?
         get() {
             return getUserDocument()?.collection(BaseUrl.BAGS)
         }

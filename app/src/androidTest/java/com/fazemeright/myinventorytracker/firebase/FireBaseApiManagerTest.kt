@@ -1,6 +1,7 @@
 package com.fazemeright.myinventorytracker.firebase
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.fazemeright.myinventorytracker.database.bag.BagItem
 import com.fazemeright.myinventorytracker.firebase.api.FireBaseApiManager
 import com.fazemeright.myinventorytracker.firebase.models.Result
 import com.fazemeright.myinventorytracker.utils.TestUtils
@@ -106,6 +107,31 @@ class FireBaseApiManagerTest {
             }
             is Result.Error -> {
                 assertEquals("User not signed in!", result.msg)
+            }
+        }
+    }
+
+//    TODO: Test batch write
+//    TODO: Test read all items
+
+    @Test
+    fun batchWriteBagItemsFromLocal() = runBlocking {
+        val bagItems = (-10..-1).map { TestUtils.getBagItem(id = it) }
+
+        FireBaseApiManager.batchWriteBags(bagItems).await()
+
+        when (val result = FireBaseApiManager.getAllBags()) {
+            is Result.Success<List<BagItem>> -> {
+                bagItems.forEach { item ->
+                    FireBaseApiManager.deleteBag(item)
+                }
+                assertTrue(result.data.toSet().containsAll(bagItems))
+            }
+            is Result.Error -> {
+                bagItems.forEach { item ->
+                    FireBaseApiManager.deleteBag(item)
+                }
+                throw AssertionError("Bag added to database successfully without sign in")
             }
         }
     }

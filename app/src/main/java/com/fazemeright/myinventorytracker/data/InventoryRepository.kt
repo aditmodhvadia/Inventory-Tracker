@@ -136,4 +136,46 @@ class InventoryRepository @Inject constructor(
             }
         }
     }
+
+    /**
+     * Sync the local database and cloud database with each other
+     */
+    suspend fun syncLocalAndCloud() {
+//        TODO: Make these asynchronous
+        withContext(Dispatchers.IO) {
+            val bagItemsInLocal = bagItemDao.getAllBagsList()
+            FireBaseApiManager.batchWriteBags(bagItemsInLocal)
+
+            val inventoryItemsInLocal = inventoryItemDao.getAllInventoryItemsList()
+            FireBaseApiManager.batchWriteInventoryItems(inventoryItemsInLocal)
+
+            when (val bagItemsInCloudResult = FireBaseApiManager.getAllBags()) {
+                is Result.Success -> {
+                    bagItemDao.insertAll(bagItemsInCloudResult.data)
+                }
+                is Result.Error -> {
+                    Timber.e(bagItemsInCloudResult.exception)
+                    throw InterruptedException("Did not fetch Bag items from the cloud")
+                }
+
+            }
+
+            when (val inventoryItemsInCloudResult = FireBaseApiManager.getAllInventoryItems()) {
+                is Result.Success -> {
+                    inventoryItemDao.insertAll(inventoryItemsInCloudResult.data)
+                }
+                is Result.Error -> {
+                    Timber.e(inventoryItemsInCloudResult.exception)
+                    throw InterruptedException("Did not fetch Inventory items from the cloud")
+                }
+            }
+        }
+    }
 }
+
+
+
+
+
+
+
