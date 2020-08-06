@@ -13,6 +13,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="?attr/colorPrimary"
+            android:fitsSystemWindows="true"
             tools:context="com.fazemeright.myinventorytracker.ui.login.LoginActivity">
 
         <EditText
@@ -23,6 +25,8 @@
                 android:hint="@string/email_address_hint"
                 android:imeOptions="actionNext"
                 android:inputType="textEmailAddress"
+                android:textColor="?attr/colorOnPrimary"
+                android:textColorHint="?attr/colorOnPrimary"
                 app:layout_constraintBottom_toTopOf="@+id/etPassword"
                 app:layout_constraintEnd_toStartOf="@id/guidelineRight"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -40,6 +44,8 @@
                 android:hint="@string/password_hint"
                 android:imeOptions="actionDone"
                 android:inputType="textPassword"
+                android:textColor="?attr/colorOnPrimary"
+                android:textColorHint="?attr/colorOnPrimary"
                 app:layout_constraintBottom_toTopOf="@+id/btnLogin"
                 app:layout_constraintEnd_toStartOf="@id/guidelineRight"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -51,10 +57,11 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/spacing_large"
+                android:backgroundTint="?attr/colorSecondary"
                 android:padding="8dp"
                 android:text="@string/login_button_text"
                 android:textAlignment="center"
-                android:textColor="@android:color/white"
+                android:textColor="?attr/colorOnSecondary"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/guidelineRight"
                 app:layout_constraintHorizontal_bias="0.5"

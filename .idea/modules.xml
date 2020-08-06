@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Android-Inventory-Tracker.iml" filepath="$PROJECT_DIR$/.idea/modules/Android-Inventory-Tracker.iml" group="Inventory-Tracker" />
       <module fileurl="file://$PROJECT_DIR$/.idea/Inventory-Tracker.iml" filepath="$PROJECT_DIR$/.idea/Inventory-Tracker.iml" group="Inventory-Tracker" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Inventory-Tracker-app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Inventory-Tracker-app.iml" group="Inventory-Tracker/app" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="Inventory-Tracker/app" />
     </modules>
   </component>
