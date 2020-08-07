@@ -16,7 +16,7 @@ class ItemDetailViewModel @ViewModelInject constructor(
     private val repository: InventoryRepository,
     itemWithBag: ItemWithBag,
     @ActivityContext context: Context
-) : BaseViewModel(context) {
+) : BaseViewModel(context,repository) {
 
     val item = repository.getItemWithBagFromId(itemWithBag.item.itemId)
 

@@ -35,7 +35,7 @@ import timber.log.Timber
 class AddBagViewModel @ViewModelInject constructor(
     private val repository: InventoryRepository,
     @ActivityContext context: Context
-) : BaseViewModel(context) {
+) : BaseViewModel(context, repository) {
 
     val navigateBackToItemList = MutableLiveData<Boolean>()
 

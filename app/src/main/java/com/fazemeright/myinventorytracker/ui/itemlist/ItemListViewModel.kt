@@ -19,7 +19,7 @@ class ItemListViewModel @ViewModelInject constructor(
         bagItemDao: BagItemDao,
         private val repository: InventoryRepository,
         @ActivityContext context: Context
-) : BaseViewModel(context) {
+) : BaseViewModel(context,repository) {
 
     private val _searchString = MutableLiveData<String>()
 
