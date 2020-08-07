@@ -35,19 +35,6 @@ class AddItemActivity : BaseActivity<ActivityAddItemBinding>(), AdapterView.OnIt
             setDisplayHomeAsUpEnabled(true)
         }
 
-        viewModel.bagNames.observe(this, Observer { bagNames ->
-            Timber.d(bagNames.size.toString())
-
-            // Create an ArrayAdapter using a simple spinner layout and languages array
-            val aa = ArrayAdapter(this, android.R.layout.simple_spinner_item, bagNames)
-            // Set layout to use when the list of choices appear
-            aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            // Set Adapter to Spinner
-            binding.spinnerBag.adapter = aa
-
-            binding.spinnerBag.onItemSelectedListener = this
-        })
-
         viewModel.navigateBackToItemList.observe(this, Observer { navigate ->
             if (navigate) {
                 finish()
@@ -68,10 +55,10 @@ class AddItemActivity : BaseActivity<ActivityAddItemBinding>(), AdapterView.OnIt
     private fun addBag() {
         selectedBagName?.let { bagName ->
             viewModel.onAddClicked(
-                    edtItemName.text.toString(),
-                    bagName,
-                    edtItemDesc.text.toString(),
-                    edtItemQuantity.text.toString()
+                edtItemName.text.toString(),
+                bagName,
+                edtItemDesc.text.toString(),
+                edtItemQuantity.text.toString()
             )
         }
     }

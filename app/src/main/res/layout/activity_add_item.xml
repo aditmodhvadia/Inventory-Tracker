@@ -34,7 +34,7 @@
                 android:imeOptions="actionNext"
                 android:inputType="textPersonName"
                 android:text="@{viewModel.itemName}"
-                app:layout_constraintBottom_toTopOf="@+id/spinnerBag"
+                app:layout_constraintBottom_toTopOf="@+id/tvBagname"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
@@ -43,7 +43,7 @@
                 tools:text="Item Name" />
 
             <Spinner
-                android:id="@+id/spinnerBag"
+                android:id="@+id/tvBagname"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/spacing_normal"
@@ -75,7 +75,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/spinnerBag"
+                app:layout_constraintTop_toBottomOf="@+id/tvBagname"
                 tools:text="Item Desc" />
 
             <EditText

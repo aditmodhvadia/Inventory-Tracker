@@ -2,6 +2,7 @@ package com.fazemeright.myinventorytracker.ui.itemdetail
 
 import android.content.Context
 import androidx.hilt.lifecycle.ViewModelInject
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.fazemeright.myinventorytracker.data.InventoryRepository
@@ -16,7 +17,13 @@ class ItemDetailViewModel @ViewModelInject constructor(
     private val repository: InventoryRepository,
     itemWithBag: ItemWithBag,
     @ActivityContext context: Context
-) : BaseViewModel(context,repository) {
+) : BaseViewModel(context, repository) {
+
+
+    private val _onItemDeleteComplete = MutableLiveData<Boolean>()
+
+    val onItemDeleteComplete: LiveData<Boolean>
+        get() = _onItemDeleteComplete
 
     val item = repository.getItemWithBagFromId(itemWithBag.item.itemId)
 
@@ -45,8 +52,20 @@ class ItemDetailViewModel @ViewModelInject constructor(
         navigateBackToItemList.value = true
     }
 
-    fun onNavigationToAddItemFinished() {
+    fun onNavigationToItemListFinished() {
         navigateBackToItemList.value = false
+    }
+
+    fun deleteItem() {
+        viewModelScope.launch {
+            repository.deleteInventoryItem(item.value!!.item)
+
+            _onItemDeleteComplete.value = true
+        }
+    }
+
+    fun onItemDeleteFinished() {
+        _onItemDeleteComplete.value = false
     }
 
     /*fun updateBagDesc(selectedBagName: String?) {

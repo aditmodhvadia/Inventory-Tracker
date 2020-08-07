@@ -53,4 +53,6 @@
     <string name="item_list_title">Track Items</string>
     <string name="app_tag_line">Store | Track | Forget</string>
     <string name="logout_title">Logout</string>
+    <string name="action_delete">Delete</string>
+    <string name="item_deleted_successfully">Item deleted</string>
 </resources>
