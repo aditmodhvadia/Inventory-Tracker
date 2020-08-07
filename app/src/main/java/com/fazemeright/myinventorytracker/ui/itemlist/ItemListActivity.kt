@@ -41,8 +41,6 @@ class ItemListActivity : BaseActivity<ActivityItemListBinding>() {
 
         setSupportActionBar(toolbar)
 
-        toolbar.title = getString(R.string.item_list_title)
-
         val manager = LinearLayoutManager(this)
 
         binding.itemList.layoutManager = manager

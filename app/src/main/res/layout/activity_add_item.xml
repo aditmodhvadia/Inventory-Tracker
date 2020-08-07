@@ -1,20 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
         <variable
-                name="viewModel"
-                type="com.fazemeright.myinventorytracker.ui.additem.AddItemViewModel" />
+            name="viewModel"
+            type="com.fazemeright.myinventorytracker.ui.additem.AddItemViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-        <EditText
+        <include layout="@layout/collapsing_toolbar" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <EditText
                 android:id="@+id/edtItemName"
                 style="@style/Base.Widget.AppCompat.EditText.Centred"
                 android:layout_width="0dp"
@@ -35,7 +42,7 @@
                 app:layout_constraintVertical_chainStyle="packed"
                 tools:text="Item Name" />
 
-        <Spinner
+            <Spinner
                 android:id="@+id/spinnerBag"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -49,7 +56,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/edtItemName"
                 tools:text="Bag" />
 
-        <EditText
+            <EditText
                 android:id="@+id/edtItemDesc"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -71,7 +78,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/spinnerBag"
                 tools:text="Item Desc" />
 
-        <EditText
+            <EditText
                 android:id="@+id/edtItemQuantity"
                 style="@style/Base.Widget.AppCompat.EditText.Centred"
                 android:layout_width="0dp"
@@ -90,7 +97,8 @@
                 app:layout_constraintTop_toBottomOf="@+id/edtItemDesc"
                 tools:text="Item Quantity" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>
 
-        <!--android:onClick="@{() -> viewModel.onAddClicked(edtItemName.getText().toString(),edtBagName.getText().toString(),edtItemDesc.getText().toString(),edtItemQuantity.getText().toString())}"-->
+    <!--android:onClick="@{() -> viewModel.onAddClicked(edtItemName.getText().toString(),edtBagName.getText().toString(),edtItemDesc.getText().toString(),edtItemQuantity.getText().toString())}"-->

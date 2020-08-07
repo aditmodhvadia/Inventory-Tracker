@@ -13,6 +13,7 @@ import com.fazemeright.myinventorytracker.databinding.ActivityAddItemBinding
 import com.fazemeright.myinventorytracker.ui.base.BaseActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_add_item.*
+import kotlinx.android.synthetic.main.collapsing_toolbar.*
 import timber.log.Timber
 
 @AndroidEntryPoint
@@ -27,10 +28,11 @@ class AddItemActivity : BaseActivity<ActivityAddItemBinding>(), AdapterView.OnIt
 
         binding.viewModel = viewModel
 
+        setSupportActionBar(toolbar)
+
         supportActionBar?.apply {
             setHomeButtonEnabled(true)
             setDisplayHomeAsUpEnabled(true)
-            title = getString(R.string.add_item_title)
         }
 
         viewModel.bagNames.observe(this, Observer { bagNames ->
@@ -66,10 +68,10 @@ class AddItemActivity : BaseActivity<ActivityAddItemBinding>(), AdapterView.OnIt
     private fun addBag() {
         selectedBagName?.let { bagName ->
             viewModel.onAddClicked(
-                edtItemName.text.toString(),
-                bagName,
-                edtItemDesc.text.toString(),
-                edtItemQuantity.text.toString()
+                    edtItemName.text.toString(),
+                    bagName,
+                    edtItemDesc.text.toString(),
+                    edtItemQuantity.text.toString()
             )
         }
     }

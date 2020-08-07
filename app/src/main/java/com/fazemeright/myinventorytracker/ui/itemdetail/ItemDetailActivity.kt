@@ -13,12 +13,13 @@ import com.fazemeright.myinventorytracker.database.inventoryitem.ItemWithBag
 import com.fazemeright.myinventorytracker.databinding.ActivityItemDetailBinding
 import com.fazemeright.myinventorytracker.ui.base.BaseActivity
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.collapsing_toolbar.*
 import timber.log.Timber
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class ItemDetailActivity : BaseActivity<ActivityItemDetailBinding>(),
-    AdapterView.OnItemSelectedListener {
+        AdapterView.OnItemSelectedListener {
 
     val viewModel: ItemDetailViewModel by viewModels()
 
@@ -30,10 +31,11 @@ class ItemDetailActivity : BaseActivity<ActivityItemDetailBinding>(),
 
         binding.viewModel = viewModel
 
+        setSupportActionBar(toolbar)
+
         supportActionBar?.apply {
             setHomeButtonEnabled(true)
             setDisplayHomeAsUpEnabled(true)
-            title = getString(R.string.item_detail_title)
         }
 
         viewModel.item.observe(this, Observer { item ->
@@ -41,7 +43,7 @@ class ItemDetailActivity : BaseActivity<ActivityItemDetailBinding>(),
             item?.let {
                 // Create an ArrayAdapter using a simple spinner layout and languages array
                 val aa =
-                    ArrayAdapter(this, android.R.layout.simple_spinner_item, listOf(it.bag.bagName))
+                        ArrayAdapter(this, android.R.layout.simple_spinner_item, listOf(it.bag.bagName))
                 // Set layout to use when the list of choices appear
                 aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                 // Set Adapter to Spinner

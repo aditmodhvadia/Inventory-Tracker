@@ -33,9 +33,18 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.itemdetail.ItemDetailActivity" />
-        <activity android:name=".ui.additem.AddItemActivity" />
-        <activity android:name=".ui.addbag.AddBagActivity" />
+        <activity
+            android:name=".ui.itemdetail.ItemDetailActivity"
+            android:label="@string/item_detail_title"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".ui.additem.AddItemActivity"
+            android:label="@string/add_item_title"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".ui.addbag.AddBagActivity"
+            android:label="@string/add_bag_title"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".ui.login.LoginActivity"
             android:windowSoftInputMode="adjustResize">
