@@ -13,13 +13,13 @@
         <item name="colorOnSecondary">@color/secondaryTextColor</item>
         <item name="android:textViewStyle">@style/TextView.Default</item>
 
-        <!--        Fullscreen-->
-        <item name="android:windowNoTitle">true</item>
-        <item name="android:windowActionBar">false</item>
-        <item name="android:windowFullscreen">true</item>
-        <item name="android:windowContentOverlay">@null</item>
-        <item name="android:windowTranslucentStatus">true</item>
-        <item name="android:windowTranslucentNavigation">true</item>
+        <!--        &lt;!&ndash;        Fullscreen&ndash;&gt;
+                <item name="android:windowNoTitle">true</item>
+                <item name="android:windowActionBar">false</item>
+                <item name="android:windowFullscreen">true</item>
+                <item name="android:windowContentOverlay">@null</item>
+                <item name="android:windowTranslucentStatus">true</item>
+                <item name="android:windowTranslucentNavigation">true</item>-->
     </style>
 
     <style name="AppTheme.Fullscreen" parent="AppTheme">
@@ -34,9 +34,5 @@
     </style>
 
     <style name="TextView.Default" parent="Widget.AppCompat.TextView" />
-
-    <style name="FullscreenTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <item name="colorPrimaryDark">@android:color/transparent</item>
-    </style>
 
 </resources>
