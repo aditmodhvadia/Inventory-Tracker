@@ -13,6 +13,9 @@
         <item name="colorOnSecondary">@color/secondaryTextColor</item>
         <item name="android:textViewStyle">@style/TextView.Default</item>
 
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+
         <!--        &lt;!&ndash;        Fullscreen&ndash;&gt;
                 <item name="android:windowNoTitle">true</item>
                 <item name="android:windowActionBar">false</item>

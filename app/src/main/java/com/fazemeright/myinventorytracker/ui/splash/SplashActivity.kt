@@ -2,6 +2,7 @@ package com.fazemeright.myinventorytracker.ui.splash
 
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.core.view.WindowCompat
 import androidx.lifecycle.Observer
 import com.fazemeright.myinventorytracker.R
 import com.fazemeright.myinventorytracker.databinding.ActivitySplashBinding
@@ -19,6 +20,8 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
         super.onCreate(savedInstanceState)
 
         binding.viewModel = viewModel
+
+        setFullScreen()
 
         viewModel.isUserSignedIn.observe(this, Observer { userIsSignedIn ->
             if (userIsSignedIn) {
