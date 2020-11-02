@@ -1,0 +1,16 @@
+version: 2
+updates:
+- package-ecosystem: gradle
+  directory: "/"
+  schedule:
+    interval: daily
+    time: "10:00"
+  open-pull-requests-limit: 10
+  reviewers:
+  - aditmodhvadia
+  assignees:
+  - aditmodhvadia
+  ignore:
+  - dependency-name: com.android.tools.build:gradle
+    versions:
+    - "> 4.0.0"
