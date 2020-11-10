@@ -122,7 +122,7 @@ dependencies {
     implementation 'com.jaredrummler:colorpicker:1.1.0'
 
     // Testing libraries
-    testImplementation 'junit:junit:4.13'
+    testImplementation 'junit:junit:4.13.1'
 
     // Core library
     androidTestImplementation 'androidx.test:core:1.2.0'
