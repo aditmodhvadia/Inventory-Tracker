@@ -138,7 +138,7 @@ dependencies {
 
     // Espresso dependencies
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
-    androidTestImplementation 'androidx.test.espresso:espresso-intents:3.2.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-intents:3.3.0'
 
 //    Networking
     implementation "com.squareup.retrofit2:retrofit:2.9.0"
