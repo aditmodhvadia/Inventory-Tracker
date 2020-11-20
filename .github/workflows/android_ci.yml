@@ -36,32 +36,32 @@ jobs:
   #       - name: Test
   #         run: sudo ./gradlew build
 
-  android:
-    runs-on: macos-latest
+#   android:
+#     runs-on: macos-latest
 
-    strategy:
-      fail-fast: false
-      matrix:
-        api-level:
-          - 21
-          - 24
-          - 26
-          - 29
+#     strategy:
+#       fail-fast: false
+#       matrix:
+#         api-level:
+#           - 21
+#           - 24
+#           - 26
+#           - 29
 
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v2
 
-      - name: Validate Gradle Wrapper
-        uses: gradle/wrapper-validation-action@v1
+#       - name: Validate Gradle Wrapper
+#         uses: gradle/wrapper-validation-action@v1
 
-      - name: Run Tests
-        uses: reactivecircus/android-emulator-runner@v2
-        with:
-          api-level: ${{ matrix.api-level }}
-          script: ./gradlew connectedCheck
-        env:
-          API_LEVEL: ${{ matrix.api-level }}
+#       - name: Run Tests
+#         uses: reactivecircus/android-emulator-runner@v2
+#         with:
+#           api-level: ${{ matrix.api-level }}
+#           script: ./gradlew connectedCheck
+#         env:
+#           API_LEVEL: ${{ matrix.api-level }}
 
 #   robovm:
 #     runs-on: macos-latest
