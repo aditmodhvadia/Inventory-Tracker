@@ -15,12 +15,10 @@ class ItemDetailActivityTest : BaseUiTest<ItemDetailActivity>() {
     override fun allViewsAreDisplayed() {
         R.string.item_detail_title.isViewWithTextDisplayed()
         R.id.edtItemName.isViewDisplayed()
-        R.id.spinnerBag.isViewDisplayed()
-        R.id.tvBagDesc.isViewDisplayed()
+        R.id.tvBagname.isViewDisplayed()
         R.id.edtItemDesc.isViewDisplayed()
         R.id.edtItemQuantity.isViewDisplayed()
-        R.id.button.isViewDisplayed()
-        R.id.action_update_item.isViewDisplayed()
+        R.id.action_delete_item.isViewDisplayed()
 
         onView(withContentDescription("Navigate up"))
             .check(matches(isDisplayed()))

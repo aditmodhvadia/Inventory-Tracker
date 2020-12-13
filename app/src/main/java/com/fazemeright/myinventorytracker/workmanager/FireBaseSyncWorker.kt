@@ -10,6 +10,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
+import timber.log.Timber
 
 class FireBaseSyncWorker @WorkerInject constructor(
     @Assisted context: Context,
@@ -24,7 +25,7 @@ class FireBaseSyncWorker @WorkerInject constructor(
         get() = Dispatchers.IO
 
     override suspend fun doWork(): Result = coroutineScope {
-
+        Timber.d("Worker called")
         val result = async { repository.syncLocalAndCloud() }
         result.await()
 

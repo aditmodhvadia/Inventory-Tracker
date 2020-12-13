@@ -4,12 +4,16 @@ import android.content.Context
 import androidx.annotation.StringRes
 import androidx.lifecycle.ViewModel
 import androidx.work.*
+import com.fazemeright.myinventorytracker.data.InventoryRepository
 import com.fazemeright.myinventorytracker.workmanager.FireBaseSyncWorker
 import dagger.hilt.android.qualifiers.ActivityContext
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 
-abstract class BaseViewModel constructor(@ActivityContext private val context: Context) :
+abstract class BaseViewModel constructor(
+    @ActivityContext private val context: Context,
+    private val repository: InventoryRepository
+) :
     ViewModel() {
 
     fun getString(@StringRes resId: Int): String {
@@ -32,10 +36,9 @@ abstract class BaseViewModel constructor(@ActivityContext private val context: C
             .setConstraints(constraints)
             .build()
 
-//        val singleRequest = OneTimeWorkRequestBuilder<FireBaseSyncWorker>()
-//            .build()
 //        Instantly sync
-        workManager.enqueue(OneTimeWorkRequest.from(FireBaseSyncWorker::class.java))
+        val oneTimeRequest = OneTimeWorkRequest.from(FireBaseSyncWorker::class.java)
+        workManager.enqueue(oneTimeRequest)
 //        Set a periodic repeating work request to sync data daily once
         workManager.enqueue(syncRequest)
     }

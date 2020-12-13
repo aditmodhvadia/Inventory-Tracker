@@ -114,10 +114,6 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.3.0-beta01"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.3.0-alpha06"
 
-    // Navigation
-//    implementation "android.arch.navigation:navigation-fragment-ktx:1.0.0"
-//    implementation "android.arch.navigation:navigation-ui-ktx:1.0.0"
-
 //    Color Picker Library
     implementation 'com.jaredrummler:colorpicker:1.1.0'
 

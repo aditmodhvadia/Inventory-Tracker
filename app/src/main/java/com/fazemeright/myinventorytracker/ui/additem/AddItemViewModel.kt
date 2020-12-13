@@ -14,7 +14,7 @@ import timber.log.Timber
 class AddItemViewModel @ViewModelInject constructor(
     private val repository: InventoryRepository,
     @ActivityContext private val context: Context
-) : BaseViewModel(context) {
+) : BaseViewModel(context, repository) {
 
     private val newInventoryItem by lazy { InventoryItem() }
     val bags = repository.getAllBags()

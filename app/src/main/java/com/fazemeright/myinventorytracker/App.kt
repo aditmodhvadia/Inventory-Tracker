@@ -1,10 +1,10 @@
 package com.fazemeright.myinventorytracker
 
 import android.app.Application
-import android.content.Context
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.hilt.work.HiltWorkerFactory
+import androidx.preference.PreferenceManager
 import androidx.work.Configuration
 import dagger.hilt.android.HiltAndroidApp
 import timber.log.Timber
@@ -15,8 +15,7 @@ class App : Application(), Configuration.Provider {
 
     override fun onCreate() {
         super.onCreate()
-
-        val preferences = getSharedPreferences(null, Context.MODE_PRIVATE)
+        val preferences = PreferenceManager.getDefaultSharedPreferences(this)
         handleTheme(preferences)
 
         if (BuildConfig.DEBUG) {
@@ -28,9 +27,9 @@ class App : Application(), Configuration.Provider {
     lateinit var workerFactory: HiltWorkerFactory
 
     override fun getWorkManagerConfiguration() =
-        Configuration.Builder()
-            .setWorkerFactory(workerFactory)
-            .build()
+            Configuration.Builder()
+                    .setWorkerFactory(workerFactory)
+                    .build()
 
     /**
      * Handle the theme of the app from the user settings

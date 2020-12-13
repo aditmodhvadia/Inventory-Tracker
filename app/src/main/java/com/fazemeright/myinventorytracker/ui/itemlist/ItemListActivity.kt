@@ -4,9 +4,15 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.WindowInsets.Type.ime
+import android.view.WindowInsets.Type.systemBars
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SearchView
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowCompat
+import androidx.core.view.marginTop
+import androidx.core.view.updatePadding
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fazemeright.myinventorytracker.R
@@ -20,6 +26,8 @@ import com.fazemeright.myinventorytracker.ui.login.LoginActivity
 import com.fazemeright.myinventorytracker.ui.settings.SettingsActivity
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.activity_splash.*
+import kotlinx.android.synthetic.main.collapsing_toolbar.*
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -38,6 +46,7 @@ class ItemListActivity : BaseActivity<ActivityItemListBinding>() {
 
         binding.viewModel = viewModel
 
+        setSupportActionBar(toolbar)
         val manager = LinearLayoutManager(this)
 
         binding.itemList.layoutManager = manager

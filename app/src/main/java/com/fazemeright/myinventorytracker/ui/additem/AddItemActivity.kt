@@ -13,6 +13,7 @@ import com.fazemeright.myinventorytracker.databinding.ActivityAddItemBinding
 import com.fazemeright.myinventorytracker.ui.base.BaseActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_add_item.*
+import kotlinx.android.synthetic.main.collapsing_toolbar.*
 import timber.log.Timber
 
 @AndroidEntryPoint
@@ -27,24 +28,12 @@ class AddItemActivity : BaseActivity<ActivityAddItemBinding>(), AdapterView.OnIt
 
         binding.viewModel = viewModel
 
+        setSupportActionBar(toolbar)
+
         supportActionBar?.apply {
             setHomeButtonEnabled(true)
             setDisplayHomeAsUpEnabled(true)
-            title = getString(R.string.add_item_title)
         }
-
-        viewModel.bagNames.observe(this, Observer { bagNames ->
-            Timber.d(bagNames.size.toString())
-
-            // Create an ArrayAdapter using a simple spinner layout and languages array
-            val aa = ArrayAdapter(this, android.R.layout.simple_spinner_item, bagNames)
-            // Set layout to use when the list of choices appear
-            aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            // Set Adapter to Spinner
-            binding.spinnerBag.adapter = aa
-
-            binding.spinnerBag.onItemSelectedListener = this
-        })
 
         viewModel.navigateBackToItemList.observe(this, Observer { navigate ->
             if (navigate) {

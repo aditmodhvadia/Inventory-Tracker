@@ -17,7 +17,7 @@ import java.security.InvalidParameterException
 
 class LoginViewModel @ViewModelInject constructor(
     private val repository: InventoryRepository, @ActivityContext private val context: Context
-) : BaseViewModel(context) {
+) : BaseViewModel(context, repository) {
 
     private val _loginResult = MutableLiveData<Result<FirebaseUser>>()
 

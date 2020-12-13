@@ -16,10 +16,10 @@ import timber.log.Timber
  * ViewModel for SleepTrackerFragment.
  */
 class ItemListViewModel @ViewModelInject constructor(
-    bagItemDao: BagItemDao,
-    private val repository: InventoryRepository,
-    @ActivityContext context: Context
-) : BaseViewModel(context) {
+        bagItemDao: BagItemDao,
+        private val repository: InventoryRepository,
+        @ActivityContext context: Context
+) : BaseViewModel(context,repository) {
 
     private val _searchString = MutableLiveData<String>()
 
@@ -34,7 +34,7 @@ class ItemListViewModel @ViewModelInject constructor(
             liveData {
                 emit(
 //                    withContext(Dispatchers.IO + Job()) {
-                    repository.searchInventoryItems(it)
+                        repository.searchInventoryItems(it)
 //                    }
                 )
             }

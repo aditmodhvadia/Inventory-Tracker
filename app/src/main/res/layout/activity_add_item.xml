@@ -1,96 +1,117 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
         <variable
-                name="viewModel"
-                type="com.fazemeright.myinventorytracker.ui.additem.AddItemViewModel" />
+            name="viewModel"
+            type="com.fazemeright.myinventorytracker.ui.additem.AddItemViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-        <EditText
-                android:id="@+id/edtItemName"
-                style="@style/Base.Widget.AppCompat.EditText.Centred"
+        <include layout="@layout/collapsing_toolbar" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="@dimen/spacing_normal"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilItemName"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/spacing_normal"
-                android:layout_marginEnd="@dimen/spacing_normal"
-                android:layout_marginBottom="@dimen/spacing_normal"
-                android:ems="10"
                 android:hint="@string/item_name"
-                android:imeOptions="actionNext"
-                android:inputType="textPersonName"
-                android:text="@{viewModel.itemName}"
-                app:layout_constraintBottom_toTopOf="@+id/spinnerBag"
+                app:layout_constraintBottom_toTopOf="@+id/tvBagname"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_chainStyle="packed"
-                tools:text="Item Name" />
+                app:layout_constraintVertical_chainStyle="packed">
 
-        <Spinner
-                android:id="@+id/spinnerBag"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edtItemName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:imeOptions="actionNext"
+                    android:inputType="textPersonName"
+                    android:text="@{viewModel.itemName}"
+                    tools:text="Item Name" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Spinner
+                android:id="@+id/tvBagname"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/spacing_normal"
-                android:layout_marginEnd="@dimen/spacing_normal"
+                android:layout_marginTop="@dimen/spacing_normal"
                 android:layout_marginBottom="@dimen/spacing_normal"
-                app:layout_constraintBottom_toTopOf="@+id/edtItemDesc"
+                app:layout_constraintBottom_toTopOf="@+id/tilItemDesc"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/edtItemName"
+                app:layout_constraintTop_toBottomOf="@+id/tilItemName"
                 tools:text="Bag" />
 
-        <EditText
-                android:id="@+id/edtItemDesc"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilItemDesc"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/spacing_normal"
-                android:layout_marginEnd="@dimen/spacing_normal"
-                android:layout_marginBottom="@dimen/spacing_normal"
-                android:ems="10"
-                android:hint="@string/desc"
-                android:imeOptions="actionNext"
-                android:inputType="textMultiLine"
-                android:lines="4"
-                android:maxLines="10"
-                android:minLines="2"
-                android:text="@{viewModel.desc}"
-                app:layout_constraintBottom_toTopOf="@+id/edtItemQuantity"
+                android:layout_marginTop="@dimen/spacing_normal"
+                app:layout_constraintBottom_toTopOf="@+id/tilItemQuantity"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/spinnerBag"
-                tools:text="Item Desc" />
+                app:layout_constraintTop_toBottomOf="@+id/tvBagname">
 
-        <EditText
-                android:id="@+id/edtItemQuantity"
-                style="@style/Base.Widget.AppCompat.EditText.Centred"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edtItemDesc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="@string/desc"
+                    android:imeOptions="actionNext"
+                    android:inputType="textMultiLine"
+                    android:lines="4"
+                    android:maxLines="10"
+                    android:minLines="2"
+                    android:text="@{viewModel.desc}"
+                    tools:text="Item Desc" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilItemQuantity"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/spacing_normal"
-                android:layout_marginEnd="@dimen/spacing_normal"
-                android:ems="10"
-                android:hint="@string/item_quantity"
-                android:imeOptions="actionDone"
-                android:inputType="number"
-                android:text="@{String.valueOf(viewModel.itemQuantity)}"
+                android:layout_marginTop="@dimen/spacing_normal"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/edtItemDesc"
-                tools:text="Item Quantity" />
+                app:layout_constraintTop_toBottomOf="@+id/tilItemDesc">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edtItemQuantity"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="@string/item_quantity"
+                    android:imeOptions="actionDone"
+                    android:inputType="number"
+                    android:text="@{String.valueOf(viewModel.itemQuantity)}"
+                    tools:text="Item Quantity" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>
 
-        <!--android:onClick="@{() -> viewModel.onAddClicked(edtItemName.getText().toString(),edtBagName.getText().toString(),edtItemDesc.getText().toString(),edtItemQuantity.getText().toString())}"-->
+    <!--android:onClick="@{() -> viewModel.onAddClicked(edtItemName.getText().toString(),edtBagName.getText().toString(),edtItemDesc.getText().toString(),edtItemQuantity.getText().toString())}"-->

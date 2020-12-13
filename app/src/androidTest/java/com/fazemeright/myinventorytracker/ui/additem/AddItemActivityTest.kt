@@ -17,7 +17,7 @@ class AddItemActivityTest : BaseUiTest<AddItemActivity>() {
     @Test
     override fun allViewsAreDisplayed() {
         R.id.edtItemName.isViewDisplayed()
-        R.id.spinnerBag.isViewDisplayed()
+        R.id.tvBagname.isViewDisplayed()
         R.id.edtItemDesc.isViewDisplayed()
         R.id.edtItemQuantity.isViewDisplayed()
         R.id.action_add_item.isViewDisplayed()

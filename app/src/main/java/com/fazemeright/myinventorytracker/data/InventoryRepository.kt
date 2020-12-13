@@ -142,6 +142,7 @@ class InventoryRepository @Inject constructor(
      */
     suspend fun syncLocalAndCloud() {
 //        TODO: Make these asynchronous
+        Timber.d("Sync called")
         withContext(Dispatchers.IO) {
             val bagItemsInLocal = bagItemDao.getAllBagsList()
             FireBaseApiManager.batchWriteBags(bagItemsInLocal)
