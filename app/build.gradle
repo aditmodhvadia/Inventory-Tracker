@@ -58,12 +58,11 @@ dependencies {
     implementation 'androidx.preference:preference:1.1.1'
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.3.72"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.4.21"
     implementation 'androidx.appcompat:appcompat:1.2.0'
-    implementation 'androidx.core:core-ktx:1.3.1'
-    implementation 'androidx.core:core:1.5.0-alpha02'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.1'
-    implementation 'com.google.android.material:material:1.3.0-alpha02'
+    implementation 'androidx.core:core-ktx:1.3.2'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+    implementation 'com.google.android.material:material:1.3.0-alpha04'
 
     // Android KTX
     implementation "androidx.core:core-ktx:1.3.1"
@@ -80,22 +79,22 @@ dependencies {
     testImplementation "androidx.room:room-testing:2.2.5"
 
     // Dagger Hilt (DI)
-    implementation 'com.google.dagger:hilt-android:2.28.1-alpha'
-    kapt 'com.google.dagger:hilt-android-compiler:2.28.1-alpha'
+    implementation 'com.google.dagger:hilt-android:2.30.1-alpha'
+    kapt 'com.google.dagger:hilt-android-compiler:2.30.1-alpha'
     implementation 'androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha02'
     implementation 'androidx.hilt:hilt-work:1.0.0-alpha02'
     kapt 'androidx.hilt:hilt-compiler:1.0.0-alpha02'
     // Hilt testing dependency
-    androidTestImplementation "com.google.dagger:hilt-android-testing:2.28.1-alpha"
+    androidTestImplementation "com.google.dagger:hilt-android-testing:2.30.1-alpha"
     // Make Hilt generate code in the androidTest folder
-    kaptAndroidTest "com.google.dagger:hilt-android-compiler:2.28.1-alpha"
+    kaptAndroidTest "com.google.dagger:hilt-android-compiler:2.30-alpha"
 
     // For instrumentation tests
-    androidTestImplementation 'com.google.dagger:hilt-android-testing:2.28.1-alpha'
-    kaptAndroidTest 'com.google.dagger:hilt-android-compiler:2.28.1-alpha'
+    androidTestImplementation 'com.google.dagger:hilt-android-testing:2.30-alpha'
+    kaptAndroidTest 'com.google.dagger:hilt-android-compiler:2.30.1-alpha'
 
     // For local unit tests
-    testImplementation 'com.google.dagger:hilt-android-testing:2.28.1-alpha'
+    testImplementation 'com.google.dagger:hilt-android-testing:2.30.1-alpha'
     kaptTest 'com.google.dagger:hilt-android-compiler:2.28.1-alpha'
 
     // ViewModel
@@ -108,54 +107,54 @@ dependencies {
     kapt "androidx.lifecycle:lifecycle-common-java8:$lifecycle_version"
 
     // Coroutines
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.7"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.4"
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.3.7'
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.2-native-mt"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.1-native-mt"
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.4.2-native-mt'
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.0-alpha06"
-    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.3.0-alpha06"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.3.0-beta01"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.3.0-alpha06"
 
 //    Color Picker Library
     implementation 'com.jaredrummler:colorpicker:1.1.0'
 
     // Testing libraries
-    testImplementation 'junit:junit:4.13'
+    testImplementation 'junit:junit:4.13.1'
 
     // Core library
-    androidTestImplementation 'androidx.test:core:1.2.0'
+    androidTestImplementation 'androidx.test:core:1.3.0'
 
     // AndroidJUnitRunner and JUnit Rules
-    androidTestImplementation 'androidx.test:runner:1.2.0'
-    androidTestImplementation 'androidx.test:rules:1.2.0'
+    androidTestImplementation 'androidx.test:runner:1.3.0'
+    androidTestImplementation 'androidx.test:rules:1.3.0'
 
     // Assertions
-    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
-    androidTestImplementation 'androidx.test.ext:truth:1.2.0'
-    androidTestImplementation 'com.google.truth:truth:1.0.1'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+    androidTestImplementation 'androidx.test.ext:truth:1.3.0'
+    androidTestImplementation 'com.google.truth:truth:1.1'
 
     // Espresso dependencies
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-    androidTestImplementation 'androidx.test.espresso:espresso-intents:3.2.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-intents:3.3.0'
 
 //    Networking
     implementation "com.squareup.retrofit2:retrofit:2.9.0"
     implementation "com.squareup.retrofit2:converter-moshi:2.9.0"
 
-    implementation "com.squareup.moshi:moshi:1.8.0"
-    implementation "com.squareup.moshi:moshi-kotlin:1.8.0"
+    implementation "com.squareup.moshi:moshi:1.11.0"
+    implementation "com.squareup.moshi:moshi-kotlin:1.11.0"
 
 //    Work Manager
     // Kotlin + coroutines
-    implementation "androidx.work:work-runtime-ktx:2.3.4"
+    implementation "androidx.work:work-runtime-ktx:2.4.0"
     // optional - Test helpers
-    androidTestImplementation "androidx.work:work-testing:2.3.4"
+    androidTestImplementation "androidx.work:work-testing:2.4.0"
 
     //  FireBase
-    implementation 'com.google.firebase:firebase-analytics:17.4.4'      // Analytics
-    implementation 'com.google.firebase:firebase-auth:19.3.2'           //  Auth
-    implementation 'com.google.firebase:firebase-auth-ktx:19.3.2'       //  Auth KTX
-    implementation 'com.google.android.gms:play-services-auth:18.1.0'   //  Google SSO
-    implementation 'com.google.firebase:firebase-firestore:21.5.0'      //  FireStore
-    implementation 'com.google.firebase:firebase-firestore-ktx:21.5.0'  //  FireStore ktx
+    implementation 'com.google.firebase:firebase-analytics:18.0.0'      // Analytics
+    implementation 'com.google.firebase:firebase-auth:20.0.1'           //  Auth
+    implementation 'com.google.firebase:firebase-auth-ktx:20.0.1'       //  Auth KTX
+    implementation 'com.google.android.gms:play-services-auth:19.0.0'   //  Google SSO
+    implementation 'com.google.firebase:firebase-firestore:22.0.0'      //  FireStore
+    implementation 'com.google.firebase:firebase-firestore-ktx:22.0.0'  //  FireStore ktx
 
 }
