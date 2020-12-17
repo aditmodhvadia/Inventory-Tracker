@@ -76,7 +76,7 @@ dependencies {
     implementation "androidx.room:room-ktx:2.2.6"
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
     // Test helpers
-    testImplementation "androidx.room:room-testing:2.2.5"
+    testImplementation "androidx.room:room-testing:2.2.6"
 
     // Dagger Hilt (DI)
     implementation 'com.google.dagger:hilt-android:2.30.1-alpha'
