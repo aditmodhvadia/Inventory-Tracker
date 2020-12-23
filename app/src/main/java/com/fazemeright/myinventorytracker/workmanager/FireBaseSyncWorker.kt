@@ -5,7 +5,7 @@ import androidx.hilt.Assisted
 import androidx.hilt.work.WorkerInject
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
-import com.fazemeright.myinventorytracker.data.InventoryRepository
+import com.fazemeright.myinventorytracker.repository.InventoryRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async

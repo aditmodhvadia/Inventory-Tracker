@@ -5,7 +5,7 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.fazemeright.myinventorytracker.data.InventoryRepository
+import com.fazemeright.myinventorytracker.repository.InventoryRepository
 import com.fazemeright.myinventorytracker.firebase.models.Result
 import com.fazemeright.myinventorytracker.ui.base.BaseViewModel
 import com.fazemeright.myinventorytracker.utils.Validator.isEmailValid

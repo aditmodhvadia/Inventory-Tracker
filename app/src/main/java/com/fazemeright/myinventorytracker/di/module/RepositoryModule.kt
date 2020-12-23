@@ -1,6 +1,6 @@
 package com.fazemeright.myinventorytracker.di.module
 
-import com.fazemeright.myinventorytracker.data.InventoryRepository
+import com.fazemeright.myinventorytracker.repository.InventoryRepository
 import com.fazemeright.myinventorytracker.database.bag.BagItemDao
 import com.fazemeright.myinventorytracker.database.inventoryitem.InventoryItemDao
 import com.fazemeright.myinventorytracker.network.interfaces.SampleNetworkInterface
