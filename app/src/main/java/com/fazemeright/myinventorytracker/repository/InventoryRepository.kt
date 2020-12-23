@@ -6,8 +6,9 @@ import com.fazemeright.myinventorytracker.database.bag.BagItemDao
 import com.fazemeright.myinventorytracker.database.inventoryitem.InventoryItem
 import com.fazemeright.myinventorytracker.database.inventoryitem.InventoryItemDao
 import com.fazemeright.myinventorytracker.database.inventoryitem.ItemWithBag
-import com.fazemeright.myinventorytracker.firebase.api.FireBaseApiManager
+import com.fazemeright.myinventorytracker.firebase.api.FireBaseOnlineDatabaseStore
 import com.fazemeright.myinventorytracker.firebase.api.FireBaseUserAuthentication
+import com.fazemeright.myinventorytracker.firebase.interfaces.OnlineDatabaseStore
 import com.fazemeright.myinventorytracker.firebase.interfaces.UserAuthentication
 import com.fazemeright.myinventorytracker.firebase.models.Result
 import com.fazemeright.myinventorytracker.network.interfaces.SampleNetworkInterface
@@ -24,6 +25,7 @@ class InventoryRepository @Inject constructor(
     private val apiService: SampleNetworkInterface
 ) {
     private val userAuthentication: UserAuthentication = FireBaseUserAuthentication
+    private val onlineDatabaseStore: OnlineDatabaseStore = FireBaseOnlineDatabaseStore
 
     fun isUserSignedIn(): Result<Boolean> {
         return if (userAuthentication.isUserSignedIn()) {
@@ -64,7 +66,7 @@ class InventoryRepository @Inject constructor(
 
             val item = bagItemDao.get(itemId)
 
-            item?.let { FireBaseApiManager.storeBag(it) }
+            item?.let { onlineDatabaseStore.storeBag(it) }
         }
     }
 
@@ -90,7 +92,7 @@ class InventoryRepository @Inject constructor(
 
             val item = inventoryItemDao.getById(itemId.toInt())
 
-            item?.let { FireBaseApiManager.storeInventoryItem(it) }
+            item?.let { onlineDatabaseStore.storeInventoryItem(it) }
         }
     }
 
@@ -124,7 +126,7 @@ class InventoryRepository @Inject constructor(
         withContext(Dispatchers.IO) {
             inventoryItemDao.deleteItem(item)
 
-            FireBaseApiManager.deleteInventoryItem(item)
+            onlineDatabaseStore.deleteInventoryItem(item)
         }
     }
 
@@ -148,12 +150,12 @@ class InventoryRepository @Inject constructor(
         Timber.d("Sync called")
         withContext(Dispatchers.IO) {
             val bagItemsInLocal = bagItemDao.getAllBagsList()
-            FireBaseApiManager.batchWriteBags(bagItemsInLocal)
+            onlineDatabaseStore.batchWriteBags(bagItemsInLocal)
 
             val inventoryItemsInLocal = inventoryItemDao.getAllInventoryItemsList()
-            FireBaseApiManager.batchWriteInventoryItems(inventoryItemsInLocal)
+            onlineDatabaseStore.batchWriteInventoryItems(inventoryItemsInLocal)
 
-            when (val bagItemsInCloudResult = FireBaseApiManager.getAllBags()) {
+            when (val bagItemsInCloudResult = onlineDatabaseStore.getAllBags()) {
                 is Result.Success -> {
                     bagItemDao.insertAll(bagItemsInCloudResult.data)
                 }
@@ -164,7 +166,7 @@ class InventoryRepository @Inject constructor(
 
             }
 
-            when (val inventoryItemsInCloudResult = FireBaseApiManager.getAllInventoryItems()) {
+            when (val inventoryItemsInCloudResult = onlineDatabaseStore.getAllInventoryItems()) {
                 is Result.Success -> {
                     inventoryItemDao.insertAll(inventoryItemsInCloudResult.data)
                 }
