@@ -4,12 +4,10 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.view.Window
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.WindowCompat
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 
@@ -36,19 +34,11 @@ abstract class BaseActivity<V : ViewDataBinding> : AppCompatActivity() {
         }
     }
 
-    protected fun setFullScreen() {
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
-            window.setDecorFitsSystemWindows(false)
-        } else {
-            WindowCompat.setDecorFitsSystemWindows(window, false)
-        }
-    }
-
     protected fun Context.showToast(msg: String) {
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
     }
 
-    protected fun <T : AppCompatActivity> AppCompatActivity.open(java: Class<T>) {
-        startActivity(Intent(this, java))
+    protected fun <T : AppCompatActivity> AppCompatActivity.open(classType: Class<T>) {
+        startActivity(Intent(this, classType))
     }
 }

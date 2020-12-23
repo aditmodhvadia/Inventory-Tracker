@@ -21,8 +21,6 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
 
         binding.viewModel = viewModel
 
-        setFullScreen()
-
         viewModel.isUserSignedIn.observe(this, Observer { userIsSignedIn ->
             if (userIsSignedIn) {
                 viewModel.syncLocalAndCloudData()
