@@ -92,11 +92,6 @@ class InventoryDatabaseTest {
 
         val allItemsWithBag = inventoryItemDao.getItemsWithBag()
         assertEquals(1, allItemsWithBag.size)
-
-//        TODO: Remove the newly created items from the database
-//        bagItemDao.deleteItem(bag1)
-//        bagItemDao.deleteItem(bag2)
-//        inventoryItemDao.deleteItem(item)
     }
 }
 

@@ -4,21 +4,21 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseUser
 
-interface FireBaseAuthUserInterface {
+interface UserAuthentication {
 
-    fun signIn(email: String, password: String): Task<AuthResult>
+    suspend fun signIn(email: String, password: String): Task<AuthResult>
 
-    fun signIn(idToken: String): Task<AuthResult>
+    suspend fun signIn(idToken: String): Task<AuthResult>
 
-    fun register(email: String, password: String): Task<AuthResult>
+    suspend fun register(email: String, password: String): Task<AuthResult>
 
     fun logout()
 
     fun currentUser(): FirebaseUser?
 
-    fun userSignedIn(): Boolean
+    fun isUserSignedIn(): Boolean
 
-    fun sendPasswordResetEmail(): Task<Void>?
+    suspend fun sendPasswordResetEmail(): Task<Void>?
 
     fun isUserVerified(): Boolean
 

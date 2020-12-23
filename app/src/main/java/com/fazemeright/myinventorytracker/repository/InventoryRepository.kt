@@ -7,6 +7,8 @@ import com.fazemeright.myinventorytracker.database.inventoryitem.InventoryItem
 import com.fazemeright.myinventorytracker.database.inventoryitem.InventoryItemDao
 import com.fazemeright.myinventorytracker.database.inventoryitem.ItemWithBag
 import com.fazemeright.myinventorytracker.firebase.api.FireBaseApiManager
+import com.fazemeright.myinventorytracker.firebase.api.FireBaseUserAuthentication
+import com.fazemeright.myinventorytracker.firebase.interfaces.UserAuthentication
 import com.fazemeright.myinventorytracker.firebase.models.Result
 import com.fazemeright.myinventorytracker.network.interfaces.SampleNetworkInterface
 import com.google.firebase.auth.FirebaseUser
@@ -21,9 +23,10 @@ class InventoryRepository @Inject constructor(
     private val inventoryItemDao: InventoryItemDao,
     private val apiService: SampleNetworkInterface
 ) {
+    private val userAuthentication: UserAuthentication = FireBaseUserAuthentication
 
     fun isUserSignedIn(): Result<Boolean> {
-        return if (FireBaseApiManager.isUserSignedIn()) {
+        return if (userAuthentication.isUserSignedIn()) {
             Result.Success(
                 msg = "User is singed in",
                 data = true
@@ -36,7 +39,7 @@ class InventoryRepository @Inject constructor(
     suspend fun registerWithEmailPassword(email: String, password: String): Result<FirebaseUser> {
         return withContext(Dispatchers.IO) {
             try {
-                val result = FireBaseApiManager.registerWithEmailPassword(email, password).await()
+                val result = userAuthentication.register(email, password).await()
                 if (result.user != null)
                     Result.Success(data = result.user!!)
                 else
@@ -128,7 +131,7 @@ class InventoryRepository @Inject constructor(
     suspend fun performLogin(email: String, password: String): Result<FirebaseUser> {
         return withContext(Dispatchers.IO) {
             try {
-                val result = FireBaseApiManager.signInWithEmailPassword(email, password).await()
+                val result = userAuthentication.signIn(email, password).await()
                 Result.Success(data = result.user!!, msg = "User Logged in Successfully")
             } catch (e: Exception) {
                 Timber.e(e)
@@ -174,7 +177,7 @@ class InventoryRepository @Inject constructor(
     }
 
     suspend fun logoutUser() {
-        FireBaseApiManager.logout()
+        userAuthentication.logout()
         withContext(Dispatchers.IO) {
             inventoryItemDao.clear()
             bagItemDao.clear()
