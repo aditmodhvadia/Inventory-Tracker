@@ -5,6 +5,7 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.fazemeright.myinventorytracker.R
 import com.fazemeright.myinventorytracker.firebase.models.Result
 import com.fazemeright.myinventorytracker.repository.InventoryRepository
 import com.fazemeright.myinventorytracker.ui.base.BaseViewModel
@@ -16,7 +17,7 @@ import kotlinx.coroutines.launch
 import java.security.InvalidParameterException
 
 class LoginViewModel @ViewModelInject constructor(
-    private val repository: InventoryRepository, @ActivityContext private val context: Context
+    @ActivityContext private val context: Context, private val repository: InventoryRepository
 ) : BaseViewModel(context, repository) {
 
     private val _loginResult = MutableLiveData<Result<FirebaseUser>>()
@@ -29,12 +30,12 @@ class LoginViewModel @ViewModelInject constructor(
             _loginResult.value = when {
                 !email.isEmailValid() -> Result.Error(
                     exception = InvalidParameterException("Invalid Email"),
-                    msg = "Please enter valid email address"
+                    msg = getString(R.string.invalid_email_msg)
                 )
 
                 !password.isPasswordValid() -> Result.Error(
                     exception = InvalidParameterException("Invalid Password"),
-                    msg = "Password should be greater than 6 characters"
+                    msg = getString(R.string.invalid_password_msg)
                 )
                 else -> {
                     repository.performLogin(email, password)

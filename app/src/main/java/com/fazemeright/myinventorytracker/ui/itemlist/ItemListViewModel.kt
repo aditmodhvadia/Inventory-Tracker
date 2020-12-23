@@ -3,7 +3,6 @@ package com.fazemeright.myinventorytracker.ui.itemlist
 import android.content.Context
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
-import com.fazemeright.myinventorytracker.database.bag.BagItemDao
 import com.fazemeright.myinventorytracker.database.inventoryitem.InventoryItem
 import com.fazemeright.myinventorytracker.database.inventoryitem.ItemWithBag
 import com.fazemeright.myinventorytracker.repository.InventoryRepository
@@ -16,7 +15,6 @@ import timber.log.Timber
  * ViewModel for SleepTrackerFragment.
  */
 class ItemListViewModel @ViewModelInject constructor(
-    bagItemDao: BagItemDao,
     private val repository: InventoryRepository,
     @ActivityContext context: Context
 ) : BaseViewModel(context, repository) {
@@ -25,32 +23,28 @@ class ItemListViewModel @ViewModelInject constructor(
 
     private val _logoutUser = MutableLiveData<Boolean>()
 
-    val logoutUser: LiveData<Boolean>
+    val userLoggedOut: LiveData<Boolean>
         get() = _logoutUser
-
-    val items = _searchString.switchMap {
-        if (it.isEmpty()) repository.getItemsWithBagLive()
-        else
-            liveData {
-                emit(
-//                    withContext(Dispatchers.IO + Job()) {
-                    repository.searchInventoryItems(it)
-//                    }
-                )
-            }
-    }
-
-    init {
-        _searchString.value = ""
-    }
-
-    val bags = bagItemDao.getAllBags()
 
     val navigateToItemDetailActivity = MutableLiveData<ItemWithBag?>()
 
     val navigateToAddItemActivity = MutableLiveData<Boolean>()
 
     val deletedItem = MutableLiveData<InventoryItem>()
+
+    init {
+        _searchString.value = ""
+    }
+
+    val items = _searchString.switchMap {
+        if (it.isEmpty()) repository.getItemsWithBagLive()
+        else
+            liveData {
+                emit(
+                    repository.searchInventoryItems(it)
+                )
+            }
+    }
 
     fun onSearchClicked(searchText: String) {
         _searchString.value = searchText
@@ -79,11 +73,11 @@ class ItemListViewModel @ViewModelInject constructor(
     }
 
     private suspend fun deleteItem(itemId: Int): InventoryItem? {
-        val deleteItem = repository.getInventoryItemById(itemId)
-        deleteItem?.let {
+        repository.getInventoryItemById(itemId)?.let {
             repository.deleteInventoryItem(it)
+            return it
         }
-        return deleteItem
+        return null
     }
 
     fun undoDeleteItem(deletedItem: InventoryItem?) {

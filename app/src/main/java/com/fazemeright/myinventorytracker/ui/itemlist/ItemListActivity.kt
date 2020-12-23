@@ -7,7 +7,6 @@ import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SearchView
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fazemeright.myinventorytracker.R
 import com.fazemeright.myinventorytracker.database.inventoryitem.ItemWithBag
@@ -27,9 +26,9 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class ItemListActivity : BaseActivity<ActivityItemListBinding>() {
 
-    private lateinit var searchView: SearchView
-
     val viewModel: ItemListViewModel by viewModels()
+
+    private lateinit var searchView: SearchView
 
     @Inject
     lateinit var selectedItem: ItemWithBag
@@ -40,9 +39,8 @@ class ItemListActivity : BaseActivity<ActivityItemListBinding>() {
         binding.viewModel = viewModel
 
         setSupportActionBar(toolbar)
-        val manager = LinearLayoutManager(this)
 
-        binding.itemList.layoutManager = manager
+        binding.itemList.layoutManager = LinearLayoutManager(this)
 
         val adapter = ItemListAdapter(ItemListAdapter.ItemListener(
             clickListener = { item ->
@@ -50,22 +48,20 @@ class ItemListActivity : BaseActivity<ActivityItemListBinding>() {
             },
             deleteClickListener = { itemId ->
                 showConfirmationDialog(itemId)
-//                TODO("Implement AlertDialog for confirmation before delete")
                 viewModel.onDeleteItemClicked(itemId)
             }
         ))
 
         binding.itemList.adapter = adapter
 
-        viewModel.items.observe(this, Observer {
+        viewModel.items.observe(this, {
             it?.let {
                 adapter.updateList(it)
             }
-            Timber.i("received in onCreate: $it")
+            Timber.i("received in onCreate: ${it.size}")
         })
 
-        viewModel.deletedItem.observe(this, Observer { deletedItem ->
-            // Show a snack bar for undo option
+        viewModel.deletedItem.observe(this, { deletedItem ->
             Snackbar.make(
                 binding.root, // Parent view
                 "Item deleted from database.", // Message to show
@@ -73,36 +69,30 @@ class ItemListActivity : BaseActivity<ActivityItemListBinding>() {
             ).setAction( // Set an action for snack bar
                 "Undo" // Action button text
             ) {
-                // Action button click listener
-                // Do something when undo action button clicked
                 viewModel.undoDeleteItem(deletedItem)
             }.show()
         })
 
-        viewModel.navigateToAddItemActivity.observe(this, Observer { navigate ->
+        viewModel.navigateToAddItemActivity.observe(this, { navigate ->
             if (navigate) {
                 startActivity(Intent(this, AddItemActivity::class.java))
                 viewModel.onNavigationToAddItemFinished()
             }
         })
 
-        viewModel.navigateToItemDetailActivity.observe(this, Observer { itemInBag ->
+        viewModel.navigateToItemDetailActivity.observe(this, { itemInBag ->
             itemInBag?.let {
                 val intent = Intent(this, ItemDetailActivity::class.java)
-                selectedItem.item = itemInBag.item
-                selectedItem.bag = itemInBag.bag
+                selectedItem.apply {
+                    item = itemInBag.item
+                    bag = itemInBag.bag
+                }
                 startActivity(intent)
                 viewModel.onNavigationToItemDetailFinished()
             }
         })
 
-        viewModel.bags.observe(this, Observer { bagList ->
-            bagList?.let {
-                adapter.updateBagList(bagList)
-            }
-        })
-
-        viewModel.logoutUser.observe(this, Observer { userLoggedOut ->
+        viewModel.userLoggedOut.observe(this, { userLoggedOut ->
             if (userLoggedOut) {
                 open(LoginActivity::class.java)
                 finish()
@@ -112,15 +102,9 @@ class ItemListActivity : BaseActivity<ActivityItemListBinding>() {
     }
 
     private fun showConfirmationDialog(itemId: Int) {
-        // build alert dialog
-        val dialogBuilder = AlertDialog.Builder(this)
-
-        // set message of alert dialog
-        dialogBuilder
-            // set title for alert dialog box
+        AlertDialog.Builder(this)
             .setTitle("Are you sure")
             .setMessage("Do you want to delete this entry?")
-            // if the dialog is cancelable
             .setCancelable(false)
             // positive button text and action
             .setPositiveButton("Yes") { _, _ ->
@@ -130,11 +114,8 @@ class ItemListActivity : BaseActivity<ActivityItemListBinding>() {
             .setNegativeButton("No") { dialog, _ ->
                 dialog.cancel()
             }
-
-        // create dialog box
-        val alert = dialogBuilder.create()
-        // show alert dialog
-        alert.show()
+            .create()
+            .show()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

@@ -5,35 +5,25 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.fazemeright.myinventorytracker.database.bag.BagItem
 import com.fazemeright.myinventorytracker.database.inventoryitem.ItemWithBag
 import com.fazemeright.myinventorytracker.databinding.ListInventoryItemBinding
-import timber.log.Timber
 
 class ItemListAdapter(private val clickListener: ItemListener) :
     ListAdapter<ItemWithBag,
             ItemListAdapter.ViewHolder>(ItemListDiffCallback()) {
-
-    private lateinit var bagsList: List<BagItem>
-
-//    private val adapterScope = CoroutineScope(Dispatchers.Default)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder.from(parent)
     }
 
     fun updateList(list: List<ItemWithBag>?) {
-        Timber.d(list.toString())
         submitList(list)
     }
 
-    fun updateBagList(updatedList: List<BagItem>) {
-        this.bagsList = updatedList
-    }
-
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item = getItem(position)
-        holder.bind(item, clickListener)
+        getItem(position).also {
+            holder.bind(it, clickListener)
+        }
     }
 
     class ViewHolder private constructor(private val binding: ListInventoryItemBinding) :
