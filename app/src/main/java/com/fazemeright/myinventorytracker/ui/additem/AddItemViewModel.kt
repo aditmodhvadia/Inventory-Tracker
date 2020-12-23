@@ -17,7 +17,6 @@ class AddItemViewModel @ViewModelInject constructor(
 ) : BaseViewModel(context, repository) {
 
     private val newInventoryItem by lazy { InventoryItem() }
-    val bags = repository.getAllBags()
 
     val bagNames = repository.getAllBagNames()
 
@@ -33,19 +32,20 @@ class AddItemViewModel @ViewModelInject constructor(
     }
 
     fun onAddClicked(
-        itemName: String,
+        newItemName: String,
         bagName: String,
-        itemDesc: String,
-        itemQuantity: String
+        newItemDesc: String,
+        newItemQuantity: String
     ) {
         viewModelScope.launch {
-            Timber.d(itemName)
-            newInventoryItem.itemName = itemName
-            newInventoryItem.itemDesc = itemDesc
-            newInventoryItem.itemQuantity = itemQuantity.toInt()
-            newInventoryItem.bagOwnerId = getBagId(bagName)
+            newInventoryItem.apply {
+                itemName = newItemName
+                itemDesc = newItemDesc
+                itemQuantity = newItemQuantity.toInt()
+                bagOwnerId = getBagId(bagName)
+            }
 
-            Timber.d(newInventoryItem.toString())
+            Timber.d("$newInventoryItem")
             insert(newInventoryItem)
             navigateBackToItemList()
         }
@@ -60,7 +60,6 @@ class AddItemViewModel @ViewModelInject constructor(
     }
 
     private fun navigateBackToItemList() {
-        Timber.i("Clicked Fab")
         navigateBackToItemList.value = true
     }
 

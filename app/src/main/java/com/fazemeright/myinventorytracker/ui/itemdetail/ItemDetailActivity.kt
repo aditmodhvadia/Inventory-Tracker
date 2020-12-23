@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.viewModels
-import androidx.lifecycle.Observer
 import com.fazemeright.myinventorytracker.R
 import com.fazemeright.myinventorytracker.database.inventoryitem.ItemWithBag
 import com.fazemeright.myinventorytracker.databinding.ActivityItemDetailBinding
@@ -34,20 +33,20 @@ class ItemDetailActivity : BaseActivity<ActivityItemDetailBinding>() {
             setDisplayHomeAsUpEnabled(true)
         }
 
-        viewModel.item.observe(this, Observer { item ->
+        viewModel.item.observe(this, { item ->
             Timber.d("Detail Item: $item")
             item?.let {
                 binding.item = it
             }
         })
-        viewModel.navigateBackToItemList.observe(this, Observer { navigate ->
+        viewModel.navigateBackToItemList.observe(this, { navigate ->
             if (navigate) {
                 finish()
                 viewModel.onNavigationToItemListFinished()
             }
         })
 
-        viewModel.onItemDeleteComplete.observe(this, Observer { deleted ->
+        viewModel.onItemDeleteComplete.observe(this, { deleted ->
             if (deleted) {
                 showToast(getString(R.string.item_deleted_successfully))
                 finish()
@@ -69,7 +68,6 @@ class ItemDetailActivity : BaseActivity<ActivityItemDetailBinding>() {
             }
             R.id.action_delete_item -> {
                 viewModel.deleteItem()
-//                TODO("Show Alert dialog to confirm delete item")
             }
         }
         return super.onOptionsItemSelected(item)

@@ -11,7 +11,7 @@ import kotlinx.android.parcel.Parcelize
 @Entity(
     tableName = "my_inventory_table", foreignKeys = [ForeignKey(
         entity = BagItem::class,
-        childColumns = ["itemId"],
+        childColumns = ["bagOwnerId"],
         parentColumns = ["bagId"]
     )]
 )

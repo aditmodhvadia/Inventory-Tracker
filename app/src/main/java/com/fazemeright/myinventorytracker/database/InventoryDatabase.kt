@@ -13,7 +13,7 @@ import javax.inject.Singleton
  */
 @Database(
     entities = [InventoryItem::class, BagItem::class/*, InventoryItemFts::class*/],
-    version = 6,
+    version = 7,
     exportSchema = false
 )
 @Singleton
