@@ -5,7 +5,6 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
-import android.widget.ArrayAdapter
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import com.fazemeright.myinventorytracker.R
@@ -14,7 +13,6 @@ import com.fazemeright.myinventorytracker.ui.base.BaseActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_add_item.*
 import kotlinx.android.synthetic.main.collapsing_toolbar.*
-import timber.log.Timber
 
 @AndroidEntryPoint
 class AddItemActivity : BaseActivity<ActivityAddItemBinding>(), AdapterView.OnItemSelectedListener {

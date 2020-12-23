@@ -3,10 +3,10 @@ package com.fazemeright.myinventorytracker.ui.itemlist
 import android.content.Context
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
-import com.fazemeright.myinventorytracker.repository.InventoryRepository
 import com.fazemeright.myinventorytracker.database.bag.BagItemDao
 import com.fazemeright.myinventorytracker.database.inventoryitem.InventoryItem
 import com.fazemeright.myinventorytracker.database.inventoryitem.ItemWithBag
+import com.fazemeright.myinventorytracker.repository.InventoryRepository
 import com.fazemeright.myinventorytracker.ui.base.BaseViewModel
 import dagger.hilt.android.qualifiers.ActivityContext
 import kotlinx.coroutines.launch
@@ -16,10 +16,10 @@ import timber.log.Timber
  * ViewModel for SleepTrackerFragment.
  */
 class ItemListViewModel @ViewModelInject constructor(
-        bagItemDao: BagItemDao,
-        private val repository: InventoryRepository,
-        @ActivityContext context: Context
-) : BaseViewModel(context,repository) {
+    bagItemDao: BagItemDao,
+    private val repository: InventoryRepository,
+    @ActivityContext context: Context
+) : BaseViewModel(context, repository) {
 
     private val _searchString = MutableLiveData<String>()
 
@@ -34,7 +34,7 @@ class ItemListViewModel @ViewModelInject constructor(
             liveData {
                 emit(
 //                    withContext(Dispatchers.IO + Job()) {
-                        repository.searchInventoryItems(it)
+                    repository.searchInventoryItems(it)
 //                    }
                 )
             }

@@ -38,18 +38,18 @@ class AddBagActivity : BaseActivity<ActivityAddBagBinding>(), ColorPickerDialogL
 
         binding.btnChooseColor.setOnClickListener {
             ColorPickerDialog.newBuilder()
-                    .setDialogType(ColorPickerDialog.TYPE_CUSTOM)
-                    .setAllowPresets(false)
-                    .setDialogId(dialogId)
-                    .setColor(Color.BLACK)
-                    .show(this)
+                .setDialogType(ColorPickerDialog.TYPE_CUSTOM)
+                .setAllowPresets(false)
+                .setDialogId(dialogId)
+                .setColor(Color.BLACK)
+                .show(this)
         }
 
         binding.btnAddBag.setOnClickListener {
             viewModel.onAddBagClicked(
-                    binding.edtBagName.text.toString(),
-                    bagColor,
-                    binding.edtBagDesc.text.toString()
+                binding.edtBagName.text.toString(),
+                bagColor,
+                binding.edtBagDesc.text.toString()
             )
         }
 
@@ -68,7 +68,7 @@ class AddBagActivity : BaseActivity<ActivityAddBagBinding>(), ColorPickerDialogL
 
     override fun onColorSelected(dialogId: Int, color: Int) {
         Toast.makeText(this, "Selected Color: #" + Integer.toHexString(color), Toast.LENGTH_SHORT)
-                .show()
+            .show()
         binding.viewBagColorDisplay.setBackgroundColor(color)
         bagColor = color
 //        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.

@@ -2,8 +2,6 @@ package com.fazemeright.myinventorytracker.ui.splash
 
 import android.os.Bundle
 import androidx.activity.viewModels
-import androidx.core.view.WindowCompat
-import androidx.lifecycle.Observer
 import com.fazemeright.myinventorytracker.R
 import com.fazemeright.myinventorytracker.databinding.ActivitySplashBinding
 import com.fazemeright.myinventorytracker.ui.base.BaseActivity
@@ -21,7 +19,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
 
         binding.viewModel = viewModel
 
-        viewModel.isUserSignedIn.observe(this, Observer { userIsSignedIn ->
+        viewModel.isUserSignedIn.observe(this, { userIsSignedIn ->
             if (userIsSignedIn) {
                 viewModel.syncLocalAndCloudData()
                 open(ItemListActivity::class.java)
@@ -33,6 +31,4 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
     }
 
     override fun getLayoutId(): Int = R.layout.activity_splash
-
-
 }

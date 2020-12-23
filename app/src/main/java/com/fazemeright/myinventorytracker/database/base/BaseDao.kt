@@ -1,7 +1,6 @@
 package com.fazemeright.myinventorytracker.database.base
 
 import androidx.room.*
-import com.fazemeright.myinventorytracker.database.bag.BagItem
 
 @Dao
 interface BaseDao<T> {
