@@ -28,17 +28,6 @@ data class InventoryItem(
     var bagOwnerId: Int = 0
 ) : Parcelable
 
-@Parcelize
-@Entity
-data class ItemWithBag(
-    @Embedded var item: InventoryItem,
-    @Relation(
-        parentColumn = "bagOwnerId",
-        entityColumn = "bagId"
-    )
-    var bag: BagItem
-) : Parcelable
-
 //@Fts4(contentEntity = InventoryItem::class)
 //@Entity(tableName = "inventoryItemFts")
 //data class InventoryItemFts(val itemId: Int, val itemName: String, val itemDesc: String)

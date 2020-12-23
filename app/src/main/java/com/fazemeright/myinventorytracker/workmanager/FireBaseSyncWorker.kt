@@ -6,10 +6,10 @@ import androidx.hilt.work.WorkerInject
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.fazemeright.myinventorytracker.repository.InventoryRepository
-import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.withContext
 import timber.log.Timber
 
 class FireBaseSyncWorker @WorkerInject constructor(
@@ -21,14 +21,13 @@ class FireBaseSyncWorker @WorkerInject constructor(
     workerParams
 ) {
 
-    override val coroutineContext: CoroutineDispatcher
-        get() = Dispatchers.IO
-
     override suspend fun doWork(): Result = coroutineScope {
-        Timber.d("Worker called")
-        val result = async { repository.syncLocalAndCloud() }
-        result.await()
+        withContext(Dispatchers.IO) {
+            Timber.d("Worker called")
+            val result = async { repository.syncLocalAndCloud() }
+            result.await()
 
-        Result.success()
+            Result.success()
+        }
     }
 }
