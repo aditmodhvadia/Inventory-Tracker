@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.lifecycle.Observer
 import com.fazemeright.myinventorytracker.R
 import com.fazemeright.myinventorytracker.databinding.ActivityAddBagBinding
 import com.fazemeright.myinventorytracker.ui.base.BaseActivity
@@ -53,7 +52,7 @@ class AddBagActivity : BaseActivity<ActivityAddBagBinding>(), ColorPickerDialogL
             )
         }
 
-        viewModel.navigateBackToItemList.observe(this, Observer { navigate ->
+        viewModel.navigateBackToItemList.observe(this, { navigate ->
             if (navigate) {
                 finish()
                 viewModel.onNavigationToAddItemFinished()
@@ -63,7 +62,6 @@ class AddBagActivity : BaseActivity<ActivityAddBagBinding>(), ColorPickerDialogL
     }
 
     override fun onDialogDismissed(dialogId: Int) {
-//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun onColorSelected(dialogId: Int, color: Int) {
@@ -71,7 +69,6 @@ class AddBagActivity : BaseActivity<ActivityAddBagBinding>(), ColorPickerDialogL
             .show()
         binding.viewBagColorDisplay.setBackgroundColor(color)
         bagColor = color
-//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
