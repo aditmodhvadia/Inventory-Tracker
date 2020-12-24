@@ -1,15 +1,15 @@
 package com.fazemeright.myinventorytracker.repository
 
 import androidx.lifecycle.LiveData
-import com.fazemeright.myinventorytracker.domain.models.BagItem
-import com.fazemeright.myinventorytracker.domain.database.offline.room.dao.BagItemDao
-import com.fazemeright.myinventorytracker.domain.models.InventoryItem
-import com.fazemeright.myinventorytracker.domain.database.offline.room.dao.InventoryItemDao
-import com.fazemeright.myinventorytracker.domain.models.ItemWithBag
-import com.fazemeright.myinventorytracker.domain.database.online.firestore.FireBaseOnlineDatabaseStore
-import com.fazemeright.myinventorytracker.domain.authentication.firebase.FireBaseUserAuthentication
-import com.fazemeright.myinventorytracker.domain.database.online.OnlineDatabaseStore
 import com.fazemeright.myinventorytracker.domain.authentication.UserAuthentication
+import com.fazemeright.myinventorytracker.domain.authentication.firebase.FireBaseUserAuthentication
+import com.fazemeright.myinventorytracker.domain.database.offline.room.dao.BagItemDao
+import com.fazemeright.myinventorytracker.domain.database.offline.room.dao.InventoryItemDao
+import com.fazemeright.myinventorytracker.domain.database.online.OnlineDatabaseStore
+import com.fazemeright.myinventorytracker.domain.database.online.firestore.FireBaseOnlineDatabaseStore
+import com.fazemeright.myinventorytracker.domain.models.BagItem
+import com.fazemeright.myinventorytracker.domain.models.InventoryItem
+import com.fazemeright.myinventorytracker.domain.models.ItemWithBag
 import com.fazemeright.myinventorytracker.domain.models.Result
 import com.fazemeright.myinventorytracker.network.interfaces.SampleNetworkInterface
 import com.google.firebase.auth.FirebaseUser
@@ -23,11 +23,11 @@ class InventoryRepository @Inject constructor(
     private val bagItemDao: BagItemDao,
     private val inventoryItemDao: InventoryItemDao,
     private val apiService: SampleNetworkInterface
-) {
+) : Repository {
     private val userAuthentication: UserAuthentication = FireBaseUserAuthentication
     private val onlineDatabaseStore: OnlineDatabaseStore = FireBaseOnlineDatabaseStore
 
-    fun isUserSignedIn(): Result<Boolean> {
+    override fun isUserSignedIn(): Result<Boolean> {
         return if (userAuthentication.isUserSignedIn()) {
             Result.Success(
                 msg = "User is singed in",
@@ -38,7 +38,7 @@ class InventoryRepository @Inject constructor(
         }
     }
 
-    suspend fun registerWithEmailPassword(email: String, password: String): Result<FirebaseUser> {
+    override suspend fun registerWithEmailPassword(email: String, password: String): Result<FirebaseUser> {
         return withContext(Dispatchers.IO) {
             try {
                 val result = userAuthentication.register(email, password).await()
@@ -53,13 +53,13 @@ class InventoryRepository @Inject constructor(
         }
     }
 
-    suspend fun clearBagItems() {
+    override suspend fun clearBagItems() {
         withContext(Dispatchers.IO) {
             bagItemDao.clear()
         }
     }
 
-    suspend fun addBag(newBag: BagItem) {
+    override suspend fun addBag(newBag: BagItem) {
         withContext(Dispatchers.IO) {
             Timber.d(newBag.toString())
             val itemId = bagItemDao.insert(newBag)
@@ -70,23 +70,23 @@ class InventoryRepository @Inject constructor(
         }
     }
 
-    fun getAllBags() = bagItemDao.getAllBags()
+    override fun getAllBags() = bagItemDao.getAllBags()
 
-    fun getAllBagNames() = bagItemDao.getAllBagNames()
+    override fun getAllBagNames() = bagItemDao.getAllBagNames()
 
-    suspend fun clearInventoryItems() {
+    override suspend fun clearInventoryItems() {
         withContext(Dispatchers.IO) {
             inventoryItemDao.clear()
         }
     }
 
-    suspend fun getBagIdWithName(bagName: String): Int {
+    override suspend fun getBagIdWithName(bagName: String): Int {
         return withContext(Dispatchers.IO) {
             bagItemDao.getBagIdWithName(bagName)
         }
     }
 
-    suspend fun insertInventoryItem(newItem: InventoryItem) {
+    override suspend fun insertInventoryItem(newItem: InventoryItem) {
         withContext(Dispatchers.IO) {
             val itemId = inventoryItemDao.insert(newItem)
 
@@ -96,33 +96,33 @@ class InventoryRepository @Inject constructor(
         }
     }
 
-    fun getItemWithBagFromId(itemId: Int): LiveData<ItemWithBag> =
+    override fun getItemWithBagFromId(itemId: Int): LiveData<ItemWithBag> =
         inventoryItemDao.getItemWithBagFromId(itemId)
 
-    suspend fun updateItem(item: InventoryItem?) {
+    override suspend fun updateInventoryItem(item: InventoryItem?) {
         withContext(Dispatchers.IO) {
             item?.let { inventoryItemDao.update(it) }
         }
     }
 
-    fun getItemsWithBagLive(): LiveData<List<ItemWithBag>> {
+    override fun getItemsWithBagLive(): LiveData<List<ItemWithBag>> {
         return inventoryItemDao.getItemsWithBagLive()
     }
 
-    suspend fun searchInventoryItems(searchText: String): List<ItemWithBag> {
+    override suspend fun searchInventoryItems(searchText: String): List<ItemWithBag> {
         return withContext(Dispatchers.IO) {
             inventoryItemDao.searchItems(searchText)
         }
 
     }
 
-    suspend fun getInventoryItemById(itemId: Int): InventoryItem? {
+    override suspend fun getInventoryItemById(itemId: Int): InventoryItem? {
         return withContext(Dispatchers.IO) {
             inventoryItemDao.getById(itemId)
         }
     }
 
-    suspend fun deleteInventoryItem(item: InventoryItem) {
+    override suspend fun deleteInventoryItem(item: InventoryItem) {
         withContext(Dispatchers.IO) {
             inventoryItemDao.deleteItem(item)
 
@@ -130,7 +130,7 @@ class InventoryRepository @Inject constructor(
         }
     }
 
-    suspend fun performLogin(email: String, password: String): Result<FirebaseUser> {
+    override suspend fun performLogin(email: String, password: String): Result<FirebaseUser> {
         return withContext(Dispatchers.IO) {
             try {
                 val result = userAuthentication.signIn(email, password).await()
@@ -145,7 +145,7 @@ class InventoryRepository @Inject constructor(
     /**
      * Sync the local database and cloud database with each other
      */
-    suspend fun syncLocalAndCloud() {
+    override suspend fun syncLocalAndCloud() {
 //        TODO: Make these asynchronous
         Timber.d("Sync called")
         withContext(Dispatchers.IO) {
@@ -178,7 +178,7 @@ class InventoryRepository @Inject constructor(
         }
     }
 
-    suspend fun logoutUser() {
+    override suspend fun logoutUser() {
         userAuthentication.logout()
         withContext(Dispatchers.IO) {
             inventoryItemDao.clear()

@@ -44,7 +44,7 @@ class ItemDetailViewModel @ViewModelInject constructor(
     }
 
     private suspend fun updateItem(item: InventoryItem?) {
-        repository.updateItem(item)
+        repository.updateInventoryItem(item)
     }
 
     private fun navigateBackToItemList() {
