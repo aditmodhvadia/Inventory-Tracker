@@ -38,7 +38,10 @@ class InventoryRepository @Inject constructor(
         }
     }
 
-    override suspend fun registerWithEmailPassword(email: String, password: String): Result<FirebaseUser> {
+    override suspend fun registerWithEmailPassword(
+        email: String,
+        password: String
+    ): Result<FirebaseUser> {
         return withContext(Dispatchers.IO) {
             try {
                 val result = userAuthentication.register(email, password).await()
@@ -135,6 +138,18 @@ class InventoryRepository @Inject constructor(
             try {
                 val result = userAuthentication.signIn(email, password).await()
                 Result.Success(data = result.user!!, msg = "User Logged in Successfully")
+            } catch (e: Exception) {
+                Timber.e(e)
+                Result.Error(e, "Error occurred, user not logged in")
+            }
+        }
+    }
+
+    override suspend fun signInWithToken(idToken: String): Result<FirebaseUser> {
+        return withContext(Dispatchers.IO) {
+            try {
+                val result = userAuthentication.signIn(idToken).await()
+                Result.Success(data = result.user!!, msg = "User logged in successfully")
             } catch (e: Exception) {
                 Timber.e(e)
                 Result.Error(e, "Error occurred, user not logged in")

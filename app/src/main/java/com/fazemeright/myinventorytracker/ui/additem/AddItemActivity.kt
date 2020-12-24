@@ -13,7 +13,6 @@ import com.fazemeright.myinventorytracker.ui.base.BaseActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_add_item.*
 import kotlinx.android.synthetic.main.collapsing_toolbar.*
-import timber.log.Timber
 
 
 @AndroidEntryPoint
@@ -43,9 +42,6 @@ class AddItemActivity : BaseActivity<ActivityAddItemBinding>(), AdapterView.OnIt
         })
 
         viewModel.bagNames.observe(this) {
-            if (selectedBagName == null) {
-                selectedBagName = it[0]
-            }
             val adapter: ArrayAdapter<String> = ArrayAdapter<String>(
                 this,
                 android.R.layout.simple_spinner_item,
@@ -53,6 +49,7 @@ class AddItemActivity : BaseActivity<ActivityAddItemBinding>(), AdapterView.OnIt
             )
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             binding.tvBagname.adapter = adapter
+            binding.tvBagname.onItemSelectedListener = this
         }
 
     }
@@ -66,7 +63,6 @@ class AddItemActivity : BaseActivity<ActivityAddItemBinding>(), AdapterView.OnIt
     }
 
     private fun addBag() {
-        Timber.d("Add clicked")
         selectedBagName?.let { bagName ->
             viewModel.onAddClicked(
                 edtItemName.text.toString(),
@@ -83,12 +79,10 @@ class AddItemActivity : BaseActivity<ActivityAddItemBinding>(), AdapterView.OnIt
     }
 
     override fun onNothingSelected(p0: AdapterView<*>?) {
-//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun onItemSelected(p0: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
         selectedBagName = viewModel.bagNames.value?.get(position)
-//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun getLayoutId(): Int = R.layout.activity_add_item

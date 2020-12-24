@@ -14,6 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="@dimen/spacing_normal"
+        tools:background="?colorPrimary"
         tools:context="com.fazemeright.myinventorytracker.ui.login.LoginActivity">
 
         <TextView
@@ -84,12 +85,34 @@
             android:text="@string/login_button_text"
             android:textAlignment="center"
             android:textColor="?attr/colorOnPrimary"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/tvOrLabel"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tilPassword" />
 
+        <TextView
+            android:id="@+id/tvOrLabel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_normal"
+            android:text="@string/or_label"
+            android:textAlignment="center"
+            android:textColor="?colorOnPrimary"
+            app:layout_constraintBottom_toTopOf="@id/btnGoogleSignIn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btnLogin" />
+
+        <com.google.android.gms.common.SignInButton
+            android:id="@+id/btnGoogleSignIn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_normal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvOrLabel" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

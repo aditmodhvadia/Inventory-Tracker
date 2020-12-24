@@ -43,4 +43,10 @@ class LoginViewModel @ViewModelInject constructor(
             }
         }
     }
+
+    fun signInWithToken(idToken: String) {
+        viewModelScope.launch {
+            _loginResult.value = repository.signInWithToken(idToken)
+        }
+    }
 }
