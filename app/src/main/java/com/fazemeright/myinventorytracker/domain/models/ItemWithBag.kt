@@ -1,10 +1,9 @@
-package com.fazemeright.myinventorytracker.database.inventoryitem
+package com.fazemeright.myinventorytracker.domain.models
 
 import android.os.Parcelable
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.Relation
-import com.fazemeright.myinventorytracker.database.bag.BagItem
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize

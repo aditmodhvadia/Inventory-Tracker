@@ -7,8 +7,10 @@ import androidx.lifecycle.Observer
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.fazemeright.myinventorytracker.database.InventoryDatabase
-import com.fazemeright.myinventorytracker.database.bag.BagItemDao
+import com.fazemeright.myinventorytracker.domain.database.offline.room.InventoryDatabase
+import com.fazemeright.myinventorytracker.domain.database.offline.room.dao.BagItemDao
+import com.fazemeright.myinventorytracker.domain.database.offline.room.dao.InventoryItemDao
+import com.fazemeright.myinventorytracker.domain.models.InventoryItem
 import com.fazemeright.myinventorytracker.utils.TestUtils
 import junit.framework.Assert.*
 import junit.framework.AssertionFailedError

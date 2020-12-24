@@ -9,7 +9,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fazemeright.myinventorytracker.R
-import com.fazemeright.myinventorytracker.database.inventoryitem.ItemWithBag
+import com.fazemeright.myinventorytracker.domain.models.ItemWithBag
 import com.fazemeright.myinventorytracker.databinding.ActivityItemListBinding
 import com.fazemeright.myinventorytracker.ui.addbag.AddBagActivity
 import com.fazemeright.myinventorytracker.ui.additem.AddItemActivity

@@ -1,8 +1,8 @@
 package com.fazemeright.myinventorytracker.di.module
 
-import com.fazemeright.myinventorytracker.database.bag.BagItem
-import com.fazemeright.myinventorytracker.database.inventoryitem.InventoryItem
-import com.fazemeright.myinventorytracker.database.inventoryitem.ItemWithBag
+import com.fazemeright.myinventorytracker.domain.models.BagItem
+import com.fazemeright.myinventorytracker.domain.models.InventoryItem
+import com.fazemeright.myinventorytracker.domain.models.ItemWithBag
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

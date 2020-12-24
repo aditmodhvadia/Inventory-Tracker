@@ -7,7 +7,7 @@
 
         <variable
             name="item"
-            type="com.fazemeright.myinventorytracker.database.inventoryitem.ItemWithBag" />
+            type="com.fazemeright.myinventorytracker.domain.models.ItemWithBag" />
 
         <variable
             name="clickListener"

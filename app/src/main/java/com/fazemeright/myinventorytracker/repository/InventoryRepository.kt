@@ -1,16 +1,16 @@
 package com.fazemeright.myinventorytracker.repository
 
 import androidx.lifecycle.LiveData
-import com.fazemeright.myinventorytracker.database.bag.BagItem
-import com.fazemeright.myinventorytracker.database.bag.BagItemDao
-import com.fazemeright.myinventorytracker.database.inventoryitem.InventoryItem
-import com.fazemeright.myinventorytracker.database.inventoryitem.InventoryItemDao
-import com.fazemeright.myinventorytracker.database.inventoryitem.ItemWithBag
-import com.fazemeright.myinventorytracker.firebase.api.FireBaseOnlineDatabaseStore
-import com.fazemeright.myinventorytracker.firebase.api.FireBaseUserAuthentication
-import com.fazemeright.myinventorytracker.firebase.interfaces.OnlineDatabaseStore
-import com.fazemeright.myinventorytracker.firebase.interfaces.UserAuthentication
-import com.fazemeright.myinventorytracker.firebase.models.Result
+import com.fazemeright.myinventorytracker.domain.models.BagItem
+import com.fazemeright.myinventorytracker.domain.database.offline.room.dao.BagItemDao
+import com.fazemeright.myinventorytracker.domain.models.InventoryItem
+import com.fazemeright.myinventorytracker.domain.database.offline.room.dao.InventoryItemDao
+import com.fazemeright.myinventorytracker.domain.models.ItemWithBag
+import com.fazemeright.myinventorytracker.domain.database.online.firestore.FireBaseOnlineDatabaseStore
+import com.fazemeright.myinventorytracker.domain.authentication.firebase.FireBaseUserAuthentication
+import com.fazemeright.myinventorytracker.domain.database.online.OnlineDatabaseStore
+import com.fazemeright.myinventorytracker.domain.authentication.UserAuthentication
+import com.fazemeright.myinventorytracker.domain.models.Result
 import com.fazemeright.myinventorytracker.network.interfaces.SampleNetworkInterface
 import com.google.firebase.auth.FirebaseUser
 import kotlinx.coroutines.Dispatchers

@@ -1,4 +1,4 @@
-package com.fazemeright.myinventorytracker.firebase.models
+package com.fazemeright.myinventorytracker.domain.models
 
 interface OnlineDatabaseStoreObject {
     fun getOnlineDatabaseStoreId(): String?

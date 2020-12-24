@@ -1,6 +1,6 @@
-package com.fazemeright.myinventorytracker.firebase.api
+package com.fazemeright.myinventorytracker.domain.authentication.firebase
 
-import com.fazemeright.myinventorytracker.firebase.interfaces.UserAuthentication
+import com.fazemeright.myinventorytracker.domain.authentication.UserAuthentication
 import com.fazemeright.myinventorytracker.utils.Validator.isEmailValid
 import com.fazemeright.myinventorytracker.utils.Validator.isPasswordValid
 import com.google.android.gms.tasks.Task

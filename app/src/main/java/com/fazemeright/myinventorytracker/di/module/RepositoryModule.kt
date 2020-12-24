@@ -1,7 +1,7 @@
 package com.fazemeright.myinventorytracker.di.module
 
-import com.fazemeright.myinventorytracker.database.bag.BagItemDao
-import com.fazemeright.myinventorytracker.database.inventoryitem.InventoryItemDao
+import com.fazemeright.myinventorytracker.domain.database.offline.room.dao.BagItemDao
+import com.fazemeright.myinventorytracker.domain.database.offline.room.dao.InventoryItemDao
 import com.fazemeright.myinventorytracker.network.interfaces.SampleNetworkInterface
 import com.fazemeright.myinventorytracker.repository.InventoryRepository
 import dagger.Module

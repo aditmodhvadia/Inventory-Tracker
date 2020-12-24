@@ -1,4 +1,4 @@
-package com.fazemeright.myinventorytracker.firebase.interfaces
+package com.fazemeright.myinventorytracker.domain.authentication
 
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult

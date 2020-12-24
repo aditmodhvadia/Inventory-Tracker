@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import com.fazemeright.myinventorytracker.R
 import com.fazemeright.myinventorytracker.databinding.ActivityLoginBinding
-import com.fazemeright.myinventorytracker.firebase.models.Result
+import com.fazemeright.myinventorytracker.domain.models.Result
 import com.fazemeright.myinventorytracker.ui.base.BaseActivity
 import com.fazemeright.myinventorytracker.ui.itemlist.ItemListActivity
 import dagger.hilt.android.AndroidEntryPoint

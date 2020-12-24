@@ -1,10 +1,11 @@
-package com.fazemeright.myinventorytracker.firebase.api
+package com.fazemeright.myinventorytracker.domain.database.online.firestore
 
-import com.fazemeright.myinventorytracker.database.bag.BagItem
-import com.fazemeright.myinventorytracker.database.inventoryitem.InventoryItem
-import com.fazemeright.myinventorytracker.firebase.interfaces.OnlineDatabaseStore
-import com.fazemeright.myinventorytracker.firebase.models.OnlineDatabaseStoreObject
-import com.fazemeright.myinventorytracker.firebase.models.Result
+import com.fazemeright.myinventorytracker.domain.models.BagItem
+import com.fazemeright.myinventorytracker.domain.models.InventoryItem
+import com.fazemeright.myinventorytracker.domain.authentication.firebase.FireBaseUserAuthentication
+import com.fazemeright.myinventorytracker.domain.database.online.OnlineDatabaseStore
+import com.fazemeright.myinventorytracker.domain.models.OnlineDatabaseStoreObject
+import com.fazemeright.myinventorytracker.domain.models.Result
 import com.google.android.gms.tasks.Task
 import com.google.android.gms.tasks.Tasks
 import com.google.firebase.firestore.CollectionReference

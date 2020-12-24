@@ -1,4 +1,4 @@
-package com.fazemeright.myinventorytracker.database.inventoryitem
+package com.fazemeright.myinventorytracker.domain.database.offline.room.dao
 
 import androidx.room.Dao
 

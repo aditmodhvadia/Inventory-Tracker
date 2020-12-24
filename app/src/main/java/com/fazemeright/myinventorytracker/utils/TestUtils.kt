@@ -1,8 +1,8 @@
 package com.fazemeright.myinventorytracker.utils
 
 import android.graphics.Color
-import com.fazemeright.myinventorytracker.database.bag.BagItem
-import com.fazemeright.myinventorytracker.database.inventoryitem.InventoryItem
+import com.fazemeright.myinventorytracker.domain.models.BagItem
+import com.fazemeright.myinventorytracker.domain.models.InventoryItem
 import kotlin.random.Random
 
 object TestUtils {
