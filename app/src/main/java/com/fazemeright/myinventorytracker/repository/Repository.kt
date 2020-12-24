@@ -97,4 +97,6 @@ interface Repository {
      * Log out the user
      */
     suspend fun logoutUser()
+
+    suspend fun signInWithToken(idToken: String): Result<FirebaseUser>
 }

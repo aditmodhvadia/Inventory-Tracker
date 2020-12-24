@@ -57,4 +57,5 @@
     <string name="item_deleted_successfully">Item deleted</string>
     <string name="invalid_email_msg">Please enter valid email address</string>
     <string name="invalid_password_msg">Password should be greater than 6 characters</string>
+    <string name="or_label">OR</string>
 </resources>
