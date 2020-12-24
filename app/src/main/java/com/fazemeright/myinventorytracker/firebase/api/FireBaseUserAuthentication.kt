@@ -17,7 +17,6 @@ object FireBaseUserAuthentication : UserAuthentication {
         require(email.isEmailValid()) {
             "Email address is invalid"
         }
-
         require(email.isPasswordValid()) {
             "Password is invalid"
         }
@@ -35,7 +34,6 @@ object FireBaseUserAuthentication : UserAuthentication {
         require(email.isEmailValid()) {
             "Email address is invalid"
         }
-
         require(email.isPasswordValid()) {
             "Password is invalid"
         }
@@ -67,5 +65,4 @@ object FireBaseUserAuthentication : UserAuthentication {
     override fun getCurrentUserUUID(): String? {
         return currentUser()?.uid
     }
-
 }

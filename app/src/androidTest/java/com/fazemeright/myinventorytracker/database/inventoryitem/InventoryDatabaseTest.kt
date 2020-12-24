@@ -49,7 +49,7 @@ class InventoryDatabaseTest {
     @Test
     @Throws(Exception::class)
     fun writeInventoryItemFailsWithIncorrectBagItem() {
-        val item = InventoryItem(itemId = 1, itemName = "Blazer", bagOwnerId = 0)
+        val item = InventoryItem(itemId = 1, itemName = "Blazer", bagOwnerId = 0,)
         assertTrue(assertFails<SQLiteConstraintException> {
             inventoryItemDao.insert(item)
         })

@@ -3,6 +3,7 @@ package com.fazemeright.myinventorytracker.firebase.api
 import com.fazemeright.myinventorytracker.database.bag.BagItem
 import com.fazemeright.myinventorytracker.database.inventoryitem.InventoryItem
 import com.fazemeright.myinventorytracker.firebase.interfaces.OnlineDatabaseStore
+import com.fazemeright.myinventorytracker.firebase.models.OnlineDatabaseStoreObject
 import com.fazemeright.myinventorytracker.firebase.models.Result
 import com.google.android.gms.tasks.Task
 import com.google.android.gms.tasks.Tasks
@@ -23,9 +24,9 @@ object FireBaseOnlineDatabaseStore : OnlineDatabaseStore {
     /**
      * Get all items for the specified collection
      */
-    private suspend inline fun <reified T : Any> getItems(collection: CollectionReference?): Result<List<T>> {
+    private suspend inline fun <reified T : OnlineDatabaseStoreObject> getItems(collection: CollectionReference?): Result<List<T>> {
         require(collection != null) {
-            "Bag collection is null, User may not be signed in"
+            "Collection is null, User may not be signed in"
         }
         return withContext(Dispatchers.IO) {
             try {
@@ -51,7 +52,7 @@ object FireBaseOnlineDatabaseStore : OnlineDatabaseStore {
     override suspend fun storeInventoryItem(item: InventoryItem): Result<Boolean> {
         return storeItem(
             item,
-            userInventoryItemsCollection?.document(item.itemId.toString()),
+            userInventoryItemsCollection,
             "Inventory Item stored successfully"
         )
     }
@@ -59,30 +60,35 @@ object FireBaseOnlineDatabaseStore : OnlineDatabaseStore {
     override suspend fun storeBag(item: BagItem): Result<Boolean> {
         return storeItem(
             item,
-            userBagItemsCollection?.document(item.bagId.toString()),
+            userBagItemsCollection,
             "Bag stored successfully"
         )
     }
 
     override suspend fun deleteInventoryItem(item: InventoryItem): Result<Boolean> {
-        return deleteItem(userInventoryItemsCollection?.document(item.itemId.toString()))
+        return deleteItem(item, userInventoryItemsCollection)
     }
 
     override suspend fun deleteBag(bag: BagItem): Result<Boolean> {
-        return deleteItem(userBagItemsCollection?.document(bag.bagId.toString()))
+        return deleteItem(bag, userBagItemsCollection)
     }
 
     /**
-     * Delete data in the given document
+     * Delete data in the given collection
      */
-    private suspend fun deleteItem(docRef: DocumentReference?): Result<Boolean> {
-        require(docRef != null) {
+    private suspend fun deleteItem(
+        data: OnlineDatabaseStoreObject,
+        collection: CollectionReference?
+    ): Result<Boolean> {
+        require(collection != null) {
             "User not logged in"
+        }
+        require(data.getOnlineDatabaseStoreId() != null) {
+            "Online ID of data is null, cannot proceed"
         }
         return withContext(Dispatchers.IO) {
             try {
-                deleteDocument(docRef).await()
-                Timber.d("Item deleted successfully at $docRef")
+                deleteDocument(collection.document(data.getOnlineDatabaseStoreId()!!)).await()
                 Result.Success(data = true, msg = "Item deleted")
             } catch (e: Exception) {
                 Timber.e(e)
@@ -93,40 +99,27 @@ object FireBaseOnlineDatabaseStore : OnlineDatabaseStore {
 
 
     override fun batchWriteBags(bagItems: List<BagItem>): Task<Void> {
-        return if (userBagItemsCollection != null) {
-            batchWriteData(bagItems.map { bagItem ->
-                userBagItemsCollection!!.document(bagItem.bagId.toString()) to bagItem
-            }.toMap())
-        } else {
-            Tasks.forResult(null)
-        }
+        return batchWriteData(userBagItemsCollection, bagItems)
     }
 
     override fun batchWriteInventoryItems(inventoryItems: List<InventoryItem>): Task<Void> {
-        return if (userInventoryItemsCollection != null) {
-            batchWriteData(inventoryItems.map { inventoryItem ->
-                userInventoryItemsCollection!!.document(inventoryItem.itemId.toString()) to inventoryItem
-            }.toMap())
-        } else {
-            Tasks.forResult(null)
-        }
+        return batchWriteData(userInventoryItemsCollection, inventoryItems)
     }
 
     /**
      * Store the given item in the given document
      */
-    private suspend fun <T> storeItem(
+    private suspend fun <T : OnlineDatabaseStoreObject> storeItem(
         item: T,
-        docRef: DocumentReference?,
+        collectionRef: CollectionReference?,
         successMsg: String
     ): Result<Boolean> {
-        require(docRef != null) {
+        require(collectionRef != null) {
             "User not logged in"
         }
         return withContext(Dispatchers.IO) {
             try {
-                writeData(item!!, docRef).await()
-                Timber.d("Item $item stored successfully at $docRef")
+                writeData(item, collectionRef).await()
                 Result.Success(data = true, msg = successMsg)
             } catch (e: Exception) {
                 Timber.e(e)
@@ -143,13 +136,37 @@ object FireBaseOnlineDatabaseStore : OnlineDatabaseStore {
     }
 
     /**
+     * Write the given data in given collection
+     */
+    private fun writeData(
+        data: OnlineDatabaseStoreObject,
+        collection: CollectionReference
+    ): Task<Void> {
+        if (data.getOnlineDatabaseStoreId() == null) {
+            val onlineId = collection.document().id
+            data.setOnlineDatabaseStoreId(onlineId)
+        }
+
+        return collection.document(data.getOnlineDatabaseStoreId()!!).set(data)
+    }
+
+    /**
      * Batch write the given data in given documents
      */
-    private fun batchWriteData(documentDataMap: Map<DocumentReference, Any>): Task<Void> {
-        return Firebase.firestore.runBatch { batch ->
-            for ((docRef, data) in documentDataMap.entries) {
-                batch.set(docRef, data)
+    private fun batchWriteData(
+        collection: CollectionReference?,
+        dataList: List<OnlineDatabaseStoreObject>
+    ): Task<Void> {
+        return if (collection != null) {
+            Firebase.firestore.runBatch { batch ->
+                dataList.forEach { item ->
+                    item.getOnlineDatabaseStoreId()?.let {
+                        batch.set(collection.document(it), item)
+                    }
+                }
             }
+        } else {
+            Tasks.forResult(null)
         }
     }
 

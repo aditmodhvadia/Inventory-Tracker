@@ -6,6 +6,7 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 import com.fazemeright.myinventorytracker.database.bag.BagItem
+import com.fazemeright.myinventorytracker.firebase.models.OnlineDatabaseStoreObject
 import kotlinx.android.parcel.Parcelize
 
 @Entity(
@@ -28,8 +29,15 @@ data class InventoryItem(
     var itemQuantity: Int = 1,
 
     @ColumnInfo(name = "bagOwnerId")
-    var bagOwnerId: Int = 0
-) : Parcelable
+    var bagOwnerId: Int = 0,
+    var onlineId: String? = null
+) : OnlineDatabaseStoreObject, Parcelable {
+    override fun getOnlineDatabaseStoreId(): String? = onlineId
+
+    override fun setOnlineDatabaseStoreId(onlineId: String) {
+        this.onlineId = onlineId
+    }
+}
 
 //@Fts4(contentEntity = InventoryItem::class)
 //@Entity(tableName = "inventoryItemFts")

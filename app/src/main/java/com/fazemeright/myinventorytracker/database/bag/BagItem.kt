@@ -4,6 +4,7 @@ import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.fazemeright.myinventorytracker.firebase.models.OnlineDatabaseStoreObject
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
@@ -17,5 +18,12 @@ data class BagItem(
 
     var bagColor: Int = 0,
 
-    var bagDesc: String = ""
-) : Parcelable
+    var bagDesc: String = "",
+    var onlineId: String? = null
+) : OnlineDatabaseStoreObject, Parcelable {
+    override fun getOnlineDatabaseStoreId(): String? = onlineId
+
+    override fun setOnlineDatabaseStoreId(onlineId: String) {
+        this.onlineId = onlineId
+    }
+}

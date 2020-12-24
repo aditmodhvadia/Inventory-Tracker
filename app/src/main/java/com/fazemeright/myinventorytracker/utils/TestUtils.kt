@@ -14,7 +14,7 @@ object TestUtils {
         return BagItem(
             id,
             "Test Bag $id",
-            bagColor = color
+            bagColor = color,
         )
     }
 
@@ -29,7 +29,7 @@ object TestUtils {
         return InventoryItem(
             itemId = id,
             itemName = itemName,
-            bagOwnerId = bagId
+            bagOwnerId = bagId,
         )
     }
 

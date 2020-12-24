@@ -41,7 +41,7 @@ class AddBagViewModel @ViewModelInject constructor(
             val newBag = BagItem(
                 bagName = bagName,
                 bagColor = bagColor,
-                bagDesc = bagDesc
+                bagDesc = bagDesc,
             )
             insertNewBag(newBag)
             navigateBackToItemList()
