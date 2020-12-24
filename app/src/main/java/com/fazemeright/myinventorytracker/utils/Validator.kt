@@ -12,7 +12,6 @@ object Validator {
         return !isNullOrEmpty() && length > 6
     }
 
-
     private val EMAIL_ADDRESS: Pattern = Pattern.compile(
         "[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}" +
                 "\\@" +

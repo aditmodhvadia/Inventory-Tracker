@@ -1,9 +1,9 @@
-package com.fazemeright.myinventorytracker.database.bag
+package com.fazemeright.myinventorytracker.domain.database.offline.room.dao
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.fazemeright.myinventorytracker.database.base.BaseDao
-import com.fazemeright.myinventorytracker.database.inventoryitem.InventoryItem
+import com.fazemeright.myinventorytracker.domain.models.BagItem
+import com.fazemeright.myinventorytracker.domain.models.InventoryItem
 
 @Dao
 interface BagItemDao : BaseDao<BagItem> {

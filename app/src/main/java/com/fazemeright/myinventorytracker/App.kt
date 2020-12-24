@@ -15,9 +15,12 @@ class App : Application(), Configuration.Provider {
 
     override fun onCreate() {
         super.onCreate()
-        val preferences = PreferenceManager.getDefaultSharedPreferences(this)
-        handleTheme(preferences)
+        handleTheme(PreferenceManager.getDefaultSharedPreferences(this))
 
+        setUpTimber()
+    }
+
+    private fun setUpTimber() {
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())
         }
@@ -27,9 +30,9 @@ class App : Application(), Configuration.Provider {
     lateinit var workerFactory: HiltWorkerFactory
 
     override fun getWorkManagerConfiguration() =
-            Configuration.Builder()
-                    .setWorkerFactory(workerFactory)
-                    .build()
+        Configuration.Builder()
+            .setWorkerFactory(workerFactory)
+            .build()
 
     /**
      * Handle the theme of the app from the user settings

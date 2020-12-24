@@ -1,13 +1,12 @@
-package com.fazemeright.myinventorytracker.firebase
+package com.fazemeright.myinventorytracker.domain
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.fazemeright.myinventorytracker.database.bag.BagItem
-import com.fazemeright.myinventorytracker.firebase.api.FireBaseApiManager
-import com.fazemeright.myinventorytracker.firebase.models.Result
+import com.fazemeright.myinventorytracker.domain.models.BagItem
+import com.fazemeright.myinventorytracker.domain.api.FireBaseApiManager
+import com.fazemeright.myinventorytracker.domain.models.Result
 import com.fazemeright.myinventorytracker.utils.TestUtils
 import junit.framework.TestCase.*
 import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.tasks.await
 import org.junit.After
 import org.junit.Test
 import org.junit.runner.RunWith

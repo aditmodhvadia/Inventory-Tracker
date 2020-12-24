@@ -6,13 +6,13 @@ import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ApplicationComponent
+import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Singleton
 
 @Module
-@InstallIn(ApplicationComponent::class)
+@InstallIn(SingletonComponent::class)
 object NetworkModule {
 
     @Provides
@@ -32,10 +32,16 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun getMoshi(): Moshi {
+    fun getMoshi(kotlinJsonAdapterFactory: KotlinJsonAdapterFactory): Moshi {
         return Moshi.Builder()
-            .add(KotlinJsonAdapterFactory())
+            .add(kotlinJsonAdapterFactory)
             .build()
+    }
+
+    @Provides
+    @Singleton
+    fun getKotlinJsonAdapterFactory(): KotlinJsonAdapterFactory {
+        return KotlinJsonAdapterFactory()
     }
 
     @Provides

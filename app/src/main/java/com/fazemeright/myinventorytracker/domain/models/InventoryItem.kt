@@ -1,14 +1,16 @@
-package com.fazemeright.myinventorytracker.database.inventoryitem
+package com.fazemeright.myinventorytracker.domain.models
 
 import android.os.Parcelable
-import androidx.room.*
-import com.fazemeright.myinventorytracker.database.bag.BagItem
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.ForeignKey
+import androidx.room.PrimaryKey
 import kotlinx.android.parcel.Parcelize
 
 @Entity(
     tableName = "my_inventory_table", foreignKeys = [ForeignKey(
         entity = BagItem::class,
-        childColumns = ["itemId"],
+        childColumns = ["bagOwnerId"],
         parentColumns = ["bagId"]
     )]
 )
@@ -25,19 +27,15 @@ data class InventoryItem(
     var itemQuantity: Int = 1,
 
     @ColumnInfo(name = "bagOwnerId")
-    var bagOwnerId: Int = 0
-) : Parcelable
+    var bagOwnerId: Int = 0,
+    var onlineId: String? = null
+) : OnlineDatabaseStoreObject, Parcelable {
+    override fun getOnlineDatabaseStoreId(): String? = onlineId
 
-@Parcelize
-@Entity
-data class ItemWithBag(
-    @Embedded var item: InventoryItem,
-    @Relation(
-        parentColumn = "bagOwnerId",
-        entityColumn = "bagId"
-    )
-    var bag: BagItem
-) : Parcelable
+    override fun setOnlineDatabaseStoreId(onlineId: String) {
+        this.onlineId = onlineId
+    }
+}
 
 //@Fts4(contentEntity = InventoryItem::class)
 //@Entity(tableName = "inventoryItemFts")

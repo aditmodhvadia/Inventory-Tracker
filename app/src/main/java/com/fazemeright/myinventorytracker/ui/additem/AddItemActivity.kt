@@ -7,7 +7,6 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.activity.viewModels
-import androidx.lifecycle.Observer
 import com.fazemeright.myinventorytracker.R
 import com.fazemeright.myinventorytracker.databinding.ActivityAddItemBinding
 import com.fazemeright.myinventorytracker.ui.base.BaseActivity
@@ -15,6 +14,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_add_item.*
 import kotlinx.android.synthetic.main.collapsing_toolbar.*
 import timber.log.Timber
+
 
 @AndroidEntryPoint
 class AddItemActivity : BaseActivity<ActivityAddItemBinding>(), AdapterView.OnItemSelectedListener {
@@ -35,12 +35,25 @@ class AddItemActivity : BaseActivity<ActivityAddItemBinding>(), AdapterView.OnIt
             setDisplayHomeAsUpEnabled(true)
         }
 
-        viewModel.navigateBackToItemList.observe(this, Observer { navigate ->
+        viewModel.navigateBackToItemList.observe(this, { navigate ->
             if (navigate) {
                 finish()
                 viewModel.onNavigationToAddItemFinished()
             }
         })
+
+        viewModel.bagNames.observe(this) {
+            if (selectedBagName == null) {
+                selectedBagName = it[0]
+            }
+            val adapter: ArrayAdapter<String> = ArrayAdapter<String>(
+                this,
+                android.R.layout.simple_spinner_item,
+                it
+            )
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            binding.tvBagname.adapter = adapter
+        }
 
     }
 
@@ -53,6 +66,7 @@ class AddItemActivity : BaseActivity<ActivityAddItemBinding>(), AdapterView.OnIt
     }
 
     private fun addBag() {
+        Timber.d("Add clicked")
         selectedBagName?.let { bagName ->
             viewModel.onAddClicked(
                 edtItemName.text.toString(),

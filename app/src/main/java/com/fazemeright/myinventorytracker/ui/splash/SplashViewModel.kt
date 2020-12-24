@@ -5,8 +5,8 @@ import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.liveData
-import com.fazemeright.myinventorytracker.data.InventoryRepository
-import com.fazemeright.myinventorytracker.firebase.models.Result
+import com.fazemeright.myinventorytracker.domain.models.Result
+import com.fazemeright.myinventorytracker.repository.InventoryRepository
 import com.fazemeright.myinventorytracker.ui.base.BaseViewModel
 import dagger.hilt.android.qualifiers.ActivityContext
 import kotlinx.coroutines.delay

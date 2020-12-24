@@ -1,1 +1,85 @@
-
+{
+  "project_info": {
+    "project_number": "227791096724",
+    "firebase_url": "https://track-items-73a37.firebaseio.com",
+    "project_id": "track-items-73a37",
+    "storage_bucket": "track-items-73a37.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:227791096724:android:922e14b24dd490ae20dd81",
+        "android_client_info": {
+          "package_name": "com.fazemeright.myinventorytracker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "227791096724-uhtrqfpv4bquc7omgrtclgqik28jbivo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.fazemeright.myinventorytracker",
+            "certificate_hash": "7fcaa74683127f2b942ae710bcc97ae0dd778d73"
+          }
+        },
+        {
+          "client_id": "227791096724-maaduncmt61figc57qo7jl967tvg09qk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD8gRzA3_fuBztQTdErUUV9Kqe7f2c3bA4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "227791096724-maaduncmt61figc57qo7jl967tvg09qk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:227791096724:android:ea528d93d5114aaa20dd81",
+        "android_client_info": {
+          "package_name": "com.fazemeright.myinventorytracker.debug"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "227791096724-hc781e97q3skltdlucsqbp05golm91ge.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.fazemeright.myinventorytracker.debug",
+            "certificate_hash": "7fcaa74683127f2b942ae710bcc97ae0dd778d73"
+          }
+        },
+        {
+          "client_id": "227791096724-maaduncmt61figc57qo7jl967tvg09qk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD8gRzA3_fuBztQTdErUUV9Kqe7f2c3bA4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "227791096724-maaduncmt61figc57qo7jl967tvg09qk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -2,10 +2,9 @@ package com.fazemeright.myinventorytracker.ui.login
 
 import android.os.Bundle
 import androidx.activity.viewModels
-import androidx.lifecycle.Observer
 import com.fazemeright.myinventorytracker.R
 import com.fazemeright.myinventorytracker.databinding.ActivityLoginBinding
-import com.fazemeright.myinventorytracker.firebase.models.Result
+import com.fazemeright.myinventorytracker.domain.models.Result
 import com.fazemeright.myinventorytracker.ui.base.BaseActivity
 import com.fazemeright.myinventorytracker.ui.itemlist.ItemListActivity
 import dagger.hilt.android.AndroidEntryPoint
@@ -21,8 +20,6 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
 
         binding.viewmodel = viewModel
 
-        binding.lifecycleOwner = this
-
         binding.btnLogin.setOnClickListener {
 //            TODO: Show Loading
             hideKeyboard()
@@ -32,7 +29,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
             )
         }
 
-        viewModel.loginResult.observe(this, Observer { result ->
+        viewModel.loginResult.observe(this, { result ->
 //            TODO: Hide Loading
             if (result is Result.Success) {
                 viewModel.syncLocalAndCloudData()

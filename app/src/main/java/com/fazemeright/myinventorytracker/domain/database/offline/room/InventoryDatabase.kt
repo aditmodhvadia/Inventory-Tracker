@@ -1,11 +1,11 @@
-package com.fazemeright.myinventorytracker.database
+package com.fazemeright.myinventorytracker.domain.database.offline.room
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.fazemeright.myinventorytracker.database.bag.BagItem
-import com.fazemeright.myinventorytracker.database.bag.BagItemDao
-import com.fazemeright.myinventorytracker.database.inventoryitem.InventoryItem
-import com.fazemeright.myinventorytracker.database.inventoryitem.InventoryItemDao
+import com.fazemeright.myinventorytracker.domain.models.BagItem
+import com.fazemeright.myinventorytracker.domain.database.offline.room.dao.BagItemDao
+import com.fazemeright.myinventorytracker.domain.models.InventoryItem
+import com.fazemeright.myinventorytracker.domain.database.offline.room.dao.InventoryItemDao
 import javax.inject.Singleton
 
 /**
@@ -13,7 +13,7 @@ import javax.inject.Singleton
  */
 @Database(
     entities = [InventoryItem::class, BagItem::class/*, InventoryItemFts::class*/],
-    version = 6,
+    version = 8,
     exportSchema = false
 )
 @Singleton

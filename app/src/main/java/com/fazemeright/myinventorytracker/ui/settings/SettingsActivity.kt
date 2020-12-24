@@ -17,16 +17,16 @@ class SettingsActivity : BaseActivity<SettingsActivityBinding>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportFragmentManager
-                .beginTransaction()
-                .replace(R.id.settings, SettingsFragment())
-                .commit()
+            .beginTransaction()
+            .replace(R.id.settings, SettingsFragment())
+            .commit()
 
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
     class SettingsFragment : PreferenceFragmentCompat(),
-            SharedPreferences.OnSharedPreferenceChangeListener {
+        SharedPreferences.OnSharedPreferenceChangeListener {
 
         override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
             setPreferencesFromResource(R.xml.root_preferences, rootKey)
@@ -43,8 +43,8 @@ class SettingsActivity : BaseActivity<SettingsActivityBinding>() {
         }
 
         override fun onSharedPreferenceChanged(
-                sharedPreferences: SharedPreferences?,
-                key: String?
+            sharedPreferences: SharedPreferences?,
+            key: String?
         ) {
             Timber.d(key)
             when (key) {

@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.lifecycle.Observer
 import com.fazemeright.myinventorytracker.R
 import com.fazemeright.myinventorytracker.databinding.ActivityAddBagBinding
 import com.fazemeright.myinventorytracker.ui.base.BaseActivity
@@ -38,22 +37,22 @@ class AddBagActivity : BaseActivity<ActivityAddBagBinding>(), ColorPickerDialogL
 
         binding.btnChooseColor.setOnClickListener {
             ColorPickerDialog.newBuilder()
-                    .setDialogType(ColorPickerDialog.TYPE_CUSTOM)
-                    .setAllowPresets(false)
-                    .setDialogId(dialogId)
-                    .setColor(Color.BLACK)
-                    .show(this)
+                .setDialogType(ColorPickerDialog.TYPE_CUSTOM)
+                .setAllowPresets(false)
+                .setDialogId(dialogId)
+                .setColor(Color.BLACK)
+                .show(this)
         }
 
         binding.btnAddBag.setOnClickListener {
             viewModel.onAddBagClicked(
-                    binding.edtBagName.text.toString(),
-                    bagColor,
-                    binding.edtBagDesc.text.toString()
+                binding.edtBagName.text.toString(),
+                bagColor,
+                binding.edtBagDesc.text.toString()
             )
         }
 
-        viewModel.navigateBackToItemList.observe(this, Observer { navigate ->
+        viewModel.navigateBackToItemList.observe(this, { navigate ->
             if (navigate) {
                 finish()
                 viewModel.onNavigationToAddItemFinished()
@@ -63,15 +62,13 @@ class AddBagActivity : BaseActivity<ActivityAddBagBinding>(), ColorPickerDialogL
     }
 
     override fun onDialogDismissed(dialogId: Int) {
-//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun onColorSelected(dialogId: Int, color: Int) {
         Toast.makeText(this, "Selected Color: #" + Integer.toHexString(color), Toast.LENGTH_SHORT)
-                .show()
+            .show()
         binding.viewBagColorDisplay.setBackgroundColor(color)
         bagColor = color
-//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

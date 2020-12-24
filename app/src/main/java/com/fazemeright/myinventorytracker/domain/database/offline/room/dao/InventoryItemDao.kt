@@ -1,10 +1,11 @@
-package com.fazemeright.myinventorytracker.database.inventoryitem
+package com.fazemeright.myinventorytracker.domain.database.offline.room.dao
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Transaction
-import com.fazemeright.myinventorytracker.database.base.BaseDao
+import com.fazemeright.myinventorytracker.domain.models.InventoryItem
+import com.fazemeright.myinventorytracker.domain.models.ItemWithBag
 
 /**
  * Defines methods for using the InventoryItem class with Room.
