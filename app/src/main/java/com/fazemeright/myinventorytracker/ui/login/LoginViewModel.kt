@@ -7,8 +7,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.fazemeright.myinventorytracker.R
 import com.fazemeright.myinventorytracker.domain.models.Result
-import com.fazemeright.myinventorytracker.repository.InventoryRepository
 import com.fazemeright.myinventorytracker.ui.base.BaseViewModel
+import com.fazemeright.myinventorytracker.usecase.LogInUserWithEmailPasswordUseCase
+import com.fazemeright.myinventorytracker.usecase.LogInUserWithTokenUseCase
 import com.fazemeright.myinventorytracker.utils.Validator.isEmailValid
 import com.fazemeright.myinventorytracker.utils.Validator.isPasswordValid
 import com.google.firebase.auth.FirebaseUser
@@ -17,7 +18,9 @@ import kotlinx.coroutines.launch
 import java.security.InvalidParameterException
 
 class LoginViewModel @ViewModelInject constructor(
-    @ActivityContext private val context: Context, private val repository: InventoryRepository
+    @ActivityContext private val context: Context,
+    private val logInUserWithEmailPassword: LogInUserWithEmailPasswordUseCase,
+    private val logInUserWithToken: LogInUserWithTokenUseCase
 ) : BaseViewModel(context) {
 
     private val _loginResult = MutableLiveData<Result<FirebaseUser>>()
@@ -38,7 +41,7 @@ class LoginViewModel @ViewModelInject constructor(
                     msg = getString(R.string.invalid_password_msg)
                 )
                 else -> {
-                    repository.performLogin(email, password)
+                    logInUserWithEmailPassword(email, password)
                 }
             }
         }
@@ -46,7 +49,7 @@ class LoginViewModel @ViewModelInject constructor(
 
     fun signInWithToken(idToken: String) {
         viewModelScope.launch {
-            _loginResult.value = repository.signInWithToken(idToken)
+            _loginResult.value = logInUserWithToken(idToken)
         }
     }
 }
