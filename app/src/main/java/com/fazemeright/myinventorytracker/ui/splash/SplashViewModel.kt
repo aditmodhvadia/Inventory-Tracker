@@ -15,7 +15,7 @@ import timber.log.Timber
 
 class SplashViewModel @ViewModelInject constructor(
     @ActivityContext private val context: Context, private val repository: InventoryRepository
-) : BaseViewModel(context, repository) {
+) : BaseViewModel(context) {
 
     val isUserSignedIn =
         liveData {

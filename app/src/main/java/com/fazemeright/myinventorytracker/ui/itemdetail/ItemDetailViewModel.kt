@@ -17,7 +17,7 @@ class ItemDetailViewModel @ViewModelInject constructor(
     private val repository: InventoryRepository,
     itemWithBag: ItemWithBag,
     @ActivityContext context: Context
-) : BaseViewModel(context, repository) {
+) : BaseViewModel(context) {
 
 
     private val _onItemDeleteComplete = MutableLiveData<Boolean>()

@@ -4,15 +4,13 @@ import android.content.Context
 import androidx.annotation.StringRes
 import androidx.lifecycle.ViewModel
 import androidx.work.*
-import com.fazemeright.myinventorytracker.repository.InventoryRepository
 import com.fazemeright.myinventorytracker.workmanager.FireBaseSyncWorker
 import dagger.hilt.android.qualifiers.ActivityContext
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 
 abstract class BaseViewModel constructor(
-    @ActivityContext private val context: Context,
-    private val repository: InventoryRepository
+    @ActivityContext private val context: Context
 ) :
     ViewModel() {
 
