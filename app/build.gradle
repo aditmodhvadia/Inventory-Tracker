@@ -145,7 +145,7 @@ dependencies {
 
 //    Work Manager
     // Kotlin + coroutines
-    implementation "androidx.work:work-runtime-ktx:2.4.0"
+    implementation "androidx.work:work-runtime-ktx:2.5.0"
     // optional - Test helpers
     androidTestImplementation "androidx.work:work-testing:2.4.0"
 
