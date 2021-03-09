@@ -5,20 +5,22 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.fazemeright.myinventorytracker.domain.models.InventoryItem
-import com.fazemeright.myinventorytracker.repository.InventoryRepository
 import com.fazemeright.myinventorytracker.ui.base.BaseViewModel
+import com.fazemeright.myinventorytracker.usecase.ClearAllInventoryItemsUseCase
+import com.fazemeright.myinventorytracker.usecase.GetAllBagNamesUseCase
 import dagger.hilt.android.qualifiers.ActivityContext
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
 class AddItemViewModel @ViewModelInject constructor(
-    private val repository: InventoryRepository,
-    @ActivityContext private val context: Context
+    @ActivityContext private val context: Context,
+    getAllBagNamesUseCase: GetAllBagNamesUseCase,
+    private val clearAllInventoryItemsUseCase: ClearAllInventoryItemsUseCase
 ) : BaseViewModel(context) {
 
     private val newInventoryItem by lazy { InventoryItem() }
 
-    val bagNames = repository.getAllBagNames()
+    val bagNames = getAllBagNamesUseCase()
 
     val itemName: String = ""
     val bagName: String = "Black AT+"
@@ -28,7 +30,7 @@ class AddItemViewModel @ViewModelInject constructor(
     val navigateBackToItemList = MutableLiveData<Boolean>()
 
     private suspend fun clear() {
-        repository.clearInventoryItems()
+        clearAllInventoryItemsUseCase()
     }
 
     fun onAddClicked(

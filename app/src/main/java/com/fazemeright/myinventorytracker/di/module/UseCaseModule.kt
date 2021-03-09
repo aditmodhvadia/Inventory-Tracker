@@ -1,9 +1,7 @@
 package com.fazemeright.myinventorytracker.di.module
 
 import com.fazemeright.myinventorytracker.repository.InventoryRepository
-import com.fazemeright.myinventorytracker.usecase.IsUserSignedInUseCase
-import com.fazemeright.myinventorytracker.usecase.LogInUserWithEmailPasswordUseCase
-import com.fazemeright.myinventorytracker.usecase.LogInUserWithTokenUseCase
+import com.fazemeright.myinventorytracker.usecase.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -27,4 +25,14 @@ object UseCaseModule {
     @Singleton
     fun provideLogInUserWithTokenUseCase(repository: InventoryRepository) =
         LogInUserWithTokenUseCase(repository)
+
+    @Provides
+    @Singleton
+    fun provideGetAllBagNamesUseCaseUseCase(repository: InventoryRepository) =
+        GetAllBagNamesUseCase(repository)
+
+    @Provides
+    @Singleton
+    fun provideClearAllInventoryItemsUseCaseUseCaseUseCase(repository: InventoryRepository) =
+        ClearAllInventoryItemsUseCase(repository)
 }
