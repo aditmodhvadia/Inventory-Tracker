@@ -17,7 +17,7 @@ import timber.log.Timber
 class ItemListViewModel @ViewModelInject constructor(
     private val repository: InventoryRepository,
     @ActivityContext context: Context
-) : BaseViewModel(context, repository) {
+) : BaseViewModel(context) {
 
     private val _searchString = MutableLiveData<String>()
 

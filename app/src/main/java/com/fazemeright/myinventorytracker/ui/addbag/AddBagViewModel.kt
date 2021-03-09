@@ -18,7 +18,7 @@ import kotlinx.coroutines.withContext
 class AddBagViewModel @ViewModelInject constructor(
     private val repository: InventoryRepository,
     @ActivityContext context: Context
-) : BaseViewModel(context, repository) {
+) : BaseViewModel(context) {
 
     val navigateBackToItemList = MutableLiveData<Boolean>()
 
