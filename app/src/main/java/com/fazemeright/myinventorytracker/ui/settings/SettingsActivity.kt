@@ -8,7 +8,6 @@ import androidx.preference.PreferenceFragmentCompat
 import com.fazemeright.myinventorytracker.R
 import com.fazemeright.myinventorytracker.databinding.SettingsActivityBinding
 import com.fazemeright.myinventorytracker.ui.base.BaseActivity
-import kotlinx.android.synthetic.main.collapsing_toolbar.*
 import timber.log.Timber
 
 class SettingsActivity : BaseActivity<SettingsActivityBinding>() {
@@ -21,7 +20,7 @@ class SettingsActivity : BaseActivity<SettingsActivityBinding>() {
             .replace(R.id.settings, SettingsFragment())
             .commit()
 
-        setSupportActionBar(toolbar)
+//        setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 

@@ -3,18 +3,19 @@ package com.fazemeright.myinventorytracker.ui.splash
 import android.content.Context
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
 import com.fazemeright.myinventorytracker.domain.models.Result
 import com.fazemeright.myinventorytracker.ui.base.BaseViewModel
 import com.fazemeright.myinventorytracker.usecase.IsUserSignedInUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ActivityContext
 import kotlinx.coroutines.delay
 import timber.log.Timber
+import javax.inject.Inject
 
-
-class SplashViewModel @ViewModelInject constructor(
+@HiltViewModel
+class SplashViewModel @Inject constructor(
     @ActivityContext private val context: Context,
     private val _isUserSignedIn: IsUserSignedInUseCase
 ) : BaseViewModel(context) {

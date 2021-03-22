@@ -1,7 +1,6 @@
 package com.fazemeright.myinventorytracker.ui.login
 
 import android.content.Context
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -13,11 +12,14 @@ import com.fazemeright.myinventorytracker.usecase.LogInUserWithTokenUseCase
 import com.fazemeright.myinventorytracker.utils.Validator.isEmailValid
 import com.fazemeright.myinventorytracker.utils.Validator.isPasswordValid
 import com.google.firebase.auth.FirebaseUser
+import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ActivityContext
 import kotlinx.coroutines.launch
 import java.security.InvalidParameterException
+import javax.inject.Inject
 
-class LoginViewModel @ViewModelInject constructor(
+@HiltViewModel
+class LoginViewModel @Inject constructor(
     @ActivityContext private val context: Context,
     private val logInUserWithEmailPassword: LogInUserWithEmailPasswordUseCase,
     private val logInUserWithToken: LogInUserWithTokenUseCase

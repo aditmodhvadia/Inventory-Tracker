@@ -19,7 +19,6 @@ import com.fazemeright.myinventorytracker.ui.login.LoginActivity
 import com.fazemeright.myinventorytracker.ui.settings.SettingsActivity
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.collapsing_toolbar.*
 import timber.log.Timber
 import javax.inject.Inject
 

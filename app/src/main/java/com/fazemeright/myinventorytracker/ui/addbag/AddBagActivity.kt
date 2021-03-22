@@ -1,17 +1,19 @@
 package com.fazemeright.myinventorytracker.ui.addbag
 
+import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.Observer
 import com.fazemeright.myinventorytracker.R
 import com.fazemeright.myinventorytracker.databinding.ActivityAddBagBinding
 import com.fazemeright.myinventorytracker.ui.base.BaseActivity
 import com.jaredrummler.android.colorpicker.ColorPickerDialog
 import com.jaredrummler.android.colorpicker.ColorPickerDialogListener
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.collapsing_toolbar.*
 
 @AndroidEntryPoint
 class AddBagActivity : BaseActivity<ActivityAddBagBinding>(), ColorPickerDialogListener {
@@ -28,7 +30,7 @@ class AddBagActivity : BaseActivity<ActivityAddBagBinding>(), ColorPickerDialogL
 
         binding.lifecycleOwner = this
 
-        setSupportActionBar(toolbar)
+//        setSupportActionBar(binding.toolbar)
 
         supportActionBar?.apply {
             setHomeButtonEnabled(true)

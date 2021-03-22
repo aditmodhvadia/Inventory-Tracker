@@ -13,12 +13,14 @@ import com.fazemeright.myinventorytracker.domain.models.ItemWithBag
 import com.fazemeright.myinventorytracker.domain.models.Result
 import com.fazemeright.myinventorytracker.network.interfaces.SampleNetworkInterface
 import com.google.firebase.auth.FirebaseUser
+import dagger.hilt.android.scopes.ViewModelScoped
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 import timber.log.Timber
 import javax.inject.Inject
 
+@ViewModelScoped
 class InventoryRepository @Inject constructor(
     private val bagItemDao: BagItemDao,
     private val inventoryItemDao: InventoryItemDao,

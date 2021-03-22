@@ -7,14 +7,15 @@ import com.fazemeright.myinventorytracker.repository.InventoryRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ActivityRetainedComponent
-import dagger.hilt.android.scopes.ActivityRetainedScoped
+import dagger.hilt.components.SingletonComponent
+import javax.inject.Singleton
 
 @Module
-@InstallIn(ActivityRetainedComponent::class)
+@InstallIn(SingletonComponent::class)
 object RepositoryModule {
     @Provides
-    @ActivityRetainedScoped
+//    @ActivityRetainedScoped
+    @Singleton
     fun provideInventoryRepository(
         bagItemDao: BagItemDao,
         inventoryItemDao: InventoryItemDao,

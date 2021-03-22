@@ -5,7 +5,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 
 @Entity(
     tableName = "my_inventory_table", foreignKeys = [ForeignKey(
@@ -27,6 +27,7 @@ data class InventoryItem(
     var itemQuantity: Int = 1,
 
     @ColumnInfo(name = "bagOwnerId")
+    @ForeignKey(entity = BagItem::class, parentColumns = ["bagId"], childColumns = ["bagOwnerId"])
     var bagOwnerId: Int = 0,
     var onlineId: String? = null
 ) : OnlineDatabaseStoreObject, Parcelable {

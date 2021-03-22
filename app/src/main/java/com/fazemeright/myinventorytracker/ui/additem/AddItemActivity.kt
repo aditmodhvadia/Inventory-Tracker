@@ -11,8 +11,6 @@ import com.fazemeright.myinventorytracker.R
 import com.fazemeright.myinventorytracker.databinding.ActivityAddItemBinding
 import com.fazemeright.myinventorytracker.ui.base.BaseActivity
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.activity_add_item.*
-import kotlinx.android.synthetic.main.collapsing_toolbar.*
 
 
 @AndroidEntryPoint
@@ -27,7 +25,7 @@ class AddItemActivity : BaseActivity<ActivityAddItemBinding>(), AdapterView.OnIt
 
         binding.viewModel = viewModel
 
-        setSupportActionBar(toolbar)
+//        setSupportActionBar(toolbar)
 
         supportActionBar?.apply {
             setHomeButtonEnabled(true)
@@ -65,10 +63,10 @@ class AddItemActivity : BaseActivity<ActivityAddItemBinding>(), AdapterView.OnIt
     private fun addBag() {
         selectedBagName?.let { bagName ->
             viewModel.onAddClicked(
-                edtItemName.text.toString(),
+                binding.edtItemName.text.toString(),
                 bagName,
-                edtItemDesc.text.toString(),
-                edtItemQuantity.text.toString()
+                binding.edtItemDesc.text.toString(),
+                binding.edtItemQuantity.text.toString()
             )
         }
     }

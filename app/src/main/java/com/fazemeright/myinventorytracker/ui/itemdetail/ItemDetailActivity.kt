@@ -9,7 +9,6 @@ import com.fazemeright.myinventorytracker.domain.models.ItemWithBag
 import com.fazemeright.myinventorytracker.databinding.ActivityItemDetailBinding
 import com.fazemeright.myinventorytracker.ui.base.BaseActivity
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.collapsing_toolbar.*
 import timber.log.Timber
 import javax.inject.Inject
 
