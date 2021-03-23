@@ -9,13 +9,13 @@ import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import com.fazemeright.myinventorytracker.R
 import com.fazemeright.myinventorytracker.isViewDisplayed
-import com.fazemeright.myinventorytracker.ui.base.BaseUiTest
+import com.fazemeright.myinventorytracker.ui.base.BaseUiActivityTest
 import com.fazemeright.myinventorytracker.ui.itemlist.ItemListActivity
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import org.junit.Test
 
-class LoginActivityTest : BaseUiTest<LoginActivity>() {
+class LoginActivityActivityTest : BaseUiActivityTest<LoginActivity>() {
     override fun getActivity(): Class<LoginActivity> = LoginActivity::class.java
 
     val VALID_EMAIL = "validtest@test.com"

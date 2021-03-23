@@ -11,10 +11,10 @@ import com.fazemeright.myinventorytracker.isViewDisplayed
 import com.fazemeright.myinventorytracker.isViewWithTextDisplayed
 import com.fazemeright.myinventorytracker.ui.addbag.AddBagActivity
 import com.fazemeright.myinventorytracker.ui.additem.AddItemActivity
-import com.fazemeright.myinventorytracker.ui.base.BaseUiTest
+import com.fazemeright.myinventorytracker.ui.base.BaseUiActivityTest
 import org.junit.Test
 
-class ItemListActivityTest : BaseUiTest<ItemListActivity>() {
+class ItemListActivityActivityTest : BaseUiActivityTest<ItemListActivity>() {
 
     override fun getActivity(): Class<ItemListActivity> = ItemListActivity::class.java
 

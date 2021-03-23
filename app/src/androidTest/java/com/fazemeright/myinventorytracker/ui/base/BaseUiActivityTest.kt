@@ -10,7 +10,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
-abstract class BaseUiTest<A : AppCompatActivity> {
+abstract class BaseUiActivityTest<A : AppCompatActivity> {
     @Before
     fun setUp() {
         Intents.init()
