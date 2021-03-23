@@ -25,7 +25,7 @@ class ItemDetailActivity : BaseActivity<ActivityItemDetailBinding>() {
 
         binding.viewModel = viewModel
 
-        setSupportActionBar(toolbar)
+//        setSupportActionBar(toolbar)
 
         supportActionBar?.apply {
             setHomeButtonEnabled(true)

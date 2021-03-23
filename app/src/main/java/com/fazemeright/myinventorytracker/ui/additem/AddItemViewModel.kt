@@ -1,27 +1,25 @@
 package com.fazemeright.myinventorytracker.ui.additem
 
-import android.content.Context
+import android.app.Application
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.fazemeright.myinventorytracker.domain.models.InventoryItem
 import com.fazemeright.myinventorytracker.repository.InventoryRepository
-import com.fazemeright.myinventorytracker.repository.Repository
 import com.fazemeright.myinventorytracker.ui.base.BaseViewModel
 import com.fazemeright.myinventorytracker.usecase.ClearAllInventoryItemsUseCase
 import com.fazemeright.myinventorytracker.usecase.GetAllBagNamesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.android.qualifiers.ActivityContext
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
 class AddItemViewModel @Inject constructor(
-    @ActivityContext private val context: Context,
+    private val app: Application,
     getAllBagNamesUseCase: GetAllBagNamesUseCase,
     private val clearAllInventoryItemsUseCase: ClearAllInventoryItemsUseCase,
     private val repository: InventoryRepository
-) : BaseViewModel(context) {
+) : BaseViewModel(app) {
 
     private val newInventoryItem by lazy { InventoryItem() }
 

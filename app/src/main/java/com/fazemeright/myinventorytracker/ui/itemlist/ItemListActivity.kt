@@ -37,7 +37,7 @@ class ItemListActivity : BaseActivity<ActivityItemListBinding>() {
 
         binding.viewModel = viewModel
 
-        setSupportActionBar(toolbar)
+//        setSupportActionBar(toolbar)
 
         binding.itemList.layoutManager = LinearLayoutManager(this)
 

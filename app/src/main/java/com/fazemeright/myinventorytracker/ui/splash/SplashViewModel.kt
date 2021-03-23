@@ -1,6 +1,6 @@
 package com.fazemeright.myinventorytracker.ui.splash
 
-import android.content.Context
+import android.app.Application
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import androidx.lifecycle.LiveData
@@ -9,16 +9,15 @@ import com.fazemeright.myinventorytracker.domain.models.Result
 import com.fazemeright.myinventorytracker.ui.base.BaseViewModel
 import com.fazemeright.myinventorytracker.usecase.IsUserSignedInUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.android.qualifiers.ActivityContext
 import kotlinx.coroutines.delay
 import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
 class SplashViewModel @Inject constructor(
-    @ActivityContext private val context: Context,
+    private val app: Application,
     private val _isUserSignedIn: IsUserSignedInUseCase
-) : BaseViewModel(context) {
+) : BaseViewModel(app) {
 
     val isUserSignedIn: LiveData<Boolean> =
         liveData {
@@ -38,7 +37,7 @@ class SplashViewModel @Inject constructor(
             return try {
                 Timber.d("Version name info called")
                 val pInfo: PackageInfo =
-                    context.packageManager.getPackageInfo(context.packageName, 0)
+                    app.packageManager.getPackageInfo(app.packageName, 0)
                 pInfo.versionName
             } catch (e: PackageManager.NameNotFoundException) {
                 e.printStackTrace()

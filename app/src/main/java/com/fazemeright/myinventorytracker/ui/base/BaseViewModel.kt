@@ -1,21 +1,21 @@
 package com.fazemeright.myinventorytracker.ui.base
 
-import android.content.Context
+import android.app.Application
 import androidx.annotation.StringRes
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.AndroidViewModel
 import androidx.work.*
 import com.fazemeright.myinventorytracker.workmanager.FireBaseSyncWorker
-import dagger.hilt.android.qualifiers.ActivityContext
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 
 abstract class BaseViewModel constructor(
-    @ActivityContext private val context: Context
+//    @ActivityContext private val context: Context,
+    private val app: Application
 ) :
-    ViewModel() {
+    AndroidViewModel(app) {
 
     fun getString(@StringRes resId: Int): String {
-        return context.getString(resId)
+        return app.getString(resId)
     }
 
     open fun logoutClicked() {
@@ -23,7 +23,7 @@ abstract class BaseViewModel constructor(
     }
 
     fun syncLocalAndCloudData() {
-        val workManager = WorkManager.getInstance(context)
+        val workManager = WorkManager.getInstance(app)
         val constraints = Constraints.Builder()
             .setRequiredNetworkType(NetworkType.CONNECTED)
             .setRequiresBatteryNotLow(true)

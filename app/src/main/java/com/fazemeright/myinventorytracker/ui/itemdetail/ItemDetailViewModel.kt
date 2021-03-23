@@ -1,6 +1,6 @@
 package com.fazemeright.myinventorytracker.ui.itemdetail
 
-import android.content.Context
+import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -9,7 +9,6 @@ import com.fazemeright.myinventorytracker.domain.models.ItemWithBag
 import com.fazemeright.myinventorytracker.repository.InventoryRepository
 import com.fazemeright.myinventorytracker.ui.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.android.qualifiers.ActivityContext
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
@@ -18,8 +17,8 @@ import javax.inject.Inject
 class ItemDetailViewModel @Inject constructor(
     private val repository: InventoryRepository,
     itemWithBag: ItemWithBag,
-    @ActivityContext context: Context
-) : BaseViewModel(context) {
+    private val app: Application
+) : BaseViewModel(app) {
 
 
     private val _onItemDeleteComplete = MutableLiveData<Boolean>()
