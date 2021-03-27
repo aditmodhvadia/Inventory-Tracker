@@ -9,13 +9,12 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fazemeright.myinventorytracker.R
-import com.fazemeright.myinventorytracker.domain.models.ItemWithBag
 import com.fazemeright.myinventorytracker.databinding.ActivityItemListBinding
+import com.fazemeright.myinventorytracker.domain.models.ItemWithBag
 import com.fazemeright.myinventorytracker.ui.addbag.AddBagActivity
 import com.fazemeright.myinventorytracker.ui.additem.AddItemActivity
 import com.fazemeright.myinventorytracker.ui.base.BaseActivity
 import com.fazemeright.myinventorytracker.ui.itemdetail.ItemDetailActivity
-import com.fazemeright.myinventorytracker.ui.login.LoginActivity
 import com.fazemeright.myinventorytracker.ui.settings.SettingsActivity
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -93,7 +92,8 @@ class ItemListActivity : BaseActivity<ActivityItemListBinding>() {
 
         viewModel.userLoggedOut.observe(this, { userLoggedOut ->
             if (userLoggedOut) {
-                open(LoginActivity::class.java)
+//                TODO: Use NavController
+//                open(LoginFragment::class.java)
                 finish()
                 viewModel.logoutSuccessful()
             }

@@ -15,7 +15,7 @@
         android:layout_height="match_parent"
         android:padding="@dimen/spacing_normal"
         tools:background="?colorPrimary"
-        tools:context="com.fazemeright.myinventorytracker.ui.login.LoginActivity">
+        tools:context="com.fazemeright.myinventorytracker.ui.login.LoginFragment">
 
         <TextView
             android:id="@+id/tvAppName"

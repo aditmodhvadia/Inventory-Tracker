@@ -2,12 +2,14 @@ package com.fazemeright.myinventorytracker.ui.login
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.activity.viewModels
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import com.fazemeright.myinventorytracker.R
-import com.fazemeright.myinventorytracker.databinding.ActivityLoginBinding
+import com.fazemeright.myinventorytracker.databinding.FragmentLoginBinding
 import com.fazemeright.myinventorytracker.domain.models.Result
-import com.fazemeright.myinventorytracker.ui.base.BaseActivity
-import com.fazemeright.myinventorytracker.ui.itemlist.ItemListActivity
+import com.fazemeright.myinventorytracker.ui.base.BaseFragment
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
@@ -15,20 +17,22 @@ import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
 @AndroidEntryPoint
-class LoginActivity : BaseActivity<ActivityLoginBinding>() {
+class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login) {
 
     private val RC_SIGN_IN: Int = 1001
     private val viewModel: LoginViewModel by viewModels()
     private lateinit var gso: GoogleSignInOptions
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        super.onCreateView(inflater, container, savedInstanceState)
         binding.viewmodel = viewModel
 
         binding.btnLogin.setOnClickListener {
 //            TODO: Show Loading
-            hideKeyboard()
             viewModel.onLoginClicked(
                 binding.etEmail.text.toString().trim(),
                 binding.etPassword.text.toString().trim()
@@ -41,21 +45,22 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
             googleSignIn()
         }
 
-        viewModel.loginResult.observe(this, { result ->
+        viewModel.loginResult.observe(requireActivity(), { result ->
 //            TODO: Hide Loading
             if (result is Result.Success) {
                 viewModel.syncLocalAndCloudData()
-                open(ItemListActivity::class.java)
-                finish()
+//                open(ItemListActivity::class.java)
+//                finish()
             } else if (result is Result.Error) {
                 Timber.e(result.exception)
-                showToast(result.msg)
+//                showToast(result.msg)
             }
         })
+        return binding.root
     }
 
     private fun googleSignIn() {
-        val signInIntent = GoogleSignIn.getClient(this, gso).signInIntent
+        val signInIntent = GoogleSignIn.getClient(requireActivity(), gso).signInIntent
         startActivityForResult(signInIntent, RC_SIGN_IN)
 
     }
@@ -85,6 +90,4 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
             }
         }
     }
-
-    override fun getLayoutId(): Int = R.layout.activity_login
 }

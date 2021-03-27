@@ -30,9 +30,11 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>(R.layout.fragment_spl
                 viewModel.syncLocalAndCloudData()
 //                TODO: Load ItemListActivity
 //                open(ItemListActivity::class.java)
+//                TODO: Remove this after testing
+                findNavController().navigate(R.id.action_splashFragment_to_loginFragment)
             } else {
 //                TODO: Load LoginActivity
-//                open(LoginActivity::class.java)
+                findNavController().navigate(R.id.action_splashFragment_to_loginFragment)
             }
 //            TODO: Remove SplashFragment from stack
 //            finish()
