@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.activity.viewModels
-import com.fazemeright.myinventorytracker.R
 import com.fazemeright.myinventorytracker.databinding.ActivityAddBagBinding
 import com.fazemeright.myinventorytracker.ui.base.BaseActivity
 import com.jaredrummler.android.colorpicker.ColorPickerDialog
@@ -79,5 +78,6 @@ class AddBagActivity : BaseActivity<ActivityAddBagBinding>(), ColorPickerDialogL
         return true
     }
 
-    override fun getLayoutId(): Int = R.layout.activity_add_bag
+    override fun getViewBinding(): ActivityAddBagBinding =
+        ActivityAddBagBinding.inflate(layoutInflater)
 }

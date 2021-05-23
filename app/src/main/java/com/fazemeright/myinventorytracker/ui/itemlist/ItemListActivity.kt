@@ -164,5 +164,6 @@ class ItemListActivity : BaseActivity<ActivityItemListBinding>() {
         return true
     }
 
-    override fun getLayoutId(): Int = R.layout.activity_item_list
+    override fun getViewBinding(): ActivityItemListBinding =
+        ActivityItemListBinding.inflate(layoutInflater)
 }

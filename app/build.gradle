@@ -43,11 +43,7 @@ android {
 
     buildFeatures {
         viewBinding true
-    }
-
-    // Enables data binding.
-    dataBinding {
-        enabled = true
+        dataBinding true
     }
 
     kapt {

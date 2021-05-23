@@ -84,5 +84,6 @@ class AddItemActivity : BaseActivity<ActivityAddItemBinding>(), AdapterView.OnIt
         selectedBagName = viewModel.bagNames.value?.get(position)
     }
 
-    override fun getLayoutId(): Int = R.layout.activity_add_item
+    override fun getViewBinding(): ActivityAddItemBinding =
+        ActivityAddItemBinding.inflate(layoutInflater)
 }

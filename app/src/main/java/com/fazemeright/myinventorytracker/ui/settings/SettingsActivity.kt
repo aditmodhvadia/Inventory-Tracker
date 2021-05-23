@@ -8,8 +8,10 @@ import androidx.preference.PreferenceFragmentCompat
 import com.fazemeright.myinventorytracker.R
 import com.fazemeright.myinventorytracker.databinding.SettingsActivityBinding
 import com.fazemeright.myinventorytracker.ui.base.BaseActivity
+import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
+@AndroidEntryPoint
 class SettingsActivity : BaseActivity<SettingsActivityBinding>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -69,5 +71,6 @@ class SettingsActivity : BaseActivity<SettingsActivityBinding>() {
         return true
     }
 
-    override fun getLayoutId(): Int = R.layout.settings_activity
+    override fun getViewBinding(): SettingsActivityBinding =
+        SettingsActivityBinding.inflate(layoutInflater)
 }

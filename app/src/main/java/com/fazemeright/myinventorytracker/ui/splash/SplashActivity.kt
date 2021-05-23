@@ -2,7 +2,6 @@ package com.fazemeright.myinventorytracker.ui.splash
 
 import android.os.Bundle
 import androidx.activity.viewModels
-import com.fazemeright.myinventorytracker.R
 import com.fazemeright.myinventorytracker.databinding.ActivitySplashBinding
 import com.fazemeright.myinventorytracker.ui.base.BaseActivity
 import com.fazemeright.myinventorytracker.ui.itemlist.ItemListActivity
@@ -33,5 +32,6 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
         )
     }
 
-    override fun getLayoutId(): Int = R.layout.activity_splash
+    override fun getViewBinding(): ActivitySplashBinding =
+        ActivitySplashBinding.inflate(layoutInflater)
 }

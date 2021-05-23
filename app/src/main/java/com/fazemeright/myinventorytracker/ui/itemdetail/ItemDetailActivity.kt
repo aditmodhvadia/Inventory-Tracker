@@ -22,7 +22,6 @@ class ItemDetailActivity : BaseActivity<ActivityItemDetailBinding>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding.viewModel = viewModel
 
 //        setSupportActionBar(toolbar)
@@ -81,5 +80,7 @@ class ItemDetailActivity : BaseActivity<ActivityItemDetailBinding>() {
         return super.onOptionsItemSelected(item)
     }
 
-    override fun getLayoutId(): Int = R.layout.activity_item_detail
+    override fun getViewBinding(): ActivityItemDetailBinding {
+        return ActivityItemDetailBinding.inflate(layoutInflater)
+    }
 }
