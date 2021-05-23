@@ -8,11 +8,14 @@ import androidx.room.PrimaryKey
 import kotlinx.parcelize.Parcelize
 
 @Entity(
-    tableName = "my_inventory_table", foreignKeys = [ForeignKey(
-        entity = BagItem::class,
-        childColumns = ["bagOwnerId"],
-        parentColumns = ["bagId"]
-    )]
+    tableName = "my_inventory_table",
+    foreignKeys = [
+        ForeignKey(
+            entity = BagItem::class,
+            childColumns = ["bagOwnerId"],
+            parentColumns = ["bagId"]
+        )
+    ]
 )
 @Parcelize
 data class InventoryItem(
@@ -27,7 +30,6 @@ data class InventoryItem(
     var itemQuantity: Int = 1,
 
     @ColumnInfo(name = "bagOwnerId")
-    @ForeignKey(entity = BagItem::class, parentColumns = ["bagId"], childColumns = ["bagOwnerId"])
     var bagOwnerId: Int = 0,
     var onlineId: String? = null
 ) : OnlineDatabaseStoreObject, Parcelable {
@@ -38,6 +40,6 @@ data class InventoryItem(
     }
 }
 
-//@Fts4(contentEntity = InventoryItem::class)
-//@Entity(tableName = "inventoryItemFts")
-//data class InventoryItemFts(val itemId: Int, val itemName: String, val itemDesc: String)
+// @Fts4(contentEntity = InventoryItem::class)
+// @Entity(tableName = "inventoryItemFts")
+// data class InventoryItemFts(val itemId: Int, val itemName: String, val itemDesc: String)

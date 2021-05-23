@@ -20,7 +20,6 @@ class ItemDetailViewModel @Inject constructor(
     private val app: Application
 ) : BaseViewModel(app) {
 
-
     private val _onItemDeleteComplete = MutableLiveData<Boolean>()
 
     val onItemDeleteComplete: LiveData<Boolean>
@@ -76,5 +75,4 @@ class ItemDetailViewModel @Inject constructor(
             }
         }
     }*/
-
 }

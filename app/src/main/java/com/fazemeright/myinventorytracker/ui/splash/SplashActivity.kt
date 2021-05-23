@@ -19,15 +19,18 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
 
         binding.viewModel = viewModel
 
-        viewModel.isUserSignedIn.observe(this, { userIsSignedIn ->
-            if (userIsSignedIn) {
-                viewModel.syncLocalAndCloudData()
-                open(ItemListActivity::class.java)
-            } else {
-                open(LoginActivity::class.java)
+        viewModel.isUserSignedIn.observe(
+            this,
+            { userIsSignedIn ->
+                if (userIsSignedIn) {
+                    viewModel.syncLocalAndCloudData()
+                    open(ItemListActivity::class.java)
+                } else {
+                    open(LoginActivity::class.java)
+                }
+                finish()
             }
-            finish()
-        })
+        )
     }
 
     override fun getLayoutId(): Int = R.layout.activity_splash

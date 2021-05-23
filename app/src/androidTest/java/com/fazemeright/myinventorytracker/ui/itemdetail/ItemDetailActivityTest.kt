@@ -9,7 +9,6 @@ import com.fazemeright.myinventorytracker.isViewDisplayed
 import com.fazemeright.myinventorytracker.isViewWithTextDisplayed
 import com.fazemeright.myinventorytracker.ui.base.BaseUiTest
 
-
 class ItemDetailActivityTest : BaseUiTest<ItemDetailActivity>() {
 
     override fun allViewsAreDisplayed() {

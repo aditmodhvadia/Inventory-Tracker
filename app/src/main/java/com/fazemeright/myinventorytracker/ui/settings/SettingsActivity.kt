@@ -12,7 +12,6 @@ import timber.log.Timber
 
 class SettingsActivity : BaseActivity<SettingsActivityBinding>() {
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportFragmentManager
@@ -24,7 +23,8 @@ class SettingsActivity : BaseActivity<SettingsActivityBinding>() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
-    class SettingsFragment : PreferenceFragmentCompat(),
+    class SettingsFragment :
+        PreferenceFragmentCompat(),
         SharedPreferences.OnSharedPreferenceChangeListener {
 
         override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
@@ -60,8 +60,6 @@ class SettingsActivity : BaseActivity<SettingsActivityBinding>() {
                 }
             }
         }
-
-
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

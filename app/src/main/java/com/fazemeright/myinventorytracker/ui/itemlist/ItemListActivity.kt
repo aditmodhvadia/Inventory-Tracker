@@ -9,8 +9,8 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fazemeright.myinventorytracker.R
-import com.fazemeright.myinventorytracker.domain.models.ItemWithBag
 import com.fazemeright.myinventorytracker.databinding.ActivityItemListBinding
+import com.fazemeright.myinventorytracker.domain.models.ItemWithBag
 import com.fazemeright.myinventorytracker.ui.addbag.AddBagActivity
 import com.fazemeright.myinventorytracker.ui.additem.AddItemActivity
 import com.fazemeright.myinventorytracker.ui.base.BaseActivity
@@ -41,63 +41,80 @@ class ItemListActivity : BaseActivity<ActivityItemListBinding>() {
 
         binding.itemList.layoutManager = LinearLayoutManager(this)
 
-        val adapter = ItemListAdapter(ItemListAdapter.ItemListener(
-            clickListener = { item ->
-                viewModel.onItemClicked(item)
-            },
-            deleteClickListener = { itemId ->
-                showConfirmationDialog(itemId)
-                viewModel.onDeleteItemClicked(itemId)
-            }
-        ))
+        val adapter = ItemListAdapter(
+            ItemListAdapter.ItemListener(
+                clickListener = { item ->
+                    viewModel.onItemClicked(item)
+                },
+                deleteClickListener = { itemId ->
+                    showConfirmationDialog(itemId)
+                    viewModel.onDeleteItemClicked(itemId)
+                }
+            )
+        )
 
         binding.itemList.adapter = adapter
 
-        viewModel.items.observe(this, {
-            it?.let {
-                adapter.updateList(it)
-            }
-            Timber.i("received in onCreate: ${it.size}")
-        })
-
-        viewModel.deletedItem.observe(this, { deletedItem ->
-            Snackbar.make(
-                binding.root, // Parent view
-                "Item deleted from database.", // Message to show
-                Snackbar.LENGTH_LONG //
-            ).setAction( // Set an action for snack bar
-                "Undo" // Action button text
-            ) {
-                viewModel.undoDeleteItem(deletedItem)
-            }.show()
-        })
-
-        viewModel.navigateToAddItemActivity.observe(this, { navigate ->
-            if (navigate) {
-                startActivity(Intent(this, AddItemActivity::class.java))
-                viewModel.onNavigationToAddItemFinished()
-            }
-        })
-
-        viewModel.navigateToItemDetailActivity.observe(this, { itemInBag ->
-            itemInBag?.let {
-                val intent = Intent(this, ItemDetailActivity::class.java)
-                selectedItem.apply {
-                    item = itemInBag.item
-                    bag = itemInBag.bag
+        viewModel.items.observe(
+            this,
+            {
+                it?.let {
+                    adapter.updateList(it)
                 }
-                startActivity(intent)
-                viewModel.onNavigationToItemDetailFinished()
+                Timber.i("received in onCreate: ${it.size}")
             }
-        })
+        )
 
-        viewModel.userLoggedOut.observe(this, { userLoggedOut ->
-            if (userLoggedOut) {
-                open(LoginActivity::class.java)
-                finish()
-                viewModel.logoutSuccessful()
+        viewModel.deletedItem.observe(
+            this,
+            { deletedItem ->
+                Snackbar.make(
+                    binding.root, // Parent view
+                    "Item deleted from database.", // Message to show
+                    Snackbar.LENGTH_LONG //
+                ).setAction( // Set an action for snack bar
+                    "Undo" // Action button text
+                ) {
+                    viewModel.undoDeleteItem(deletedItem)
+                }.show()
             }
-        })
+        )
+
+        viewModel.navigateToAddItemActivity.observe(
+            this,
+            { navigate ->
+                if (navigate) {
+                    startActivity(Intent(this, AddItemActivity::class.java))
+                    viewModel.onNavigationToAddItemFinished()
+                }
+            }
+        )
+
+        viewModel.navigateToItemDetailActivity.observe(
+            this,
+            { itemInBag ->
+                itemInBag?.let {
+                    val intent = Intent(this, ItemDetailActivity::class.java)
+                    selectedItem.apply {
+                        item = itemInBag.item
+                        bag = itemInBag.bag
+                    }
+                    startActivity(intent)
+                    viewModel.onNavigationToItemDetailFinished()
+                }
+            }
+        )
+
+        viewModel.userLoggedOut.observe(
+            this,
+            { userLoggedOut ->
+                if (userLoggedOut) {
+                    open(LoginActivity::class.java)
+                    finish()
+                    viewModel.logoutSuccessful()
+                }
+            }
+        )
     }
 
     private fun showConfirmationDialog(itemId: Int) {

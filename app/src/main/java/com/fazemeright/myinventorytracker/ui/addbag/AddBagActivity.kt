@@ -1,13 +1,10 @@
 package com.fazemeright.myinventorytracker.ui.addbag
 
-import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.Observer
 import com.fazemeright.myinventorytracker.R
 import com.fazemeright.myinventorytracker.databinding.ActivityAddBagBinding
 import com.fazemeright.myinventorytracker.ui.base.BaseActivity
@@ -54,13 +51,15 @@ class AddBagActivity : BaseActivity<ActivityAddBagBinding>(), ColorPickerDialogL
             )
         }
 
-        viewModel.navigateBackToItemList.observe(this, { navigate ->
-            if (navigate) {
-                finish()
-                viewModel.onNavigationToAddItemFinished()
+        viewModel.navigateBackToItemList.observe(
+            this,
+            { navigate ->
+                if (navigate) {
+                    finish()
+                    viewModel.onNavigationToAddItemFinished()
+                }
             }
-        })
-
+        )
     }
 
     override fun onDialogDismissed(dialogId: Int) {

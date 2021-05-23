@@ -26,5 +26,4 @@ abstract class BaseUiTest<A : AppCompatActivity> {
     fun tearDown() {
         Intents.release()
     }
-
 }

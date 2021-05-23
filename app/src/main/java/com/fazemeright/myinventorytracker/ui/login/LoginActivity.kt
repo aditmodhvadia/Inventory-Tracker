@@ -41,23 +41,25 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
             googleSignIn()
         }
 
-        viewModel.loginResult.observe(this, { result ->
+        viewModel.loginResult.observe(
+            this,
+            { result ->
 //            TODO: Hide Loading
-            if (result is Result.Success) {
-                viewModel.syncLocalAndCloudData()
-                open(ItemListActivity::class.java)
-                finish()
-            } else if (result is Result.Error) {
-                Timber.e(result.exception)
-                showToast(result.msg)
+                if (result is Result.Success) {
+                    viewModel.syncLocalAndCloudData()
+                    open(ItemListActivity::class.java)
+                    finish()
+                } else if (result is Result.Error) {
+                    Timber.e(result.exception)
+                    showToast(result.msg)
+                }
             }
-        })
+        )
     }
 
     private fun googleSignIn() {
         val signInIntent = GoogleSignIn.getClient(this, gso).signInIntent
         startActivityForResult(signInIntent, RC_SIGN_IN)
-
     }
 
     private fun configureGoogleSignIn() {

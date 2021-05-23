@@ -42,5 +42,3 @@ class AddBagActivityTest : BaseUiTest<AddBagActivity>() {
         onView(withId(R.id.btnAddBag)).check(matches(isDisplayed())).perform(click())
     }
 }
-
-

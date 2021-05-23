@@ -40,5 +40,4 @@ object DatabaseModule {
             })
             .build()
     }
-
 }
