@@ -18,15 +18,15 @@ buildscript {
         classpath 'com.google.gms:google-services:4.3.8'
     }
 }
-plugins {
+/*plugins {
     id "org.jlleitschuh.gradle.ktlint" version "10.0.0"
-}
+}*/
 allprojects {
     repositories {
         google()
         mavenCentral()
     }
-    apply plugin: "org.jlleitschuh.gradle.ktlint"
+//    apply plugin: "org.jlleitschuh.gradle.ktlint"
 }
 
 task clean(type: Delete) {

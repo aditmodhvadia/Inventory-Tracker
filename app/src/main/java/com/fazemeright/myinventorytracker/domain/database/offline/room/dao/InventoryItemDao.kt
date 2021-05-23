@@ -29,6 +29,7 @@ interface InventoryItemDao : BaseDao<InventoryItem> {
     @Query("DELETE FROM my_inventory_table")
     fun clear()
 
+    @Transaction
     @Query("SELECT * FROM my_inventory_table WHERE itemId = :itemId")
     fun getItemWithBagFromId(itemId: Int): LiveData<ItemWithBag>
 
