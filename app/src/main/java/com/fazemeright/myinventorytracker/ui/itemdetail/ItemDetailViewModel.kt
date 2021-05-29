@@ -4,20 +4,18 @@ import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.fazemeright.myinventorytracker.domain.models.InventoryItem
 import com.fazemeright.myinventorytracker.domain.models.ItemWithBag
 import com.fazemeright.myinventorytracker.repository.InventoryRepository
 import com.fazemeright.myinventorytracker.ui.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
 class ItemDetailViewModel @Inject constructor(
     private val repository: InventoryRepository,
     itemWithBag: ItemWithBag,
-    private val app: Application
+    app: Application
 ) : BaseViewModel(app) {
 
     private val _onItemDeleteComplete = MutableLiveData<Boolean>()
@@ -29,7 +27,7 @@ class ItemDetailViewModel @Inject constructor(
 
     val navigateBackToItemList = MutableLiveData<Boolean>()
 
-    fun onUpdateClicked(
+    /*fun onUpdateClicked(
         itemName: String,
         bagName: String,
         itemDesc: String,
@@ -41,16 +39,16 @@ class ItemDetailViewModel @Inject constructor(
 //            updateItem(updateItem)
             navigateBackToItemList()
         }
-    }
+    }*/
 
-    private suspend fun updateItem(item: InventoryItem?) {
+    /*private suspend fun updateItem(item: InventoryItem?) {
         repository.updateInventoryItem(item)
-    }
+    }*/
 
-    private fun navigateBackToItemList() {
+    /*private fun navigateBackToItemList() {
         Timber.i("Clicked Fab")
         navigateBackToItemList.value = true
-    }
+    }*/
 
     fun onNavigationToItemListFinished() {
         navigateBackToItemList.value = false
