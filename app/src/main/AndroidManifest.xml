@@ -35,10 +35,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".ui.additem.AddItemActivity"
-            android:label="@string/add_item_title"
-            android:windowSoftInputMode="adjustResize" />
 
         <provider
             android:name="androidx.work.impl.WorkManagerInitializer"

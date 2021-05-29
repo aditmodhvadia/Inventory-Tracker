@@ -12,7 +12,7 @@ import com.fazemeright.myinventorytracker.R
 import com.fazemeright.myinventorytracker.databinding.ActivityItemListBinding
 import com.fazemeright.myinventorytracker.domain.models.ItemWithBag
 import com.fazemeright.myinventorytracker.ui.addbag.AddBagFragment
-import com.fazemeright.myinventorytracker.ui.additem.AddItemActivity
+import com.fazemeright.myinventorytracker.ui.additem.AddItemFragment
 import com.fazemeright.myinventorytracker.ui.base.BaseActivity
 import com.fazemeright.myinventorytracker.ui.itemdetail.ItemDetailFragment
 import com.fazemeright.myinventorytracker.ui.settings.SettingsActivity
@@ -83,7 +83,7 @@ class ItemListActivity : BaseActivity<ActivityItemListBinding>() {
             this,
             { navigate ->
                 if (navigate) {
-                    startActivity(Intent(this, AddItemActivity::class.java))
+                    startActivity(Intent(this, AddItemFragment::class.java))
                     viewModel.onNavigationToAddItemFinished()
                 }
             }
