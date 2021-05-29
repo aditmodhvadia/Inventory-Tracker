@@ -14,10 +14,10 @@ abstract class BaseUiFragmentTest<A : Fragment> {
     @Before
     fun setUp() {
         Intents.init()
-        FragmentScenario.launch(getActivity())
+        FragmentScenario.launch(getFragment())
     }
 
-    abstract fun getActivity(): Class<A>
+    abstract fun getFragment(): Class<A>
 
     @Test
     abstract fun allViewsAreDisplayed()

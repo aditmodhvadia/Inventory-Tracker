@@ -16,7 +16,7 @@ import kotlinx.coroutines.runBlocking
 import org.junit.Test
 
 class LoginActivityFragmentTest : BaseUiFragmentTest<LoginFragment>() {
-    override fun getActivity(): Class<LoginFragment> = LoginFragment::class.java
+    override fun getFragment(): Class<LoginFragment> = LoginFragment::class.java
 
     val VALID_EMAIL = "validtest@test.com"
     val VALID_PASSWORD = "12345678"

@@ -2,18 +2,20 @@ package com.fazemeright.myinventorytracker.ui.itemdetail
 
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuInflater
 import android.view.MenuItem
-import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.viewModels
 import com.fazemeright.myinventorytracker.R
-import com.fazemeright.myinventorytracker.databinding.ActivityItemDetailBinding
+import com.fazemeright.myinventorytracker.databinding.FragmentItemDetailBinding
 import com.fazemeright.myinventorytracker.domain.models.ItemWithBag
-import com.fazemeright.myinventorytracker.ui.base.BaseActivity
+import com.fazemeright.myinventorytracker.ui.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class ItemDetailActivity : BaseActivity<ActivityItemDetailBinding>() {
+class ItemDetailFragment : BaseFragment<FragmentItemDetailBinding>() {
 
     val viewModel: ItemDetailViewModel by viewModels()
 
@@ -26,7 +28,7 @@ class ItemDetailActivity : BaseActivity<ActivityItemDetailBinding>() {
 
 //        setSupportActionBar(toolbar)
 
-        supportActionBar?.apply {
+        (requireActivity() as AppCompatActivity).supportActionBar?.apply {
             setHomeButtonEnabled(true)
             setDisplayHomeAsUpEnabled(true)
         }
@@ -44,7 +46,7 @@ class ItemDetailActivity : BaseActivity<ActivityItemDetailBinding>() {
             this,
             { navigate ->
                 if (navigate) {
-                    finish()
+//                    TODO: finish()
                     viewModel.onNavigationToItemListFinished()
                 }
             }
@@ -55,22 +57,22 @@ class ItemDetailActivity : BaseActivity<ActivityItemDetailBinding>() {
             { deleted ->
                 if (deleted) {
                     showToast(getString(R.string.item_deleted_successfully))
-                    finish()
+//                    TODO: finish()
                     viewModel.onItemDeleteFinished()
                 }
             }
         )
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_update_item, menu)
-        return true
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.menu_update_item, menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> {
-                finish()
+//                TODO: finish()
                 return true
             }
             R.id.action_delete_item -> {
@@ -80,7 +82,7 @@ class ItemDetailActivity : BaseActivity<ActivityItemDetailBinding>() {
         return super.onOptionsItemSelected(item)
     }
 
-    override fun getViewBinding(): ActivityItemDetailBinding {
-        return ActivityItemDetailBinding.inflate(layoutInflater)
+    override fun getViewBinding(): FragmentItemDetailBinding {
+        return FragmentItemDetailBinding.inflate(layoutInflater)
     }
 }

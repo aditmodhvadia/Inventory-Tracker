@@ -8,9 +8,10 @@ import com.fazemeright.myinventorytracker.R
 import com.fazemeright.myinventorytracker.isViewDisplayed
 import com.fazemeright.myinventorytracker.isViewWithTextDisplayed
 import com.fazemeright.myinventorytracker.ui.base.BaseUiActivityTest
+import com.fazemeright.myinventorytracker.ui.base.BaseUiFragmentTest
 
 
-class ItemDetailActivityActivityTest : BaseUiActivityTest<ItemDetailActivity>() {
+class ItemDetailActivityFragmentTest : BaseUiFragmentTest<ItemDetailFragment>() {
 
     override fun allViewsAreDisplayed() {
         R.string.item_detail_title.isViewWithTextDisplayed()
@@ -24,5 +25,5 @@ class ItemDetailActivityActivityTest : BaseUiActivityTest<ItemDetailActivity>() 
             .check(matches(isDisplayed()))
     }
 
-    override fun getActivity(): Class<ItemDetailActivity> = ItemDetailActivity::class.java
+    override fun getFragment(): Class<ItemDetailFragment> = ItemDetailFragment::class.java
 }

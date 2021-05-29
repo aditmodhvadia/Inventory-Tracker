@@ -14,7 +14,7 @@ import com.fazemeright.myinventorytracker.domain.models.ItemWithBag
 import com.fazemeright.myinventorytracker.ui.addbag.AddBagActivity
 import com.fazemeright.myinventorytracker.ui.additem.AddItemActivity
 import com.fazemeright.myinventorytracker.ui.base.BaseActivity
-import com.fazemeright.myinventorytracker.ui.itemdetail.ItemDetailActivity
+import com.fazemeright.myinventorytracker.ui.itemdetail.ItemDetailFragment
 import com.fazemeright.myinventorytracker.ui.settings.SettingsActivity
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -93,7 +93,7 @@ class ItemListActivity : BaseActivity<ActivityItemListBinding>() {
             this,
             { itemInBag ->
                 itemInBag?.let {
-                    val intent = Intent(this, ItemDetailActivity::class.java)
+                    val intent = Intent(this, ItemDetailFragment::class.java)
                     selectedItem.apply {
                         item = itemInBag.item
                         bag = itemInBag.bag

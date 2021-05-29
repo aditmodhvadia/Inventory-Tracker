@@ -35,5 +35,5 @@ class SplashFragmentActivityTest : BaseUiFragmentTest<SplashFragment>() {
         )
     }
 
-    override fun getActivity(): Class<SplashFragment> = SplashFragment::class.java
+    override fun getFragment(): Class<SplashFragment> = SplashFragment::class.java
 }

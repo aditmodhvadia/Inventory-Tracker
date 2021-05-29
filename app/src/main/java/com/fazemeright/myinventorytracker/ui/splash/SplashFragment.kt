@@ -12,7 +12,7 @@ import com.fazemeright.myinventorytracker.ui.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class SplashFragment : BaseFragment<FragmentSplashBinding>(R.layout.fragment_splash) {
+class SplashFragment : BaseFragment<FragmentSplashBinding>() {
 
     private val viewModel: SplashViewModel by viewModels()
 
@@ -44,5 +44,9 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>(R.layout.fragment_spl
 //            finish()
             findNavController().popBackStack(R.id.splashFragment, true)
         })
+    }
+
+    override fun getViewBinding(): FragmentSplashBinding {
+        return FragmentSplashBinding.inflate(layoutInflater)
     }
 }

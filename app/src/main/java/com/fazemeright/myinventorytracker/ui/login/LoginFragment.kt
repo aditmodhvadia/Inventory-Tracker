@@ -17,7 +17,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
 @AndroidEntryPoint
-class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login) {
+class LoginFragment : BaseFragment<FragmentLoginBinding>() {
 
     private val RC_SIGN_IN: Int = 1001
     private val viewModel: LoginViewModel by viewModels()
@@ -94,5 +94,9 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
                 // ...
             }
         }
+    }
+
+    override fun getViewBinding(): FragmentLoginBinding {
+        return FragmentLoginBinding.inflate(layoutInflater)
     }
 }
