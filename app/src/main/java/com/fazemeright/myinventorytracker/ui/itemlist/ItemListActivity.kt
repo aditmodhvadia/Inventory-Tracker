@@ -111,7 +111,7 @@ class ItemListActivity : BaseActivity<ActivityItemListBinding>() {
                 finish()
                 viewModel.logoutSuccessful()
             }
-        )
+        })
     }
 
     private fun showConfirmationDialog(itemId: Int) {
@@ -155,7 +155,12 @@ class ItemListActivity : BaseActivity<ActivityItemListBinding>() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_add_bag -> startActivity(Intent(this, AddBagActivity::class.java))
-            R.id.action_settings -> startActivity(Intent(this, SettingsActivity::class.java))
+            R.id.action_settings -> startActivity(
+                Intent(
+                    this,
+                    SettingsActivity::class.java
+                )
+            )
             R.id.action_logout -> viewModel.logoutClicked()
         }
         return true

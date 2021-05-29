@@ -91,7 +91,4 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
             }
         }
     }
-
-    override fun getViewBinding(): ActivityLoginBinding =
-        ActivityLoginBinding.inflate(layoutInflater)
 }
