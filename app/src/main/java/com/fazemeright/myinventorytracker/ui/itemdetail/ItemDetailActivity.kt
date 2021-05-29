@@ -5,8 +5,8 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.viewModels
 import com.fazemeright.myinventorytracker.R
-import com.fazemeright.myinventorytracker.domain.models.ItemWithBag
 import com.fazemeright.myinventorytracker.databinding.ActivityItemDetailBinding
+import com.fazemeright.myinventorytracker.domain.models.ItemWithBag
 import com.fazemeright.myinventorytracker.ui.base.BaseActivity
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
@@ -22,7 +22,6 @@ class ItemDetailActivity : BaseActivity<ActivityItemDetailBinding>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding.viewModel = viewModel
 
 //        setSupportActionBar(toolbar)
@@ -32,26 +31,35 @@ class ItemDetailActivity : BaseActivity<ActivityItemDetailBinding>() {
             setDisplayHomeAsUpEnabled(true)
         }
 
-        viewModel.item.observe(this, { item ->
-            Timber.d("Detail Item: $item")
-            item?.let {
-                binding.item = it
+        viewModel.item.observe(
+            this,
+            { item ->
+                Timber.d("Detail Item: $item")
+                item?.let {
+                    binding.item = it
+                }
             }
-        })
-        viewModel.navigateBackToItemList.observe(this, { navigate ->
-            if (navigate) {
-                finish()
-                viewModel.onNavigationToItemListFinished()
+        )
+        viewModel.navigateBackToItemList.observe(
+            this,
+            { navigate ->
+                if (navigate) {
+                    finish()
+                    viewModel.onNavigationToItemListFinished()
+                }
             }
-        })
+        )
 
-        viewModel.onItemDeleteComplete.observe(this, { deleted ->
-            if (deleted) {
-                showToast(getString(R.string.item_deleted_successfully))
-                finish()
-                viewModel.onItemDeleteFinished()
+        viewModel.onItemDeleteComplete.observe(
+            this,
+            { deleted ->
+                if (deleted) {
+                    showToast(getString(R.string.item_deleted_successfully))
+                    finish()
+                    viewModel.onItemDeleteFinished()
+                }
             }
-        })
+        )
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -72,5 +80,7 @@ class ItemDetailActivity : BaseActivity<ActivityItemDetailBinding>() {
         return super.onOptionsItemSelected(item)
     }
 
-    override fun getLayoutId(): Int = R.layout.activity_item_detail
+    override fun getViewBinding(): ActivityItemDetailBinding {
+        return ActivityItemDetailBinding.inflate(layoutInflater)
+    }
 }

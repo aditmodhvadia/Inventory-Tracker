@@ -40,55 +40,69 @@ class ItemListActivity : BaseActivity<ActivityItemListBinding>() {
 
         binding.itemList.layoutManager = LinearLayoutManager(this)
 
-        val adapter = ItemListAdapter(ItemListAdapter.ItemListener(
-            clickListener = { item ->
-                viewModel.onItemClicked(item)
-            },
-            deleteClickListener = { itemId ->
-                showConfirmationDialog(itemId)
-                viewModel.onDeleteItemClicked(itemId)
-            }
-        ))
+        val adapter = ItemListAdapter(
+            ItemListAdapter.ItemListener(
+                clickListener = { item ->
+                    viewModel.onItemClicked(item)
+                },
+                deleteClickListener = { itemId ->
+                    showConfirmationDialog(itemId)
+                    viewModel.onDeleteItemClicked(itemId)
+                }
+            )
+        )
 
         binding.itemList.adapter = adapter
 
-        viewModel.items.observe(this, {
-            it?.let {
-                adapter.updateList(it)
-            }
-            Timber.i("received in onCreate: ${it.size}")
-        })
-
-        viewModel.deletedItem.observe(this, { deletedItem ->
-            Snackbar.make(
-                binding.root, // Parent view
-                "Item deleted from database.", // Message to show
-                Snackbar.LENGTH_LONG //
-            ).setAction( // Set an action for snack bar
-                "Undo" // Action button text
-            ) {
-                viewModel.undoDeleteItem(deletedItem)
-            }.show()
-        })
-
-        viewModel.navigateToAddItemActivity.observe(this, { navigate ->
-            if (navigate) {
-                startActivity(Intent(this, AddItemActivity::class.java))
-                viewModel.onNavigationToAddItemFinished()
-            }
-        })
-
-        viewModel.navigateToItemDetailActivity.observe(this, { itemInBag ->
-            itemInBag?.let {
-                val intent = Intent(this, ItemDetailActivity::class.java)
-                selectedItem.apply {
-                    item = itemInBag.item
-                    bag = itemInBag.bag
+        viewModel.items.observe(
+            this,
+            {
+                it?.let {
+                    adapter.updateList(it)
                 }
-                startActivity(intent)
-                viewModel.onNavigationToItemDetailFinished()
+                Timber.i("received in onCreate: ${it.size}")
             }
-        })
+        )
+
+        viewModel.deletedItem.observe(
+            this,
+            { deletedItem ->
+                Snackbar.make(
+                    binding.root, // Parent view
+                    "Item deleted from database.", // Message to show
+                    Snackbar.LENGTH_LONG //
+                ).setAction( // Set an action for snack bar
+                    "Undo" // Action button text
+                ) {
+                    viewModel.undoDeleteItem(deletedItem)
+                }.show()
+            }
+        )
+
+        viewModel.navigateToAddItemActivity.observe(
+            this,
+            { navigate ->
+                if (navigate) {
+                    startActivity(Intent(this, AddItemActivity::class.java))
+                    viewModel.onNavigationToAddItemFinished()
+                }
+            }
+        )
+
+        viewModel.navigateToItemDetailActivity.observe(
+            this,
+            { itemInBag ->
+                itemInBag?.let {
+                    val intent = Intent(this, ItemDetailActivity::class.java)
+                    selectedItem.apply {
+                        item = itemInBag.item
+                        bag = itemInBag.bag
+                    }
+                    startActivity(intent)
+                    viewModel.onNavigationToItemDetailFinished()
+                }
+            }
+        )
 
         viewModel.userLoggedOut.observe(this, { userLoggedOut ->
             if (userLoggedOut) {
@@ -97,7 +111,7 @@ class ItemListActivity : BaseActivity<ActivityItemListBinding>() {
                 finish()
                 viewModel.logoutSuccessful()
             }
-        })
+        )
     }
 
     private fun showConfirmationDialog(itemId: Int) {
@@ -147,5 +161,6 @@ class ItemListActivity : BaseActivity<ActivityItemListBinding>() {
         return true
     }
 
-    override fun getLayoutId(): Int = R.layout.activity_item_list
+    override fun getViewBinding(): ActivityItemListBinding =
+        ActivityItemListBinding.inflate(layoutInflater)
 }

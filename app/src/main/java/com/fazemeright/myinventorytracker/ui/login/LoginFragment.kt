@@ -45,24 +45,25 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
             googleSignIn()
         }
 
-        viewModel.loginResult.observe(requireActivity(), { result ->
+        viewModel.loginResult.observe(
+            requireActivity(),
+            { result ->
 //            TODO: Hide Loading
-            if (result is Result.Success) {
-                viewModel.syncLocalAndCloudData()
+                if (result is Result.Success) {
+                    viewModel.syncLocalAndCloudData()
 //                open(ItemListActivity::class.java)
 //                finish()
-            } else if (result is Result.Error) {
-                Timber.e(result.exception)
+                } else if (result is Result.Error) {
+                    Timber.e(result.exception)
 //                showToast(result.msg)
-            }
-        })
+                }
+            })
         return binding.root
     }
 
     private fun googleSignIn() {
         val signInIntent = GoogleSignIn.getClient(requireActivity(), gso).signInIntent
         startActivityForResult(signInIntent, RC_SIGN_IN)
-
     }
 
     private fun configureGoogleSignIn() {
@@ -90,4 +91,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
             }
         }
     }
+
+    override fun getViewBinding(): ActivityLoginBinding =
+        ActivityLoginBinding.inflate(layoutInflater)
 }

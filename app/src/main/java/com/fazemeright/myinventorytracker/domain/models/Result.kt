@@ -1,6 +1,5 @@
 package com.fazemeright.myinventorytracker.domain.models
 
-
 sealed class Result<out T : Any> {
 
     data class Success<out T : Any>(val data: T, val msg: String = "") : Result<T>()

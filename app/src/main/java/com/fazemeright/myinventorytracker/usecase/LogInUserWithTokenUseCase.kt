@@ -7,7 +7,7 @@ import javax.inject.Inject
 
 class LogInUserWithTokenUseCase @Inject constructor(private val repository: InventoryRepository) {
 
-    suspend operator fun invoke(idToken:String): Result<FirebaseUser> {
+    suspend operator fun invoke(idToken: String): Result<FirebaseUser> {
         return repository.signInWithToken(idToken)
     }
 }

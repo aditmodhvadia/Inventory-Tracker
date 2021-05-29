@@ -12,7 +12,6 @@ import com.fazemeright.myinventorytracker.databinding.ActivityAddItemBinding
 import com.fazemeright.myinventorytracker.ui.base.BaseActivity
 import dagger.hilt.android.AndroidEntryPoint
 
-
 @AndroidEntryPoint
 class AddItemActivity : BaseActivity<ActivityAddItemBinding>(), AdapterView.OnItemSelectedListener {
 
@@ -32,12 +31,15 @@ class AddItemActivity : BaseActivity<ActivityAddItemBinding>(), AdapterView.OnIt
             setDisplayHomeAsUpEnabled(true)
         }
 
-        viewModel.navigateBackToItemList.observe(this, { navigate ->
-            if (navigate) {
-                finish()
-                viewModel.onNavigationToAddItemFinished()
+        viewModel.navigateBackToItemList.observe(
+            this,
+            { navigate ->
+                if (navigate) {
+                    finish()
+                    viewModel.onNavigationToAddItemFinished()
+                }
             }
-        })
+        )
 
         viewModel.bagNames.observe(this) {
             val adapter: ArrayAdapter<String> = ArrayAdapter<String>(
@@ -49,7 +51,6 @@ class AddItemActivity : BaseActivity<ActivityAddItemBinding>(), AdapterView.OnIt
             binding.tvBagname.adapter = adapter
             binding.tvBagname.onItemSelectedListener = this
         }
-
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -83,5 +84,6 @@ class AddItemActivity : BaseActivity<ActivityAddItemBinding>(), AdapterView.OnIt
         selectedBagName = viewModel.bagNames.value?.get(position)
     }
 
-    override fun getLayoutId(): Int = R.layout.activity_add_item
+    override fun getViewBinding(): ActivityAddItemBinding =
+        ActivityAddItemBinding.inflate(layoutInflater)
 }

@@ -1,12 +1,14 @@
 package com.fazemeright.myinventorytracker.domain
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.fazemeright.myinventorytracker.domain.authentication.firebase.FireBaseUserAuthentication
+import com.fazemeright.myinventorytracker.domain.database.online.firestore.FireBaseOnlineDatabaseStore
 import com.fazemeright.myinventorytracker.domain.models.BagItem
-import com.fazemeright.myinventorytracker.domain.api.FireBaseApiManager
 import com.fazemeright.myinventorytracker.domain.models.Result
 import com.fazemeright.myinventorytracker.utils.TestUtils
 import junit.framework.TestCase.*
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.tasks.await
 import org.junit.After
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -21,32 +23,32 @@ class FireBaseApiManagerTest {
 
     @After
     fun tearDown() {
-        FireBaseApiManager.logout()
+        FireBaseUserAuthentication.logout()
     }
 
     @Test
     fun userIsSignedIn() = runBlocking {
         val result =
-            FireBaseApiManager.signInWithEmailPassword(VALID_EMAIL, VALID_PASSWORD)
+            FireBaseUserAuthentication.signIn(VALID_EMAIL, VALID_PASSWORD)
         result.await()
         assert(result.isSuccessful) {
             "Could not sign in User"
         }
         assertTrue(
             "User is not signed in",
-            FireBaseApiManager.isUserSignedIn()
+            FireBaseUserAuthentication.isUserSignedIn()
         )
-        FireBaseApiManager.logout()
+        FireBaseUserAuthentication.logout()
     }
 
     @Test
     fun userIsNotSignedIn() = runBlocking {
         assertFalse(
             "User is signed in without signing in first",
-            FireBaseApiManager.isUserSignedIn()
+            FireBaseUserAuthentication.isUserSignedIn()
         )
         val result =
-            FireBaseApiManager.signInWithEmailPassword(VALID_EMAIL, INVALID_PASSWORD)
+            FireBaseUserAuthentication.signIn(VALID_EMAIL, INVALID_PASSWORD)
         assert(result is Failure) {
             "User was signed in successfully despite incorrect credentials"
         }
@@ -54,11 +56,11 @@ class FireBaseApiManagerTest {
 
     @Test
     fun addInventoryItemToDatabaseWithSignIn() = runBlocking {
-        FireBaseApiManager.signIn(VALID_EMAIL, VALID_PASSWORD).await()
+        FireBaseUserAuthentication.signIn(VALID_EMAIL, VALID_PASSWORD).await()
         val item = TestUtils.getInventoryItem(-1, -1, "TestItem for FireStore")
-        when (val result = FireBaseApiManager.storeInventoryItem(item)) {
+        when (val result = FireBaseOnlineDatabaseStore.storeInventoryItem(item)) {
             is Result.Success<Boolean> -> {
-                FireBaseApiManager.deleteInventoryItem(item)
+                FireBaseOnlineDatabaseStore.deleteInventoryItem(item)
                 assertTrue(result.data)
             }
             is Result.Error -> {
@@ -70,9 +72,9 @@ class FireBaseApiManagerTest {
     @Test
     fun addInventoryItemToDatabaseWithoutSignIn() = runBlocking {
         val item = TestUtils.getInventoryItem(-1, -1, "TestItem for FireStore")
-        when (val result = FireBaseApiManager.storeInventoryItem(item)) {
+        when (val result = FireBaseOnlineDatabaseStore.storeInventoryItem(item)) {
             is Result.Success<Boolean> -> {
-                FireBaseApiManager.deleteInventoryItem(item)
+                FireBaseOnlineDatabaseStore.deleteInventoryItem(item)
                 throw AssertionError("Inventory Item added to database successfully without sign in")
             }
             is Result.Error -> {
@@ -83,11 +85,11 @@ class FireBaseApiManagerTest {
 
     @Test
     fun addBagToDatabaseWithSignIn() = runBlocking {
-        FireBaseApiManager.signIn(VALID_EMAIL, VALID_PASSWORD).await()
+        FireBaseUserAuthentication.signIn(VALID_EMAIL, VALID_PASSWORD).await()
         val item = TestUtils.getBagItem(-1)
-        when (val result = FireBaseApiManager.storeBag(item)) {
+        when (val result = FireBaseOnlineDatabaseStore.storeBag(item)) {
             is Result.Success<Boolean> -> {
-                FireBaseApiManager.deleteBag(item)
+                FireBaseOnlineDatabaseStore.deleteBag(item)
                 assertTrue(result.data)
             }
             is Result.Error -> {
@@ -99,9 +101,9 @@ class FireBaseApiManagerTest {
     @Test
     fun addBagToDatabaseWithoutSignIn() = runBlocking {
         val item = TestUtils.getBagItem(-1)
-        when (val result = FireBaseApiManager.storeBag(item)) {
+        when (val result = FireBaseOnlineDatabaseStore.storeBag(item)) {
             is Result.Success<Boolean> -> {
-                FireBaseApiManager.deleteBag(item)
+                FireBaseOnlineDatabaseStore.deleteBag(item)
                 throw AssertionError("Bag added to database successfully without sign in")
             }
             is Result.Error -> {
@@ -115,32 +117,31 @@ class FireBaseApiManagerTest {
 
     @Test
     fun batchWriteBagItemsFromLocal() = runBlocking {
-        FireBaseApiManager.signIn(VALID_EMAIL, VALID_PASSWORD).await()
+        FireBaseUserAuthentication.signIn(VALID_EMAIL, VALID_PASSWORD).await()
         val bagItems = (-10..-1).map { TestUtils.getBagItem(id = it) }
 
-        FireBaseApiManager.batchWriteBags(bagItems).await()
+        FireBaseOnlineDatabaseStore.batchWriteBags(bagItems).await()
 
-        when (val result = FireBaseApiManager.getAllBags()) {
+        when (val result = FireBaseOnlineDatabaseStore.getAllBags()) {
             is Result.Success<List<BagItem>> -> {
                 bagItems.forEach { item ->
-                    FireBaseApiManager.deleteBag(item)
+                    FireBaseOnlineDatabaseStore.deleteBag(item)
                 }
                 assertTrue(result.data.toSet().containsAll(bagItems))
             }
             is Result.Error -> {
                 bagItems.forEach { item ->
-                    FireBaseApiManager.deleteBag(item)
+                    FireBaseOnlineDatabaseStore.deleteBag(item)
                 }
                 throw AssertionError("Bag added to database successfully without sign in")
             }
         }
     }
 
-
     /*@Test
     fun registerNewUserSuccessfully() = runBlocking {
         val result =
-            FireBaseApiManager.registerWithEmailPassword(VALID_EMAIL, VALID_PASSWORD)
+            FireBaseUserAuthentication.registerWithEmailPassword(VALID_EMAIL, VALID_PASSWORD)
 
         assertNotNull((result as Success).data.toString()) {
             println("Error occurred")

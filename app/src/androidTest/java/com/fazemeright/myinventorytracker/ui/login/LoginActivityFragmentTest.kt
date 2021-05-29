@@ -28,7 +28,6 @@ class LoginActivityFragmentTest : BaseUiFragmentTest<LoginFragment>() {
         R.id.btnLogin.isViewDisplayed()
     }
 
-
     @Test
     fun validLogin() = runBlocking {
         delay(100)
@@ -45,7 +44,8 @@ class LoginActivityFragmentTest : BaseUiFragmentTest<LoginFragment>() {
             clearText(),
             typeText(
                 VALID_PASSWORD
-            ), closeSoftKeyboard()
+            ),
+            closeSoftKeyboard()
         )
         onView(withId(R.id.btnLogin)).check(matches(isDisplayed())).perform(click())
         delay(1000)
@@ -68,7 +68,8 @@ class LoginActivityFragmentTest : BaseUiFragmentTest<LoginFragment>() {
             clearText(),
             typeText(
                 INVALID_PASSWORD
-            ), closeSoftKeyboard()
+            ),
+            closeSoftKeyboard()
         )
         onView(withId(R.id.btnLogin)).check(matches(isDisplayed())).perform(click())
         delay(1000)
@@ -77,6 +78,4 @@ class LoginActivityFragmentTest : BaseUiFragmentTest<LoginFragment>() {
         )
         assert(true)
     }
-
-
 }

@@ -12,8 +12,8 @@ android {
         applicationId "com.fazemeright.myinventorytracker"
         minSdkVersion 23
         targetSdkVersion 30
-        versionCode 3
-        versionName "2.0.1"
+        versionCode 4
+        versionName "2.1.0"
 //        testInstrumentationRunner "com.fazemeright.myinventorytracker.CustomTestRunner"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -44,11 +44,7 @@ android {
 
     buildFeatures {
         viewBinding true
-    }
-
-    // Enables data binding.
-    dataBinding {
-        enabled = true
+        dataBinding true
     }
 
     kapt {
@@ -57,56 +53,53 @@ android {
 }
 
 dependencies {
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    def lifecycle_version = "2.3.0"
+    def lifecycle_version = "2.3.1"
 
-    implementation 'androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03'
     implementation 'androidx.preference:preference-ktx:1.1.1'
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.4.31"
-    implementation 'androidx.appcompat:appcompat:1.2.0'
-    implementation 'androidx.core:core-ktx:1.3.2'
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.5.0'
+    implementation 'androidx.appcompat:appcompat:1.3.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation 'com.google.android.material:material:1.3.0'
 
     // Android KTX
-    implementation "androidx.core:core-ktx:1.3.2"
+    implementation "androidx.core:core-ktx:1.5.0"
     debugImplementation "androidx.fragment:fragment-testing:1.3.1"
 
     // Timber
     implementation 'com.jakewharton.timber:timber:4.7.1'
 
     // Room and Lifecycle dependencies
-    implementation "androidx.room:room-runtime:2.2.6"
-    kapt "androidx.room:room-compiler:2.2.6"
-    implementation "androidx.room:room-ktx:2.2.6"
+    implementation "androidx.room:room-runtime:2.3.0"
+    kapt "androidx.room:room-compiler:2.3.0"
+    implementation "androidx.room:room-ktx:2.3.0"
     implementation "androidx.lifecycle:lifecycle-extensions:2.2.0"
     // Test helpers
-    testImplementation "androidx.room:room-testing:2.2.6"
+    testImplementation "androidx.room:room-testing:2.3.0"
 
     // Dagger Hilt (DI)
-    implementation 'com.google.dagger:hilt-android:2.33-beta'
-    kapt 'com.google.dagger:hilt-android-compiler:2.32-alpha'
+    implementation 'com.google.dagger:hilt-android:2.35.1'
+    kapt 'com.google.dagger:hilt-android-compiler:2.35.1'
     implementation 'androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03'
-    implementation 'androidx.hilt:hilt-work:1.0.0-beta01'
-    kapt 'androidx.hilt:hilt-compiler:1.0.0-beta01'
+    implementation 'androidx.hilt:hilt-work:1.0.0'
+    kapt 'androidx.hilt:hilt-compiler:1.0.0'
     // Hilt testing dependency
-    androidTestImplementation "com.google.dagger:hilt-android-testing:2.32-alpha"
+    androidTestImplementation 'com.google.dagger:hilt-android-testing:2.35.1'
     // Make Hilt generate code in the androidTest folder
-    kaptAndroidTest "com.google.dagger:hilt-android-compiler:2.32-alpha"
+    kaptAndroidTest 'com.google.dagger:hilt-android-compiler:2.35.1'
 
     // For instrumentation tests
-    androidTestImplementation 'com.google.dagger:hilt-android-testing:2.32-alpha'
-    kaptAndroidTest 'com.google.dagger:hilt-android-compiler:2.32-alpha'
+    androidTestImplementation 'com.google.dagger:hilt-android-testing:2.35.1'
+    kaptAndroidTest 'com.google.dagger:hilt-android-compiler:2.35.1'
 
     // For local unit tests
-    testImplementation 'com.google.dagger:hilt-android-testing:2.32-alpha'
-    kaptTest 'com.google.dagger:hilt-android-compiler:2.32-alpha'
+    testImplementation 'com.google.dagger:hilt-android-testing:2.35.1'
+    kaptTest 'com.google.dagger:hilt-android-compiler:2.35.1'
 
     // ViewModel
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
-    implementation "androidx.activity:activity-ktx:1.2.1"
+    implementation "androidx.activity:activity-ktx:1.2.3"
 
     // LiveData
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
@@ -114,12 +107,12 @@ dependencies {
     kapt "androidx.lifecycle:lifecycle-common-java8:$lifecycle_version"
 
     // Coroutines
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.2-native-mt"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.2-native-mt"
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.4.2-native-mt'
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.0"
-    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.3.0"
-    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.3.0"
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.0-native-mt'
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.3"
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.5.0-native-mt'
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.3.1"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.3.1"
 
     // Navigation
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
@@ -159,21 +152,22 @@ dependencies {
 //    Networking
     implementation "com.squareup.retrofit2:retrofit:2.9.0"
     implementation "com.squareup.retrofit2:converter-moshi:2.9.0"
-    implementation "com.squareup.moshi:moshi:1.11.0"
-    implementation "com.squareup.moshi:moshi-kotlin:1.11.0"
+
+    implementation 'com.squareup.moshi:moshi:1.12.0'
+    implementation 'com.squareup.moshi:moshi-kotlin:1.12.0'
 
 //    Work Manager
     // Kotlin + coroutines
-    implementation "androidx.work:work-runtime-ktx:2.5.0"
+    implementation 'androidx.work:work-runtime-ktx:2.7.0-alpha03'
     // optional - Test helpers
-    androidTestImplementation "androidx.work:work-testing:2.5.0"
+    androidTestImplementation 'androidx.work:work-testing:2.7.0-alpha03'
 
     //  FireBase
-    implementation 'com.google.firebase:firebase-analytics:18.0.2'      // Analytics
-    implementation 'com.google.firebase:firebase-auth:20.0.3'           //  Auth
-    implementation 'com.google.firebase:firebase-auth-ktx:20.0.3'       //  Auth KTX
+    implementation 'com.google.firebase:firebase-analytics:19.0.0'      // Analytics
+    implementation 'com.google.firebase:firebase-auth:21.0.1'           //  Auth
+    implementation 'com.google.firebase:firebase-auth-ktx:21.0.1'       //  Auth KTX
     implementation 'com.google.android.gms:play-services-auth:19.0.0'   //  Google SSO
-    implementation 'com.google.firebase:firebase-firestore:22.1.1'      //  FireStore
-    implementation 'com.google.firebase:firebase-firestore-ktx:22.1.1'  //  FireStore ktx
+    implementation 'com.google.firebase:firebase-firestore:23.0.0'      //  FireStore
+    implementation 'com.google.firebase:firebase-firestore-ktx:23.0.0'  //  FireStore ktx
 
 }

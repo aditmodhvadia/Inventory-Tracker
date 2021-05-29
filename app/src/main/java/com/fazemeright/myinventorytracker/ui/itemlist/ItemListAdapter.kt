@@ -5,12 +5,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.fazemeright.myinventorytracker.domain.models.ItemWithBag
 import com.fazemeright.myinventorytracker.databinding.ListInventoryItemBinding
+import com.fazemeright.myinventorytracker.domain.models.ItemWithBag
 
 class ItemListAdapter(private val clickListener: ItemListener) :
     ListAdapter<ItemWithBag,
-            ItemListAdapter.ViewHolder>(ItemListDiffCallback()) {
+        ItemListAdapter.ViewHolder>(ItemListDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder.from(parent)
@@ -61,7 +61,6 @@ class ItemListAdapter(private val clickListener: ItemListener) :
         ): Boolean {
             return oldItem == newItem
         }
-
     }
 
     class ItemListener(
