@@ -24,22 +24,25 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>(R.layout.fragment_spl
         super.onCreateView(layoutInflater, container, savedInstanceState)
 
         binding.viewModel = viewModel
+        return binding.root
+    }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         viewModel.isUserSignedIn.observe(requireActivity(), { userIsSignedIn ->
             if (userIsSignedIn) {
                 viewModel.syncLocalAndCloudData()
 //                TODO: Load ItemListActivity
 //                open(ItemListActivity::class.java)
 //                TODO: Remove this after testing
-                findNavController().navigate(R.id.action_splashFragment_to_loginFragment)
+                findNavController().navigate(SplashFragmentDirections.actionSplashFragmentToLoginFragment())
             } else {
 //                TODO: Load LoginActivity
-                findNavController().navigate(R.id.action_splashFragment_to_loginFragment)
+                findNavController().navigate(SplashFragmentDirections.actionSplashFragmentToLoginFragment())
             }
 //            TODO: Remove SplashFragment from stack
 //            finish()
             findNavController().popBackStack(R.id.splashFragment, true)
         })
-        return binding.root
     }
 }

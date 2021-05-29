@@ -6,7 +6,7 @@
     <data>
 
         <variable
-            name="viewmodel"
+            name="viewModel"
             type="com.fazemeright.myinventorytracker.ui.login.LoginViewModel" />
     </data>
 

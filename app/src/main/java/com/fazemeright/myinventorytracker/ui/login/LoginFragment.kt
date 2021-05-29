@@ -29,8 +29,14 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
         savedInstanceState: Bundle?
     ): View {
         super.onCreateView(inflater, container, savedInstanceState)
-        binding.viewmodel = viewModel
+        binding.apply {
+            viewModel = this@LoginFragment.viewModel
+        }
+        return binding.root
+    }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         binding.btnLogin.setOnClickListener {
 //            TODO: Show Loading
             viewModel.onLoginClicked(
@@ -44,7 +50,6 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
 
             googleSignIn()
         }
-
         viewModel.loginResult.observe(
             requireActivity(),
             { result ->
@@ -58,7 +63,6 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
 //                showToast(result.msg)
                 }
             })
-        return binding.root
     }
 
     private fun googleSignIn() {
