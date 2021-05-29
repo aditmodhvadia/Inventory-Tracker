@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import com.fazemeright.myinventorytracker.R
@@ -32,9 +33,12 @@ class ItemDetailFragment : BaseFragment<FragmentItemDetailBinding>() {
             setHomeButtonEnabled(true)
             setDisplayHomeAsUpEnabled(true)
         }
+    }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         viewModel.item.observe(
-            this,
+            viewLifecycleOwner,
             { item ->
                 Timber.d("Detail Item: $item")
                 item?.let {
@@ -43,7 +47,7 @@ class ItemDetailFragment : BaseFragment<FragmentItemDetailBinding>() {
             }
         )
         viewModel.navigateBackToItemList.observe(
-            this,
+            viewLifecycleOwner,
             { navigate ->
                 if (navigate) {
 //                    TODO: finish()
@@ -53,7 +57,7 @@ class ItemDetailFragment : BaseFragment<FragmentItemDetailBinding>() {
         )
 
         viewModel.onItemDeleteComplete.observe(
-            this,
+            viewLifecycleOwner,
             { deleted ->
                 if (deleted) {
                     showToast(getString(R.string.item_deleted_successfully))

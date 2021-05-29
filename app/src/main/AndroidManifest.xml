@@ -26,15 +26,6 @@
         <activity
             android:name=".ui.settings.SettingsActivity"
             android:label="@string/title_activity_settings" />
-        <activity
-            android:name=".ui.itemlist.ItemListActivity"
-            android:label="@string/item_list_title">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
 
         <provider
             android:name="androidx.work.impl.WorkManagerInitializer"

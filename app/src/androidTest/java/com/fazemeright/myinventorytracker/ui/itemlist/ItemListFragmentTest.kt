@@ -11,12 +11,12 @@ import com.fazemeright.myinventorytracker.isViewDisplayed
 import com.fazemeright.myinventorytracker.isViewWithTextDisplayed
 import com.fazemeright.myinventorytracker.ui.addbag.AddBagFragment
 import com.fazemeright.myinventorytracker.ui.additem.AddItemFragment
-import com.fazemeright.myinventorytracker.ui.base.BaseUiActivityTest
+import com.fazemeright.myinventorytracker.ui.base.BaseUiFragmentTest
 import org.junit.Test
 
-class ItemListActivityActivityTest : BaseUiActivityTest<ItemListActivity>() {
+class ItemListFragmentTest : BaseUiFragmentTest<ItemListFragment>() {
 
-    override fun getActivity(): Class<ItemListActivity> = ItemListActivity::class.java
+    override fun getFragment(): Class<ItemListFragment> = ItemListFragment::class.java
 
     @Test
     override fun allViewsAreDisplayed() {

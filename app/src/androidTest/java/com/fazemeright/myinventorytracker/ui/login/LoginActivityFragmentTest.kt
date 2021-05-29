@@ -10,7 +10,7 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import com.fazemeright.myinventorytracker.R
 import com.fazemeright.myinventorytracker.isViewDisplayed
 import com.fazemeright.myinventorytracker.ui.base.BaseUiFragmentTest
-import com.fazemeright.myinventorytracker.ui.itemlist.ItemListActivity
+import com.fazemeright.myinventorytracker.ui.itemlist.ItemListFragment
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import org.junit.Test
@@ -49,7 +49,7 @@ class LoginActivityFragmentTest : BaseUiFragmentTest<LoginFragment>() {
         )
         onView(withId(R.id.btnLogin)).check(matches(isDisplayed())).perform(click())
         delay(1000)
-        intended(hasComponent(ItemListActivity::class.java.name))
+        intended(hasComponent(ItemListFragment::class.java.name))
     }
 
     @Test
