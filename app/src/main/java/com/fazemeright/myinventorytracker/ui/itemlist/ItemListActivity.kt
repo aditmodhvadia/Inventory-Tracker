@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.fazemeright.myinventorytracker.R
 import com.fazemeright.myinventorytracker.databinding.ActivityItemListBinding
 import com.fazemeright.myinventorytracker.domain.models.ItemWithBag
-import com.fazemeright.myinventorytracker.ui.addbag.AddBagActivity
+import com.fazemeright.myinventorytracker.ui.addbag.AddBagFragment
 import com.fazemeright.myinventorytracker.ui.additem.AddItemActivity
 import com.fazemeright.myinventorytracker.ui.base.BaseActivity
 import com.fazemeright.myinventorytracker.ui.itemdetail.ItemDetailFragment
@@ -154,7 +154,7 @@ class ItemListActivity : BaseActivity<ActivityItemListBinding>() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.action_add_bag -> startActivity(Intent(this, AddBagActivity::class.java))
+            R.id.action_add_bag -> startActivity(Intent(this, AddBagFragment::class.java))
             R.id.action_settings -> startActivity(
                 Intent(
                     this,

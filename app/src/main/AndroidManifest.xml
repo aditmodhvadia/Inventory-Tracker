@@ -39,10 +39,6 @@
             android:name=".ui.additem.AddItemActivity"
             android:label="@string/add_item_title"
             android:windowSoftInputMode="adjustResize" />
-        <activity
-            android:name=".ui.addbag.AddBagActivity"
-            android:label="@string/add_bag_title"
-            android:windowSoftInputMode="adjustResize" />
 
         <provider
             android:name="androidx.work.impl.WorkManagerInitializer"

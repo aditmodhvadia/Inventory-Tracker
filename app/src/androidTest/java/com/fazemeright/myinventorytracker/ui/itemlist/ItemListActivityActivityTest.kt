@@ -9,7 +9,7 @@ import androidx.test.espresso.matcher.ViewMatchers.*
 import com.fazemeright.myinventorytracker.R
 import com.fazemeright.myinventorytracker.isViewDisplayed
 import com.fazemeright.myinventorytracker.isViewWithTextDisplayed
-import com.fazemeright.myinventorytracker.ui.addbag.AddBagActivity
+import com.fazemeright.myinventorytracker.ui.addbag.AddBagFragment
 import com.fazemeright.myinventorytracker.ui.additem.AddItemActivity
 import com.fazemeright.myinventorytracker.ui.base.BaseUiActivityTest
 import org.junit.Test
@@ -46,7 +46,7 @@ class ItemListActivityActivityTest : BaseUiActivityTest<ItemListActivity>() {
             .perform(click())
         onView(withText(R.string.add_bag)).check(matches(isDisplayed()))
             .perform(click())
-        intended(hasComponent(AddBagActivity::class.java.name))
+        intended(hasComponent(AddBagFragment::class.java.name))
     }
 
     @Test
