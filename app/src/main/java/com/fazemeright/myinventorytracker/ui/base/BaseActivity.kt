@@ -6,22 +6,18 @@ import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
-import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
-import androidx.databinding.ViewDataBinding
+import androidx.viewbinding.ViewBinding
 
-abstract class BaseActivity<V : ViewDataBinding> : AppCompatActivity() {
+abstract class BaseActivity<V : ViewBinding> : AppCompatActivity() {
 
     lateinit var binding: V
 
-    @LayoutRes
-    abstract fun getLayoutId(): Int
+    abstract fun getViewBinding(): V
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, getLayoutId())
-        binding.lifecycleOwner = this
+        binding = getViewBinding()
     }
 
     fun hideKeyboard() {

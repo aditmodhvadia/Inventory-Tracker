@@ -1,9 +1,9 @@
 package com.fazemeright.myinventorytracker.domain.database.online.firestore
 
-import com.fazemeright.myinventorytracker.domain.models.BagItem
-import com.fazemeright.myinventorytracker.domain.models.InventoryItem
 import com.fazemeright.myinventorytracker.domain.authentication.firebase.FireBaseUserAuthentication
 import com.fazemeright.myinventorytracker.domain.database.online.OnlineDatabaseStore
+import com.fazemeright.myinventorytracker.domain.models.BagItem
+import com.fazemeright.myinventorytracker.domain.models.InventoryItem
 import com.fazemeright.myinventorytracker.domain.models.OnlineDatabaseStoreObject
 import com.fazemeright.myinventorytracker.domain.models.Result
 import com.google.android.gms.tasks.Task
@@ -34,7 +34,6 @@ object FireBaseOnlineDatabaseStore : OnlineDatabaseStore {
                 val documents = readCollection(collection).await()
                 val bagItems = documents.map { it.toObject<T>() }
                 Result.Success(data = bagItems, msg = "Bags read successfully")
-
             } catch (e: Exception) {
                 Timber.e(e)
                 Result.Error(exception = e, msg = "Error occurred")
@@ -97,7 +96,6 @@ object FireBaseOnlineDatabaseStore : OnlineDatabaseStore {
             }
         }
     }
-
 
     override fun batchWriteBags(bagItems: List<BagItem>): Task<Void> {
         return batchWriteData(userBagItemsCollection, bagItems)

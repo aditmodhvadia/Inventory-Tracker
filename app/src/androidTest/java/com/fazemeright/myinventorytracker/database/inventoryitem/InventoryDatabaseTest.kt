@@ -12,10 +12,12 @@ import com.fazemeright.myinventorytracker.domain.database.offline.room.dao.BagIt
 import com.fazemeright.myinventorytracker.domain.database.offline.room.dao.InventoryItemDao
 import com.fazemeright.myinventorytracker.domain.models.InventoryItem
 import com.fazemeright.myinventorytracker.utils.TestUtils
-import junit.framework.Assert.*
 import junit.framework.AssertionFailedError
 import kotlinx.coroutines.runBlocking
 import org.junit.After
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
+import org.junit.Assert.assertNotNull
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -25,7 +27,7 @@ import java.util.concurrent.TimeUnit
 import java.util.concurrent.TimeoutException
 
 @RunWith(AndroidJUnit4::class)
-//@HiltAndroidTest
+// @HiltAndroidTest
 class InventoryDatabaseTest {
     private lateinit var db: InventoryDatabase
     private lateinit var inventoryItemDao: InventoryItemDao
@@ -51,10 +53,12 @@ class InventoryDatabaseTest {
     @Test
     @Throws(Exception::class)
     fun writeInventoryItemFailsWithIncorrectBagItem() {
-        val item = InventoryItem(itemId = 1, itemName = "Blazer", bagOwnerId = 0,)
-        assertTrue(assertFails<SQLiteConstraintException> {
-            inventoryItemDao.insert(item)
-        })
+        val item = InventoryItem(itemId = 1, itemName = "Blazer", bagOwnerId = 0)
+        assertTrue(
+            assertFails<SQLiteConstraintException> {
+                inventoryItemDao.insert(item)
+            }
+        )
     }
 
     @Test
@@ -66,7 +70,6 @@ class InventoryDatabaseTest {
         assertTrue(byName[0] == item)
         bagItemDao.deleteItem(byName[0])
     }
-
 
     @Test
     fun writeBagAndItemAssociation() = runBlocking {
@@ -90,7 +93,6 @@ class InventoryDatabaseTest {
         val itemsInBag1 =
             bagItemDao.getItemsAndBagsInBagWithId(id = bag1.bagId)
         assertEquals(0, itemsInBag1?.items?.size)
-
 
         val allItemsWithBag = inventoryItemDao.getItemsWithBag()
         assertEquals(1, allItemsWithBag.size)

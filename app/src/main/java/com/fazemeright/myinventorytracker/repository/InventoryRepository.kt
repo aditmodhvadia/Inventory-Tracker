@@ -118,7 +118,6 @@ class InventoryRepository @Inject constructor(
         return withContext(Dispatchers.IO) {
             inventoryItemDao.searchItems(searchText)
         }
-
     }
 
     override suspend fun getInventoryItemById(itemId: Int): InventoryItem? {
@@ -180,7 +179,6 @@ class InventoryRepository @Inject constructor(
                     Timber.e(bagItemsInCloudResult.exception)
                     throw InterruptedException("Did not fetch Bag items from the cloud")
                 }
-
             }
 
             when (val inventoryItemsInCloudResult = onlineDatabaseStore.getAllInventoryItems()) {
@@ -204,10 +202,3 @@ class InventoryRepository @Inject constructor(
 //        TODO: Clear Shared Preferences
     }
 }
-
-
-
-
-
-
-
