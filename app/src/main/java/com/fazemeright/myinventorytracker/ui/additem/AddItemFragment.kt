@@ -7,7 +7,6 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.fazemeright.myinventorytracker.R
@@ -24,24 +23,17 @@ class AddItemFragment : BaseFragment<FragmentAddItemBinding>(), AdapterView.OnIt
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        binding.viewModel = viewModel
-
-//        setSupportActionBar(toolbar)
-
-        (requireActivity() as AppCompatActivity).supportActionBar?.apply {
-            setHomeButtonEnabled(true)
-            setDisplayHomeAsUpEnabled(true)
-        }
+        setHasOptionsMenu(true)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.viewModel = viewModel
         viewModel.navigateBackToItemList.observe(
             viewLifecycleOwner,
             { navigate ->
                 if (navigate) {
-                    findNavController().popBackStack()
+                    findNavController().navigate(AddItemFragmentDirections.actionAddItemFragmentToItemListFragment())
                     viewModel.onNavigationToAddItemFinished()
                 }
             }
@@ -62,9 +54,9 @@ class AddItemFragment : BaseFragment<FragmentAddItemBinding>(), AdapterView.OnIt
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_add_item -> addBag()
-            android.R.id.home -> findNavController().popBackStack()
+            android.R.id.home -> findNavController().navigate(AddItemFragmentDirections.actionAddItemFragmentToItemListFragment())
         }
-        return true
+        return super.onOptionsItemSelected(item)
     }
 
     private fun addBag() {
@@ -79,8 +71,10 @@ class AddItemFragment : BaseFragment<FragmentAddItemBinding>(), AdapterView.OnIt
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        super.onCreateOptionsMenu(menu, inflater)
+        menu.clear()
         inflater.inflate(R.menu.menu_add_item, menu)
+
+        super.onCreateOptionsMenu(menu, inflater)
     }
 
     override fun onNothingSelected(p0: AdapterView<*>?) {

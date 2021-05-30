@@ -3,6 +3,7 @@ package com.fazemeright.myinventorytracker.ui.itemdetail
 import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
 import com.fazemeright.myinventorytracker.domain.models.ItemWithBag
 import com.fazemeright.myinventorytracker.repository.InventoryRepository
@@ -14,7 +15,6 @@ import javax.inject.Inject
 @HiltViewModel
 class ItemDetailViewModel @Inject constructor(
     private val repository: InventoryRepository,
-    itemWithBag: ItemWithBag,
     app: Application
 ) : BaseViewModel(app) {
 
@@ -23,7 +23,10 @@ class ItemDetailViewModel @Inject constructor(
     val onItemDeleteComplete: LiveData<Boolean>
         get() = _onItemDeleteComplete
 
-    val item = repository.getItemWithBagFromId(itemWithBag.item.itemId)
+    private val _itemId = MutableLiveData<Int>()
+    val item: LiveData<ItemWithBag> = _itemId.switchMap {
+        repository.getItemWithBagFromId(it)
+    }
 
     val navigateBackToItemList = MutableLiveData<Boolean>()
 
@@ -56,7 +59,9 @@ class ItemDetailViewModel @Inject constructor(
 
     fun deleteItem() {
         viewModelScope.launch {
-            repository.deleteInventoryItem(item.value!!.item)
+            item.value?.let {
+                repository.deleteInventoryItem(it.item)
+            }
 
             _onItemDeleteComplete.value = true
         }
@@ -64,6 +69,10 @@ class ItemDetailViewModel @Inject constructor(
 
     fun onItemDeleteFinished() {
         _onItemDeleteComplete.value = false
+    }
+
+    fun setNavArguments(navArgs: ItemDetailFragmentArgs) {
+        _itemId.value = navArgs.itemId.toInt()
     }
 
     /*fun updateBagDesc(selectedBagName: String?) {

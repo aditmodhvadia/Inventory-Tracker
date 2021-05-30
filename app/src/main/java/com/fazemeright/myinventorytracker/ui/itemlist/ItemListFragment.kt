@@ -1,5 +1,6 @@
 package com.fazemeright.myinventorytracker.ui.itemlist
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
@@ -12,12 +13,11 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fazemeright.myinventorytracker.R
 import com.fazemeright.myinventorytracker.databinding.FragmentItemListBinding
-import com.fazemeright.myinventorytracker.domain.models.ItemWithBag
 import com.fazemeright.myinventorytracker.ui.base.BaseFragment
+import com.fazemeright.myinventorytracker.ui.settings.SettingsActivity
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class ItemListFragment : BaseFragment<FragmentItemListBinding>() {
@@ -26,19 +26,10 @@ class ItemListFragment : BaseFragment<FragmentItemListBinding>() {
 
     private lateinit var searchView: SearchView
 
-    @Inject
-    lateinit var selectedItem: ItemWithBag
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        binding.viewModel = viewModel
-
-//        setSupportActionBar(toolbar)
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.viewModel = viewModel
+        setHasOptionsMenu(true)
         val adapter = ItemListAdapter(
             ItemListAdapter.ItemListener(
                 clickListener = { item ->
@@ -85,7 +76,7 @@ class ItemListFragment : BaseFragment<FragmentItemListBinding>() {
             viewLifecycleOwner,
             { navigate ->
                 if (navigate) {
-//                    TODO: startActivity(Intent(this, AddItemFragment::class.java))
+                    findNavController().navigate(ItemListFragmentDirections.actionItemListFragmentToAddItemFragment())
                     viewModel.onNavigationToAddItemFinished()
                 }
             }
@@ -95,12 +86,11 @@ class ItemListFragment : BaseFragment<FragmentItemListBinding>() {
             viewLifecycleOwner,
             { itemInBag ->
                 itemInBag?.let {
-                    /* TODO: val intent = Intent(this, ItemDetailFragment::class.java)
-                    selectedItem.apply {
-                        item = itemInBag.item
-                        bag = itemInBag.bag
-                    }
-                    startActivity(intent)*/
+                    findNavController().navigate(
+                        ItemListFragmentDirections.actionItemListFragmentToItemDetailFragment(
+                            it.item.itemId.toLong()
+                        )
+                    )
                     viewModel.onNavigationToItemDetailFinished()
                 }
             }
@@ -108,9 +98,7 @@ class ItemListFragment : BaseFragment<FragmentItemListBinding>() {
 
         viewModel.userLoggedOut.observe(viewLifecycleOwner, { userLoggedOut ->
             if (userLoggedOut) {
-//                TODO: Use NavController
-//                open(LoginFragment::class.java)
-                findNavController().popBackStack()
+                findNavController().popBackStack(R.id.splashFragment, false)
                 viewModel.logoutSuccessful()
             }
         })
@@ -156,15 +144,15 @@ class ItemListFragment : BaseFragment<FragmentItemListBinding>() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_add_bag -> {
-//            TODO: startActivity(Intent(this, AddBagFragment::class.java))
+                findNavController().navigate(ItemListFragmentDirections.actionItemListFragmentToAddBagFragment())
             }
             R.id.action_settings -> {
-                /* TODO: startActivity(
-                    Intent(
-                        this,
-                        SettingsActivity::class.java
-                    )
-                )*/
+                Intent(
+                    requireContext(),
+                    SettingsActivity::class.java
+                ).let {
+                    startActivity(it)
+                }
             }
             R.id.action_logout -> viewModel.logoutClicked()
         }

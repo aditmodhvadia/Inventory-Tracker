@@ -14,8 +14,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <include layout="@layout/collapsing_toolbar" />
-
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -109,7 +107,6 @@
                     android:text="@{String.valueOf(viewModel.itemQuantity)}"
                     tools:text="Item Quantity" />
             </com.google.android.material.textfield.TextInputLayout>
-
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

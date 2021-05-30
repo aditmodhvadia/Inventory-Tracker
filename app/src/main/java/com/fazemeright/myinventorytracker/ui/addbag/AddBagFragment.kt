@@ -4,7 +4,6 @@ import android.graphics.Color
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.fazemeright.myinventorytracker.databinding.FragmentAddBagBinding
@@ -21,19 +20,14 @@ class AddBagFragment : BaseFragment<FragmentAddBagBinding>(), ColorPickerDialogL
 
     private val viewModel: AddBagViewModel by viewModels()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        binding.viewModel = viewModel
-
-        (requireActivity() as AppCompatActivity).supportActionBar?.apply {
-            setHomeButtonEnabled(true)
-            setDisplayHomeAsUpEnabled(true)
-        }
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.viewModel = viewModel
+
+        /*(requireActivity() as AppCompatActivity).supportActionBar?.apply {
+            setHomeButtonEnabled(true)
+            setDisplayHomeAsUpEnabled(true)
+        }*/
         binding.btnChooseColor.setOnClickListener {
             ColorPickerDialog.newBuilder()
                 .setDialogType(ColorPickerDialog.TYPE_CUSTOM)
@@ -55,7 +49,7 @@ class AddBagFragment : BaseFragment<FragmentAddBagBinding>(), ColorPickerDialogL
             viewLifecycleOwner,
             { navigate ->
                 if (navigate) {
-                    findNavController().popBackStack()
+                    findNavController().navigate(AddBagFragmentDirections.actionAddBagFragmentToItemListFragment())
                     viewModel.onNavigationToAddItemFinished()
                 }
             }
@@ -73,7 +67,7 @@ class AddBagFragment : BaseFragment<FragmentAddBagBinding>(), ColorPickerDialogL
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            android.R.id.home -> findNavController().popBackStack()
+            android.R.id.home -> findNavController().navigate(AddBagFragmentDirections.actionAddBagFragmentToItemListFragment())
         }
         return true
     }

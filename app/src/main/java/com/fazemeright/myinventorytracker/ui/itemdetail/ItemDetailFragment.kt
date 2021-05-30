@@ -5,38 +5,31 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.fazemeright.myinventorytracker.R
 import com.fazemeright.myinventorytracker.databinding.FragmentItemDetailBinding
-import com.fazemeright.myinventorytracker.domain.models.ItemWithBag
 import com.fazemeright.myinventorytracker.ui.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class ItemDetailFragment : BaseFragment<FragmentItemDetailBinding>() {
 
     val viewModel: ItemDetailViewModel by viewModels()
-
-    @Inject
-    lateinit var selectedBag: ItemWithBag
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding.viewModel = viewModel
-
-//        setSupportActionBar(toolbar)
-
-        (requireActivity() as AppCompatActivity).supportActionBar?.apply {
-            setHomeButtonEnabled(true)
-            setDisplayHomeAsUpEnabled(true)
-        }
-    }
+    private val navArgs by navArgs<ItemDetailFragmentArgs>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.viewModel = viewModel
+        /*(requireActivity() as AppCompatActivity).supportActionBar?.apply {
+            setHomeButtonEnabled(true)
+            setDisplayHomeAsUpEnabled(true)
+        }*/
+
+        viewModel.setNavArguments(navArgs)
+
         viewModel.item.observe(
             viewLifecycleOwner,
             { item ->
@@ -50,7 +43,7 @@ class ItemDetailFragment : BaseFragment<FragmentItemDetailBinding>() {
             viewLifecycleOwner,
             { navigate ->
                 if (navigate) {
-//                    TODO: finish()
+                    findNavController().navigate(ItemDetailFragmentDirections.actionItemDetailFragmentToItemListFragment())
                     viewModel.onNavigationToItemListFinished()
                 }
             }
@@ -61,7 +54,7 @@ class ItemDetailFragment : BaseFragment<FragmentItemDetailBinding>() {
             { deleted ->
                 if (deleted) {
                     showToast(getString(R.string.item_deleted_successfully))
-//                    TODO: finish()
+                    findNavController().navigate(ItemDetailFragmentDirections.actionItemDetailFragmentToItemListFragment())
                     viewModel.onItemDeleteFinished()
                 }
             }
@@ -76,7 +69,7 @@ class ItemDetailFragment : BaseFragment<FragmentItemDetailBinding>() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> {
-//                TODO: finish()
+                findNavController().navigate(ItemDetailFragmentDirections.actionItemDetailFragmentToItemListFragment())
                 return true
             }
             R.id.action_delete_item -> {

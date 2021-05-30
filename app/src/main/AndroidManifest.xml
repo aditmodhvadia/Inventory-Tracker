@@ -26,12 +26,6 @@
         <activity
             android:name=".ui.settings.SettingsActivity"
             android:label="@string/title_activity_settings" />
-
-        <provider
-            android:name="androidx.work.impl.WorkManagerInitializer"
-            android:authorities="com.fazemeright.myinventorytracker.workmanager-init"
-            android:exported="false"
-            tools:node="remove" />
     </application>
 
 </manifest>

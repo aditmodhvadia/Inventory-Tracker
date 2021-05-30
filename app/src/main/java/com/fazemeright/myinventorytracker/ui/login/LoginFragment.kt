@@ -2,10 +2,9 @@ package com.fazemeright.myinventorytracker.ui.login
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.fazemeright.myinventorytracker.R
 import com.fazemeright.myinventorytracker.databinding.FragmentLoginBinding
 import com.fazemeright.myinventorytracker.domain.models.Result
@@ -23,20 +22,9 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
     private val viewModel: LoginViewModel by viewModels()
     private lateinit var gso: GoogleSignInOptions
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        super.onCreateView(inflater, container, savedInstanceState)
-        binding.apply {
-            viewModel = this@LoginFragment.viewModel
-        }
-        return binding.root
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.viewModel = viewModel
         binding.btnLogin.setOnClickListener {
 //            TODO: Show Loading
             viewModel.onLoginClicked(
@@ -56,11 +44,10 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
 //            TODO: Hide Loading
                 if (result is Result.Success) {
                     viewModel.syncLocalAndCloudData()
-//                open(ItemListActivity::class.java)
-//                finish()
+                    findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToItemListFragment())
                 } else if (result is Result.Error) {
                     Timber.e(result.exception)
-//                showToast(result.msg)
+                    showToast(result.msg)
                 }
             })
     }

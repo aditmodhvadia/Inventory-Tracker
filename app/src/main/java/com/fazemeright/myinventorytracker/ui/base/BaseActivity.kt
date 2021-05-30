@@ -18,6 +18,7 @@ abstract class BaseActivity<V : ViewBinding> : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = getViewBinding()
+        setContentView(binding.root)
     }
 
     fun hideKeyboard() {
