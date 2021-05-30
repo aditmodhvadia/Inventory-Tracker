@@ -7,12 +7,10 @@ import androidx.test.espresso.matcher.ViewMatchers.withContentDescription
 import com.fazemeright.myinventorytracker.R
 import com.fazemeright.myinventorytracker.isViewDisplayed
 import com.fazemeright.myinventorytracker.isViewWithTextDisplayed
-import com.fazemeright.myinventorytracker.ui.base.BaseUiTest
+import com.fazemeright.myinventorytracker.ui.base.BaseUiFragmentTest
 import org.junit.Test
 
-class AddItemActivityTest : BaseUiTest<AddItemActivity>() {
-
-    override fun getActivity(): Class<AddItemActivity> = AddItemActivity::class.java
+class AddItemFragmentTest : BaseUiFragmentTest<AddItemFragment>() {
 
     @Test
     override fun allViewsAreDisplayed() {
@@ -26,4 +24,6 @@ class AddItemActivityTest : BaseUiTest<AddItemActivity>() {
         onView(withContentDescription("Navigate up"))
             .check(matches(isDisplayed()))
     }
+
+    override fun getFragment(): Class<AddItemFragment> = AddItemFragment::class.java
 }

@@ -9,14 +9,14 @@ import androidx.test.espresso.matcher.ViewMatchers.*
 import com.fazemeright.myinventorytracker.R
 import com.fazemeright.myinventorytracker.isViewDisplayed
 import com.fazemeright.myinventorytracker.isViewWithTextDisplayed
-import com.fazemeright.myinventorytracker.ui.addbag.AddBagActivity
-import com.fazemeright.myinventorytracker.ui.additem.AddItemActivity
-import com.fazemeright.myinventorytracker.ui.base.BaseUiTest
+import com.fazemeright.myinventorytracker.ui.addbag.AddBagFragment
+import com.fazemeright.myinventorytracker.ui.additem.AddItemFragment
+import com.fazemeright.myinventorytracker.ui.base.BaseUiFragmentTest
 import org.junit.Test
 
-class ItemListActivityTest : BaseUiTest<ItemListActivity>() {
+class ItemListFragmentTest : BaseUiFragmentTest<ItemListFragment>() {
 
-    override fun getActivity(): Class<ItemListActivity> = ItemListActivity::class.java
+    override fun getFragment(): Class<ItemListFragment> = ItemListFragment::class.java
 
     @Test
     override fun allViewsAreDisplayed() {
@@ -37,7 +37,7 @@ class ItemListActivityTest : BaseUiTest<ItemListActivity>() {
     fun onClickFab() {
         onView(withId(R.id.fabAddItem)).check(matches(isDisplayed())).perform(click())
 
-        intended(hasComponent(AddItemActivity::class.java.name))
+        intended(hasComponent(AddItemFragment::class.java.name))
     }
 
     @Test
@@ -46,13 +46,13 @@ class ItemListActivityTest : BaseUiTest<ItemListActivity>() {
             .perform(click())
         onView(withText(R.string.add_bag)).check(matches(isDisplayed()))
             .perform(click())
-        intended(hasComponent(AddBagActivity::class.java.name))
+        intended(hasComponent(AddBagFragment::class.java.name))
     }
 
     @Test
     fun onAddItemSuccessfully() {
         onView(withId(R.id.fabAddItem)).check(matches(isDisplayed())).perform(click())
-        intended(hasComponent(AddItemActivity::class.java.name))
+        intended(hasComponent(AddItemFragment::class.java.name))
 
         onView(withId(R.id.edtItemName)).check(matches(isDisplayed()))
             .perform(typeText("Test Item"), closeSoftKeyboard())

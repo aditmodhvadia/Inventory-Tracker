@@ -7,9 +7,11 @@ import androidx.test.espresso.matcher.ViewMatchers.withContentDescription
 import com.fazemeright.myinventorytracker.R
 import com.fazemeright.myinventorytracker.isViewDisplayed
 import com.fazemeright.myinventorytracker.isViewWithTextDisplayed
-import com.fazemeright.myinventorytracker.ui.base.BaseUiTest
+import com.fazemeright.myinventorytracker.ui.base.BaseUiActivityTest
+import com.fazemeright.myinventorytracker.ui.base.BaseUiFragmentTest
 
-class ItemDetailActivityTest : BaseUiTest<ItemDetailActivity>() {
+
+class ItemDetailActivityFragmentTest : BaseUiFragmentTest<ItemDetailFragment>() {
 
     override fun allViewsAreDisplayed() {
         R.string.item_detail_title.isViewWithTextDisplayed()
@@ -23,5 +25,5 @@ class ItemDetailActivityTest : BaseUiTest<ItemDetailActivity>() {
             .check(matches(isDisplayed()))
     }
 
-    override fun getActivity(): Class<ItemDetailActivity> = ItemDetailActivity::class.java
+    override fun getFragment(): Class<ItemDetailFragment> = ItemDetailFragment::class.java
 }

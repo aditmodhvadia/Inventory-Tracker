@@ -2,18 +2,20 @@ package com.fazemeright.myinventorytracker.ui.additem
 
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import androidx.activity.viewModels
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.fazemeright.myinventorytracker.R
-import com.fazemeright.myinventorytracker.databinding.ActivityAddItemBinding
-import com.fazemeright.myinventorytracker.ui.base.BaseActivity
+import com.fazemeright.myinventorytracker.databinding.FragmentAddItemBinding
+import com.fazemeright.myinventorytracker.ui.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class AddItemActivity : BaseActivity<ActivityAddItemBinding>(), AdapterView.OnItemSelectedListener {
+class AddItemFragment : BaseFragment<FragmentAddItemBinding>(), AdapterView.OnItemSelectedListener {
 
     private var selectedBagName: String? = null
 
@@ -21,29 +23,25 @@ class AddItemActivity : BaseActivity<ActivityAddItemBinding>(), AdapterView.OnIt
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         binding.viewModel = viewModel
-
-//        setSupportActionBar(toolbar)
-
-        supportActionBar?.apply {
-            setHomeButtonEnabled(true)
-            setDisplayHomeAsUpEnabled(true)
-        }
-
         viewModel.navigateBackToItemList.observe(
-            this,
+            viewLifecycleOwner,
             { navigate ->
                 if (navigate) {
-                    finish()
+                    findNavController().navigate(AddItemFragmentDirections.actionAddItemFragmentToItemListFragment())
                     viewModel.onNavigationToAddItemFinished()
                 }
             }
         )
 
-        viewModel.bagNames.observe(this) {
+        viewModel.bagNames.observe(viewLifecycleOwner) {
             val adapter: ArrayAdapter<String> = ArrayAdapter<String>(
-                this,
+                requireContext(),
                 android.R.layout.simple_spinner_item,
                 it
             )
@@ -56,9 +54,9 @@ class AddItemActivity : BaseActivity<ActivityAddItemBinding>(), AdapterView.OnIt
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_add_item -> addBag()
-            android.R.id.home -> finish()
+            android.R.id.home -> findNavController().navigate(AddItemFragmentDirections.actionAddItemFragmentToItemListFragment())
         }
-        return true
+        return super.onOptionsItemSelected(item)
     }
 
     private fun addBag() {
@@ -72,9 +70,11 @@ class AddItemActivity : BaseActivity<ActivityAddItemBinding>(), AdapterView.OnIt
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_add_item, menu)
-        return true
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        menu.clear()
+        inflater.inflate(R.menu.menu_add_item, menu)
+
+        super.onCreateOptionsMenu(menu, inflater)
     }
 
     override fun onNothingSelected(p0: AdapterView<*>?) {
@@ -84,6 +84,6 @@ class AddItemActivity : BaseActivity<ActivityAddItemBinding>(), AdapterView.OnIt
         selectedBagName = viewModel.bagNames.value?.get(position)
     }
 
-    override fun getViewBinding(): ActivityAddItemBinding =
-        ActivityAddItemBinding.inflate(layoutInflater)
+    override fun getViewBinding(): FragmentAddItemBinding =
+        FragmentAddItemBinding.inflate(layoutInflater)
 }

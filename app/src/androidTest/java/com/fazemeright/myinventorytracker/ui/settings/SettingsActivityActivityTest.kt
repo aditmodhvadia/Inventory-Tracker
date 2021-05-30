@@ -7,10 +7,10 @@ import androidx.test.espresso.matcher.ViewMatchers.withContentDescription
 import com.fazemeright.myinventorytracker.R
 import com.fazemeright.myinventorytracker.isViewDisplayed
 import com.fazemeright.myinventorytracker.isViewWithTextDisplayed
-import com.fazemeright.myinventorytracker.ui.base.BaseUiTest
+import com.fazemeright.myinventorytracker.ui.base.BaseUiActivityTest
 import org.junit.Test
 
-class SettingsActivityTest : BaseUiTest<SettingsActivity>() {
+class SettingsActivityActivityTest : BaseUiActivityTest<SettingsActivity>() {
 
     @Test
     override fun allViewsAreDisplayed() {

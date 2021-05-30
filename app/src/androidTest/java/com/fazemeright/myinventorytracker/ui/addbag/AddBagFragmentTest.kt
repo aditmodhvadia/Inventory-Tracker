@@ -7,12 +7,10 @@ import androidx.test.espresso.matcher.ViewMatchers.*
 import com.fazemeright.myinventorytracker.R
 import com.fazemeright.myinventorytracker.isViewDisplayed
 import com.fazemeright.myinventorytracker.isViewWithTextDisplayed
-import com.fazemeright.myinventorytracker.ui.base.BaseUiTest
+import com.fazemeright.myinventorytracker.ui.base.BaseUiFragmentTest
 import org.junit.Test
 
-class AddBagActivityTest : BaseUiTest<AddBagActivity>() {
-
-    override fun getActivity(): Class<AddBagActivity> = AddBagActivity::class.java
+class AddBagFragmentTest : BaseUiFragmentTest<AddBagFragment>() {
 
     @Test
     override fun allViewsAreDisplayed() {
@@ -41,4 +39,6 @@ class AddBagActivityTest : BaseUiTest<AddBagActivity>() {
 
         onView(withId(R.id.btnAddBag)).check(matches(isDisplayed())).perform(click())
     }
+
+    override fun getFragment(): Class<AddBagFragment> = AddBagFragment::class.java
 }

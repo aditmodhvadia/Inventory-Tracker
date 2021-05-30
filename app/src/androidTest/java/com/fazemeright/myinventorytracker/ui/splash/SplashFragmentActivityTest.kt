@@ -10,10 +10,10 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import com.fazemeright.myinventorytracker.R
 import com.fazemeright.myinventorytracker.isViewDisplayed
-import com.fazemeright.myinventorytracker.ui.base.BaseUiTest
+import com.fazemeright.myinventorytracker.ui.base.BaseUiFragmentTest
 import timber.log.Timber
 
-class SplashActivityTest : BaseUiTest<SplashActivity>() {
+class SplashFragmentActivityTest : BaseUiFragmentTest<SplashFragment>() {
 
     override fun allViewsAreDisplayed() {
         R.id.tvAppVersion.isViewDisplayed()
@@ -35,5 +35,5 @@ class SplashActivityTest : BaseUiTest<SplashActivity>() {
         )
     }
 
-    override fun getActivity(): Class<SplashActivity> = SplashActivity::class.java
+    override fun getFragment(): Class<SplashFragment> = SplashFragment::class.java
 }

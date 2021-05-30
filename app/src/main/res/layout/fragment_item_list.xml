@@ -13,9 +13,7 @@
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.addbag.AddBagActivity">
-
-        <include layout="@layout/collapsing_toolbar" />
+        tools:context=".ui.addbag.AddBagFragment">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

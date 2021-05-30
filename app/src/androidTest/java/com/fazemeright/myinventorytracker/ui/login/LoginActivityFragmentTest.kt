@@ -9,14 +9,14 @@ import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import com.fazemeright.myinventorytracker.R
 import com.fazemeright.myinventorytracker.isViewDisplayed
-import com.fazemeright.myinventorytracker.ui.base.BaseUiTest
-import com.fazemeright.myinventorytracker.ui.itemlist.ItemListActivity
+import com.fazemeright.myinventorytracker.ui.base.BaseUiFragmentTest
+import com.fazemeright.myinventorytracker.ui.itemlist.ItemListFragment
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import org.junit.Test
 
-class LoginActivityTest : BaseUiTest<LoginActivity>() {
-    override fun getActivity(): Class<LoginActivity> = LoginActivity::class.java
+class LoginActivityFragmentTest : BaseUiFragmentTest<LoginFragment>() {
+    override fun getFragment(): Class<LoginFragment> = LoginFragment::class.java
 
     val VALID_EMAIL = "validtest@test.com"
     val VALID_PASSWORD = "12345678"
@@ -49,7 +49,7 @@ class LoginActivityTest : BaseUiTest<LoginActivity>() {
         )
         onView(withId(R.id.btnLogin)).check(matches(isDisplayed())).perform(click())
         delay(1000)
-        intended(hasComponent(ItemListActivity::class.java.name))
+        intended(hasComponent(ItemListFragment::class.java.name))
     }
 
     @Test
