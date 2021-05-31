@@ -2,26 +2,26 @@ package com.fazemeright.myinventorytracker.ui.itemlist
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.fazemeright.myinventorytracker.databinding.ListInventoryItemBinding
 import com.fazemeright.myinventorytracker.domain.models.ItemWithBag
 
 class ItemListAdapter(private val clickListener: ItemListener) :
-    ListAdapter<ItemWithBag,
-        ItemListAdapter.ViewHolder>(ItemListDiffCallback()) {
+    PagingDataAdapter<ItemWithBag,
+            ItemListAdapter.ViewHolder>(ItemListDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder.from(parent)
     }
 
-    fun updateList(list: List<ItemWithBag>?) {
+    /*fun updateList(list: List<ItemWithBag>?) {
         submitList(list)
-    }
+    }*/
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        getItem(position).also {
+        getItem(position)?.let {
             holder.bind(it, clickListener)
         }
     }

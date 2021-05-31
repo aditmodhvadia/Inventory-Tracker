@@ -1,7 +1,11 @@
 package com.fazemeright.myinventorytracker.ui.itemlist
 
 import android.app.Application
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.switchMap
+import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
 import com.fazemeright.myinventorytracker.domain.models.InventoryItem
 import com.fazemeright.myinventorytracker.domain.models.ItemWithBag
 import com.fazemeright.myinventorytracker.repository.InventoryRepository
@@ -37,14 +41,11 @@ class ItemListViewModel @Inject constructor(
         _searchString.value = ""
     }
 
-    val items = _searchString.switchMap {
+    val items: LiveData<PagingData<ItemWithBag>> = _searchString.switchMap {
         if (it.isEmpty()) repository.getItemsWithBagLive()
-        else
-            liveData {
-                emit(
-                    repository.searchInventoryItems(it)
-                )
-            }
+        else {
+            repository.searchInventoryItems(it)
+        }
     }
 
     fun onSearchClicked(searchText: String) {

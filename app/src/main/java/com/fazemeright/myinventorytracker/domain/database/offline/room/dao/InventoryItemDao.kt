@@ -1,6 +1,7 @@
 package com.fazemeright.myinventorytracker.domain.database.offline.room.dao
 
 import androidx.lifecycle.LiveData
+import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Transaction
@@ -41,7 +42,7 @@ interface InventoryItemDao : BaseDao<InventoryItem> {
 
     @Transaction
     @Query("SELECT * FROM my_inventory_table")
-    fun getItemsWithBagLive(): LiveData<List<ItemWithBag>>
+    fun getItemsWithBagLive(): PagingSource<Int, ItemWithBag>/*LiveData<List<ItemWithBag>>*/
 
     @Transaction
     @Query("SELECT * FROM my_inventory_table")
@@ -49,5 +50,5 @@ interface InventoryItemDao : BaseDao<InventoryItem> {
 
     @Transaction
     @Query("SELECT * FROM my_inventory_table WHERE itemName LIKE '%' || :searchString || '%' ORDER BY itemName")
-    fun searchItems(searchString: String): List<ItemWithBag>
+    fun searchItems(searchString: String): PagingSource<Int, ItemWithBag>
 }
