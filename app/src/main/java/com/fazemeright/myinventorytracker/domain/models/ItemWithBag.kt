@@ -6,6 +6,12 @@ import androidx.room.Entity
 import androidx.room.Relation
 import kotlinx.parcelize.Parcelize
 
+/**
+ * Holds and [InventoryItem] and the [BagItem] it is in.
+ *
+ * @author Adit Modhvadia
+ * @since 2.1.1
+ */
 @Parcelize
 @Entity
 data class ItemWithBag(
