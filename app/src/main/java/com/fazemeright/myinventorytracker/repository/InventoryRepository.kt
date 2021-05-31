@@ -1,6 +1,10 @@
 package com.fazemeright.myinventorytracker.repository
 
 import androidx.lifecycle.LiveData
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.liveData
 import com.fazemeright.myinventorytracker.domain.authentication.UserAuthentication
 import com.fazemeright.myinventorytracker.domain.authentication.firebase.FireBaseUserAuthentication
 import com.fazemeright.myinventorytracker.domain.database.offline.room.dao.BagItemDao
@@ -110,14 +114,18 @@ class InventoryRepository @Inject constructor(
         }
     }
 
-    override fun getItemsWithBagLive(): LiveData<List<ItemWithBag>> {
-        return inventoryItemDao.getItemsWithBagLive()
+    override fun getItemsWithBagLive(): LiveData<PagingData<ItemWithBag>> {
+        return Pager(
+            config = pagingConfig,
+            pagingSourceFactory = { inventoryItemDao.getItemsWithBagLive() }
+        ).liveData
     }
 
-    override suspend fun searchInventoryItems(searchText: String): List<ItemWithBag> {
-        return withContext(Dispatchers.IO) {
-            inventoryItemDao.searchItems(searchText)
-        }
+    override fun searchInventoryItems(searchText: String): LiveData<PagingData<ItemWithBag>> {
+        return Pager(
+            config = pagingConfig,
+            pagingSourceFactory = { inventoryItemDao.searchItems(searchText) }
+        ).liveData
     }
 
     override suspend fun getInventoryItemById(itemId: Int): InventoryItem? {
@@ -200,5 +208,14 @@ class InventoryRepository @Inject constructor(
             bagItemDao.clear()
         }
 //        TODO: Clear Shared Preferences
+    }
+
+    companion object {
+        val pagingConfig = PagingConfig(
+            pageSize = 20,
+            prefetchDistance = 10,
+            enablePlaceholders = false,
+            initialLoadSize = 20
+        )
     }
 }

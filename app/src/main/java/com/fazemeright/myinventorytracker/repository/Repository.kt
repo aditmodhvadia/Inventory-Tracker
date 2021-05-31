@@ -1,6 +1,8 @@
 package com.fazemeright.myinventorytracker.repository
 
 import androidx.lifecycle.LiveData
+import androidx.paging.PagedList
+import androidx.paging.PagingData
 import com.fazemeright.myinventorytracker.domain.models.BagItem
 import com.fazemeright.myinventorytracker.domain.models.InventoryItem
 import com.fazemeright.myinventorytracker.domain.models.ItemWithBag
@@ -66,12 +68,12 @@ interface Repository {
     /**
      * Get items with bag data through livedata
      */
-    fun getItemsWithBagLive(): LiveData<List<ItemWithBag>>
+    fun getItemsWithBagLive(): LiveData<PagingData<ItemWithBag>>
 
     /**
      * Search for inventory items with given search string
      */
-    suspend fun searchInventoryItems(searchText: String): List<ItemWithBag>
+    fun searchInventoryItems(searchText: String): LiveData<PagingData<ItemWithBag>>
 
     /**
      * Get inventory item with given id

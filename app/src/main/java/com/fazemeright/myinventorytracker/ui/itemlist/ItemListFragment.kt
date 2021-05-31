@@ -17,7 +17,9 @@ import com.fazemeright.myinventorytracker.ui.base.BaseFragment
 import com.fazemeright.myinventorytracker.ui.settings.SettingsActivity
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class ItemListFragment : BaseFragment<FragmentItemListBinding>() {
@@ -51,9 +53,10 @@ class ItemListFragment : BaseFragment<FragmentItemListBinding>() {
             viewLifecycleOwner,
             {
                 it?.let {
-                    adapter.updateList(it)
+                    CoroutineScope(Dispatchers.IO).launch {
+                        adapter.submitData(it)
+                    }
                 }
-                Timber.i("received in onCreate: ${it.size}")
             }
         )
 
