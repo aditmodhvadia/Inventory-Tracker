@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/Inventory-Tracker.iml" filepath="$PROJECT_DIR$/.idea/Inventory-Tracker.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Inventory-Tracker.iml" filepath="$PROJECT_DIR$/.idea/modules/Inventory-Tracker.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Inventory-Tracker.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Inventory-Tracker.app.iml" />
     </modules>
   </component>
