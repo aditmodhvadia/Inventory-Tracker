@@ -168,6 +168,6 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth-ktx:21.0.1'       //  Auth KTX
     implementation 'com.google.android.gms:play-services-auth:19.0.0'   //  Google SSO
     implementation 'com.google.firebase:firebase-firestore:23.0.0'      //  FireStore
-    implementation 'com.google.firebase:firebase-firestore-ktx:23.0.0'  //  FireStore ktx
+    implementation 'com.google.firebase:firebase-firestore-ktx:23.0.1'  //  FireStore ktx
 
 }
