@@ -18,10 +18,6 @@ import org.junit.Test
 class LoginActivityFragmentTest : BaseUiFragmentTest<LoginFragment>() {
     override fun getFragment(): Class<LoginFragment> = LoginFragment::class.java
 
-    val VALID_EMAIL = "validtest@test.com"
-    val VALID_PASSWORD = "12345678"
-    val INVALID_PASSWORD = "1234567890"
-
     override fun allViewsAreDisplayed() {
         R.id.etEmail.isViewDisplayed()
         R.id.etPassword.isViewDisplayed()
@@ -77,5 +73,11 @@ class LoginActivityFragmentTest : BaseUiFragmentTest<LoginFragment>() {
             matches(isDisplayed())
         )
         assert(true)
+    }
+
+    companion object {
+        const val VALID_EMAIL = "validtest@test.com"
+        const val VALID_PASSWORD = "12345678"
+        const val INVALID_PASSWORD = "1234567890"
     }
 }

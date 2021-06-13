@@ -7,7 +7,6 @@ import androidx.test.espresso.matcher.ViewMatchers.withContentDescription
 import com.fazemeright.myinventorytracker.R
 import com.fazemeright.myinventorytracker.isViewDisplayed
 import com.fazemeright.myinventorytracker.isViewWithTextDisplayed
-import com.fazemeright.myinventorytracker.ui.base.BaseUiActivityTest
 import com.fazemeright.myinventorytracker.ui.base.BaseUiFragmentTest
 
 

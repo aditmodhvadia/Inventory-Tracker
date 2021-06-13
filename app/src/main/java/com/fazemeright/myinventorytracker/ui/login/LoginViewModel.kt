@@ -19,7 +19,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    private val app: Application,
+    app: Application,
     private val logInUserWithEmailPassword: LogInUserWithEmailPasswordUseCase,
     private val logInUserWithToken: LogInUserWithTokenUseCase
 ) : BaseViewModel(app) {

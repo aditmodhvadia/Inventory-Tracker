@@ -6,7 +6,6 @@ import androidx.lifecycle.viewModelScope
 import com.fazemeright.myinventorytracker.domain.models.InventoryItem
 import com.fazemeright.myinventorytracker.repository.InventoryRepository
 import com.fazemeright.myinventorytracker.ui.base.BaseViewModel
-import com.fazemeright.myinventorytracker.usecase.ClearAllInventoryItemsUseCase
 import com.fazemeright.myinventorytracker.usecase.GetAllBagNamesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -15,9 +14,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AddItemViewModel @Inject constructor(
-    private val app: Application,
+    app: Application,
     getAllBagNamesUseCase: GetAllBagNamesUseCase,
-    private val clearAllInventoryItemsUseCase: ClearAllInventoryItemsUseCase,
+//    private val clearAllInventoryItemsUseCase: ClearAllInventoryItemsUseCase,
     private val repository: InventoryRepository
 ) : BaseViewModel(app) {
 
@@ -32,9 +31,9 @@ class AddItemViewModel @Inject constructor(
 
     val navigateBackToItemList = MutableLiveData<Boolean>()
 
-    private suspend fun clear() {
+    /*private suspend fun clear() {
         clearAllInventoryItemsUseCase()
-    }
+    }*/
 
     fun onAddClicked(
         newItemName: String,

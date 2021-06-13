@@ -11,7 +11,6 @@ import com.fazemeright.myinventorytracker.domain.models.BagItem
 import com.fazemeright.myinventorytracker.domain.models.InventoryItem
 import com.fazemeright.myinventorytracker.domain.models.ItemWithBag
 import com.fazemeright.myinventorytracker.domain.models.Result
-import com.fazemeright.myinventorytracker.network.interfaces.SampleNetworkInterface
 import com.google.firebase.auth.FirebaseUser
 import dagger.hilt.android.scopes.ViewModelScoped
 import kotlinx.coroutines.Dispatchers
@@ -24,7 +23,7 @@ import javax.inject.Inject
 class InventoryRepository @Inject constructor(
     private val bagItemDao: BagItemDao,
     private val inventoryItemDao: InventoryItemDao,
-    private val apiService: SampleNetworkInterface
+//    private val apiService: SampleNetworkInterface
 ) : Repository {
     private val userAuthentication: UserAuthentication = FireBaseUserAuthentication
     private val onlineDatabaseStore: OnlineDatabaseStore = FireBaseOnlineDatabaseStore

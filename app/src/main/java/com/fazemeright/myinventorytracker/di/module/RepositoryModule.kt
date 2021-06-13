@@ -2,7 +2,6 @@ package com.fazemeright.myinventorytracker.di.module
 
 import com.fazemeright.myinventorytracker.domain.database.offline.room.dao.BagItemDao
 import com.fazemeright.myinventorytracker.domain.database.offline.room.dao.InventoryItemDao
-import com.fazemeright.myinventorytracker.network.interfaces.SampleNetworkInterface
 import com.fazemeright.myinventorytracker.repository.InventoryRepository
 import dagger.Module
 import dagger.Provides
@@ -19,8 +18,8 @@ object RepositoryModule {
     fun provideInventoryRepository(
         bagItemDao: BagItemDao,
         inventoryItemDao: InventoryItemDao,
-        apiService: SampleNetworkInterface
+//        apiService: SampleNetworkInterface
     ): InventoryRepository {
-        return InventoryRepository(bagItemDao, inventoryItemDao, apiService)
+        return InventoryRepository(bagItemDao, inventoryItemDao/*, apiService*/)
     }
 }
