@@ -41,11 +41,17 @@ android {
 
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
+        useIR = true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion '1.0.0-beta09'
     }
 
     buildFeatures {
         viewBinding true
         dataBinding true
+        compose true
     }
 
     kapt {
@@ -66,7 +72,7 @@ dependencies {
 
     // Android KTX
     implementation "androidx.core:core-ktx:1.5.0"
-    debugImplementation "androidx.fragment:fragment-testing:1.3.4"
+    debugImplementation "androidx.fragment:fragment-testing:1.3.5"
 
     // Timber
     implementation 'com.jakewharton.timber:timber:4.7.1'
@@ -108,8 +114,8 @@ dependencies {
     kapt "androidx.lifecycle:lifecycle-common-java8:$lifecycle_version"
 
     // Coroutines
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.0-native-mt'
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.3"
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.0'
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.0"
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.5.0-native-mt'
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1"
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.3.1"
@@ -126,7 +132,25 @@ dependencies {
     androidTestImplementation "androidx.navigation:navigation-testing:$nav_version"
 
     // Jetpack Compose Integration
-    implementation "androidx.navigation:navigation-compose:2.4.0-alpha02"
+    implementation 'androidx.compose.ui:ui:1.0.0-beta09'
+    // Tooling support (Previews, etc.)
+    implementation 'androidx.compose.ui:ui-tooling:1.0.0-beta09'
+    // Foundation (Border, Background, Box, Image, Scroll, shapes, animations, etc.)
+    implementation 'androidx.compose.foundation:foundation:1.0.0-beta09'
+    // Material Design
+    implementation 'androidx.compose.material:material:1.0.0-beta09'
+    // Material design icons
+    implementation 'androidx.compose.material:material-icons-core:1.0.0-beta09'
+    implementation 'androidx.compose.material:material-icons-extended:1.0.0-beta09'
+    // Integration with activities
+    implementation 'androidx.activity:activity-compose:1.3.0-beta02'
+    // Integration with ViewModels
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-compose:1.0.0-alpha07'
+    // Integration with observables
+    implementation 'androidx.compose.runtime:runtime-livedata:1.0.0-beta09'
+    // Jetpack UI Tests
+    androidTestImplementation 'androidx.compose.ui:ui-test-junit4:1.0.0-beta09'
+    implementation "androidx.navigation:navigation-compose:2.4.0-alpha03"
 
 //    Color Picker Library
     implementation 'com.jaredrummler:colorpicker:1.1.0'
