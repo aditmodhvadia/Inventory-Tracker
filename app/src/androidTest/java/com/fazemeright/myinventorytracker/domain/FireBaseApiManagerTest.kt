@@ -17,10 +17,6 @@ import org.junit.runner.notification.Failure
 @RunWith(AndroidJUnit4::class)
 class FireBaseApiManagerTest {
 
-    private val VALID_EMAIL = "dev.aditmodhvadia@gmail.com"
-    private val VALID_PASSWORD = "12345678"
-    private val INVALID_PASSWORD = "1234567890"
-
     @After
     fun tearDown() {
         FireBaseUserAuthentication.logout()
@@ -147,4 +143,9 @@ class FireBaseApiManagerTest {
             println("Error occurred")
         }
     }*/
+    companion object {
+        private const val VALID_EMAIL = "dev.aditmodhvadia@gmail.com"
+        private const val VALID_PASSWORD = "12345678"
+        private const val INVALID_PASSWORD = "1234567890"
+    }
 }

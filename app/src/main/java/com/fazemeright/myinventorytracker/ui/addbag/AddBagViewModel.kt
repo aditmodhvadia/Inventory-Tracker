@@ -7,9 +7,7 @@ import com.fazemeright.myinventorytracker.domain.models.BagItem
 import com.fazemeright.myinventorytracker.repository.InventoryRepository
 import com.fazemeright.myinventorytracker.ui.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 /**
@@ -18,16 +16,16 @@ import javax.inject.Inject
 @HiltViewModel
 class AddBagViewModel @Inject constructor(
     private val repository: InventoryRepository,
-    private val app: Application
+    app: Application
 ) : BaseViewModel(app) {
 
     val navigateBackToItemList = MutableLiveData<Boolean>()
 
-    private suspend fun clear() {
+    /*private suspend fun clear() {
         withContext(Dispatchers.IO) {
             repository.clearBagItems()
         }
-    }
+    }*/
 
     private fun navigateBackToItemList() {
         navigateBackToItemList.value = true

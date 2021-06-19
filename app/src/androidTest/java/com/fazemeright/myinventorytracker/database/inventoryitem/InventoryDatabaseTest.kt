@@ -113,6 +113,7 @@ fun <T> getValue(liveData: LiveData<T>): T {
     return data[0] as T
 }
 
+/*
 fun <T> LiveData<T>.getOrAwaitValue(
     time: Long = 2,
     timeUnit: TimeUnit = TimeUnit.SECONDS
@@ -140,6 +141,7 @@ fun <T> LiveData<T>.getOrAwaitValue(
     @Suppress("UNCHECKED_CAST")
     return data as T
 }
+*/
 
 private inline fun <reified T> assertFails(function: () -> Unit): Boolean {
     try {

@@ -5,6 +5,7 @@ apply plugin: 'dagger.hilt.android.plugin'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'com.google.gms.google-services'
 apply plugin: "androidx.navigation.safeargs"
+apply plugin: "org.jetbrains.dokka"
 
 android {
     compileSdkVersion 30
@@ -12,8 +13,8 @@ android {
         applicationId "com.fazemeright.myinventorytracker"
         minSdkVersion 23
         targetSdkVersion 30
-        versionCode 4
-        versionName "2.1.0"
+        versionCode 5
+        versionName "2.1.2"
 //        testInstrumentationRunner "com.fazemeright.myinventorytracker.CustomTestRunner"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -58,7 +59,7 @@ dependencies {
     implementation 'androidx.preference:preference-ktx:1.1.1'
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.5.0'
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.5.10'
     implementation 'androidx.appcompat:appcompat:1.3.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation 'com.google.android.material:material:1.3.0'
@@ -125,7 +126,7 @@ dependencies {
     androidTestImplementation "androidx.navigation:navigation-testing:$nav_version"
 
     // Jetpack Compose Integration
-    implementation "androidx.navigation:navigation-compose:2.4.0-alpha01"
+    implementation "androidx.navigation:navigation-compose:2.4.0-alpha02"
 
 //    Color Picker Library
     implementation 'com.jaredrummler:colorpicker:1.1.0'
@@ -158,16 +159,16 @@ dependencies {
 
 //    Work Manager
     // Kotlin + coroutines
-    implementation 'androidx.work:work-runtime-ktx:2.7.0-alpha03'
+    implementation 'androidx.work:work-runtime-ktx:2.7.0-alpha04'
     // optional - Test helpers
-    androidTestImplementation 'androidx.work:work-testing:2.7.0-alpha03'
+    androidTestImplementation 'androidx.work:work-testing:2.7.0-alpha04'
 
     //  FireBase
     implementation 'com.google.firebase:firebase-analytics:19.0.0'      // Analytics
     implementation 'com.google.firebase:firebase-auth:21.0.1'           //  Auth
     implementation 'com.google.firebase:firebase-auth-ktx:21.0.1'       //  Auth KTX
     implementation 'com.google.android.gms:play-services-auth:19.0.0'   //  Google SSO
-    implementation 'com.google.firebase:firebase-firestore:23.0.0'      //  FireStore
-    implementation 'com.google.firebase:firebase-firestore-ktx:23.0.0'  //  FireStore ktx
+    implementation 'com.google.firebase:firebase-firestore:23.0.1'      //  FireStore
+    implementation 'com.google.firebase:firebase-firestore-ktx:23.0.1'  //  FireStore ktx
 
 }

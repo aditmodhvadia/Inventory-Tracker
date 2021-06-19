@@ -18,7 +18,6 @@ import timber.log.Timber
 @AndroidEntryPoint
 class LoginFragment : BaseFragment<FragmentLoginBinding>() {
 
-    private val RC_SIGN_IN: Int = 1001
     private val viewModel: LoginViewModel by viewModels()
     private lateinit var gso: GoogleSignInOptions
 
@@ -85,5 +84,9 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
 
     override fun getViewBinding(): FragmentLoginBinding {
         return FragmentLoginBinding.inflate(layoutInflater)
+    }
+
+    companion object {
+        private const val RC_SIGN_IN: Int = 1001
     }
 }

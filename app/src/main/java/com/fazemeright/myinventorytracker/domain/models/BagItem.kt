@@ -6,6 +6,12 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import kotlinx.parcelize.Parcelize
 
+/**
+ * Holds data for a Bag, which can have many [InventoryItem]
+ *
+ * @author Adit Modhvadia
+ * @since 2.1.1
+ */
 @Parcelize
 @Entity(tableName = "my_bag_table")
 data class BagItem(

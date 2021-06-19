@@ -7,64 +7,87 @@ import com.fazemeright.myinventorytracker.domain.models.ItemWithBag
 import com.fazemeright.myinventorytracker.domain.models.Result
 import com.google.firebase.auth.FirebaseUser
 
+/**
+ * Specifies api interactions with repository level.
+ *
+ * @author Adit Modhvadia
+ * @since 2.1.1
+ */
 interface Repository {
     /**
-     * Determine if user is signed in
+     * Determine if user is signed in.
+     *
+     * @return [Result] with <code>true</code> if successful, else <code>false</code>
      */
     fun isUserSignedIn(): Result<Boolean>
 
     /**
-     * Register new user with email and password
+     * Register new user.
+     *
+     * @param email user email
+     * @param password user password
+     *
+     * @return [Result] with registered [FirebaseUser]
      */
     suspend fun registerWithEmailPassword(email: String, password: String): Result<FirebaseUser>
 
     /**
-     * Clear Bags from local
+     * Clear all [BagItem] from local.
      */
     suspend fun clearBagItems()
 
     /**
-     * Add new Bag
+     * Add new [BagItem].
+     *
+     * @param newBag [BagItem] to be added
      */
     suspend fun addBag(newBag: BagItem)
 
     /**
-     * Get all bags with livedata
+     * Get [LiveData] of [List] of [BagItem].
      */
     fun getAllBags(): LiveData<List<BagItem>>
 
     /**
-     * Get all bag names with livedata
+     * Get all [BagItem] names with [LiveData].
      */
     fun getAllBagNames(): LiveData<List<String>>
 
     /**
-     * Clear all inventory items from local
+     * Clear all [InventoryItem] from local.
      */
     suspend fun clearInventoryItems()
 
     /**
-     * Get bag id with the given name
+     * Get [BagItem.bagId].
+     *
+     * @param bagName [BagItem.bagName]
      */
     suspend fun getBagIdWithName(bagName: String): Int
 
     /**
-     * Insert inventory item
+     * Insert new [InventoryItem].
+     *
+     * @param newItem new [InventoryItem]
      */
     suspend fun insertInventoryItem(newItem: InventoryItem)
 
     /**
-     * Get inventory item for the given bag id
+     * Get [InventoryItem] with [LiveData].
+     *
+     * @param itemId [InventoryItem.itemId]
      */
     fun getItemWithBagFromId(itemId: Int): LiveData<ItemWithBag>
 
     /**
-     * Update the inventory item
+     * Update [InventoryItem].
+     *
+     * @param item [InventoryItem] to be updated
      */
     suspend fun updateInventoryItem(item: InventoryItem?)
 
     /**
-     * Get items with bag data through livedata
+     * Get [ItemWithBag] with [BagItem] through livedata.
      */
     fun getItemsWithBagLive(): LiveData<List<ItemWithBag>>
 
@@ -79,24 +102,38 @@ interface Repository {
     suspend fun getInventoryItemById(itemId: Int): InventoryItem?
 
     /**
-     * Delete the given inventory item
+     * Delete an [InventoryItem].
+     *
+     * @param item [InventoryItem] to be deleted
      */
     suspend fun deleteInventoryItem(item: InventoryItem)
 
     /**
-     * Login user with given email and password
+     * Login user.
+     *
+     * @param email User email
+     * @param password User password
+     *
+     * @return [Result] with [FirebaseUser]
      */
     suspend fun performLogin(email: String, password: String): Result<FirebaseUser>
 
     /**
-     * Sync the local database and cloud database with each other
+     * Sync the local database and cloud database with each other.
      */
     suspend fun syncLocalAndCloud()
 
     /**
-     * Log out the user
+     * Log out the user.
      */
     suspend fun logoutUser()
 
+    /**
+     * Sign in user.
+     *
+     * @param idToken Id token from Federated sign in
+     *
+     * @return [Result] of [FirebaseUser]
+     */
     suspend fun signInWithToken(idToken: String): Result<FirebaseUser>
 }

@@ -7,6 +7,12 @@ import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 import kotlinx.parcelize.Parcelize
 
+/**
+ * Holds data for Inventory item, which can be stored in a [BagItem]
+ *
+ * @author Adit Modhvadia
+ * @since 2.1.1
+ */
 @Entity(
     tableName = "my_inventory_table",
     foreignKeys = [

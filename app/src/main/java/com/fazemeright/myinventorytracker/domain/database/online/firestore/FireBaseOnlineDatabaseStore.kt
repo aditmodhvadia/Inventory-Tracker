@@ -10,7 +10,6 @@ import com.google.android.gms.tasks.Task
 import com.google.android.gms.tasks.Tasks
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentReference
-import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
@@ -127,12 +126,12 @@ object FireBaseOnlineDatabaseStore : OnlineDatabaseStore {
         }
     }
 
-    /**
+    /*/**
      * Write the given data in given document
      */
     private fun writeData(data: Any, doc: DocumentReference): Task<Void> {
         return doc.set(data)
-    }
+    }*/
 
     /**
      * Write the given data in given collection
@@ -169,12 +168,12 @@ object FireBaseOnlineDatabaseStore : OnlineDatabaseStore {
         }
     }
 
-    /**
+    /*/**
      * Read the data from the given document
      */
     private fun readDocument(doc: DocumentReference): Task<DocumentSnapshot> {
         return doc.get()
-    }
+    }*/
 
     /**
      * Read the data from the given collection

@@ -17,7 +17,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ItemListViewModel @Inject constructor(
     private val repository: InventoryRepository,
-    private val app: Application
+    app: Application
 ) : BaseViewModel(app) {
 
     private val _searchString = MutableLiveData<String>()
