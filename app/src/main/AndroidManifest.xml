@@ -15,6 +15,11 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
+            android:name=".ui.ComposeActivity"
+            android:exported="true"
+            android:label="@string/title_activity_compose"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name=".ui.main.MainActivity"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>

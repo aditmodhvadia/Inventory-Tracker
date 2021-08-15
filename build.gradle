@@ -6,6 +6,7 @@ buildscript {
         // navigation where the versions of the plugin needs to be the same as the version of the
         // library defined in the app Gradle file
         nav_version = "2.3.5"
+        compose_version = '1.0.0-beta07'
     }
 
     repositories {
