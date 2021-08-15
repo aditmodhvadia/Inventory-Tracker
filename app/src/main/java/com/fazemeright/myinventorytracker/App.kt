@@ -10,6 +10,12 @@ import dagger.hilt.android.HiltAndroidApp
 import timber.log.Timber
 import javax.inject.Inject
 
+/**
+ * Android Application entry class.
+ *
+ * @author Adit Modhvadia
+ * @since 2.1.1
+ */
 @HiltAndroidApp
 class App : Application(), Configuration.Provider {
 
@@ -20,6 +26,9 @@ class App : Application(), Configuration.Provider {
         setUpTimber()
     }
 
+    /**
+     * Set up [Timber.DebugTree] when [BuildConfig] is [BuildConfig.DEBUG].
+     */
     private fun setUpTimber() {
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())
@@ -27,15 +36,12 @@ class App : Application(), Configuration.Provider {
     }
 
     @Inject
-    lateinit var workerFactory: HiltWorkerFactory
+    lateinit var workManagerConfig: Configuration
 
-    override fun getWorkManagerConfiguration() =
-        Configuration.Builder()
-            .setWorkerFactory(workerFactory)
-            .build()
+    override fun getWorkManagerConfiguration() = workManagerConfig
 
     /**
-     * Handle the theme of the app from the user settings
+     * Handle the theme of the app from the user settings stored in [SharedPreferences].
      */
     private fun handleTheme(preferences: SharedPreferences?) {
         val mode = when (preferences?.getString("theme", "system_default")) {
