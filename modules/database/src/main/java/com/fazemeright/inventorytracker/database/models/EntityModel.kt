@@ -1,0 +1,3 @@
+package com.fazemeright.inventorytracker.database.models
+
+interface EntityModel
