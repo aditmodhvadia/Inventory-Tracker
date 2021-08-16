@@ -1,2 +1,3 @@
-rootProject.name='Inventory-Tracker'
+rootProject.name = 'Inventory-Tracker'
 include ':app'
+include ':modules:database'

@@ -1,10 +1,6 @@
 package com.fazemeright.myinventorytracker.domain.models
 
 import android.os.Parcelable
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.ForeignKey
-import androidx.room.PrimaryKey
 import kotlinx.parcelize.Parcelize
 
 /**
@@ -13,20 +9,8 @@ import kotlinx.parcelize.Parcelize
  * @author Adit Modhvadia
  * @since 2.1.1
  */
-@Entity(
-    tableName = "my_inventory_table",
-    foreignKeys = [
-        ForeignKey(
-            entity = BagItem::class,
-            childColumns = ["bagOwnerId"],
-            parentColumns = ["bagId"]
-        )
-    ]
-)
 @Parcelize
 data class InventoryItem(
-    @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "itemId")
     val itemId: Int = 0,
 
     var itemName: String = "",
@@ -35,10 +19,9 @@ data class InventoryItem(
 
     var itemQuantity: Int = 1,
 
-    @ColumnInfo(name = "bagOwnerId")
     var bagOwnerId: Int = 0,
     var onlineId: String? = null
-) : OnlineDatabaseStoreObject, Parcelable {
+) : DomainModel, OnlineDatabaseStoreObject, Parcelable {
     override fun getOnlineDatabaseStoreId(): String? = onlineId
 
     override fun setOnlineDatabaseStoreId(onlineId: String) {

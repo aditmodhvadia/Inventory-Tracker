@@ -1,0 +1,3 @@
+package com.fazemeright.myinventorytracker.domain.models
+
+interface DomainModel

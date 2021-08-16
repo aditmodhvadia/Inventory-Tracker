@@ -1,4 +1,4 @@
-package com.fazemeright.myinventorytracker.domain.models
+package com.fazemeright.inventorytracker.database.models
 
 import android.os.Parcelable
 import androidx.room.Embedded
@@ -7,18 +7,18 @@ import androidx.room.Relation
 import kotlinx.parcelize.Parcelize
 
 /**
- * Holds and [InventoryItem] and the [BagItem] it is in.
+ * Holds and [InventoryItemEntity] and the [BagItemEntity] it is in.
  *
  * @author Adit Modhvadia
  * @since 2.1.1
  */
 @Parcelize
 @Entity
-data class ItemWithBag(
-    @Embedded var item: InventoryItem,
+data class ItemWithBagEntity(
+    @Embedded var item: InventoryItemEntity,
     @Relation(
         parentColumn = "bagOwnerId",
         entityColumn = "bagId"
     )
-    var bag: BagItem
-) : DomainModel, Parcelable
+    var bag: BagItemEntity
+) : EntityModel, Parcelable

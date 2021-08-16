@@ -1,4 +1,4 @@
-package com.fazemeright.myinventorytracker.domain.database.offline.room.dao
+package com.fazemeright.inventorytracker.database.dao
 
 /*@Dao
 interface InventoryItemFtsDao {

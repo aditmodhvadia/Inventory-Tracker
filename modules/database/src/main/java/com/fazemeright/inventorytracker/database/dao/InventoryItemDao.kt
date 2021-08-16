@@ -1,17 +1,17 @@
-package com.fazemeright.myinventorytracker.domain.database.offline.room.dao
+package com.fazemeright.inventorytracker.database.dao
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Transaction
-import com.fazemeright.myinventorytracker.domain.models.InventoryItem
-import com.fazemeright.myinventorytracker.domain.models.ItemWithBag
+import com.fazemeright.inventorytracker.database.models.InventoryItemEntity
+import com.fazemeright.inventorytracker.database.models.ItemWithBagEntity
 
 /**
  * Defines methods for using the InventoryItem class with Room.
  */
 @Dao
-interface InventoryItemDao : BaseDao<InventoryItem> {
+interface InventoryItemDao : BaseDao<InventoryItemEntity> {
 
     /**
      * Selects and returns the row that matches the supplied start time, which is our key.
@@ -19,7 +19,7 @@ interface InventoryItemDao : BaseDao<InventoryItem> {
      * @param id startTimeMilli to match
      */
     @Query("SELECT * from my_inventory_table WHERE itemId = :id")
-    fun getById(id: Int): InventoryItem?
+    fun getById(id: Int): InventoryItemEntity?
 
     /**
      * Deletes all values from the table.
@@ -31,23 +31,23 @@ interface InventoryItemDao : BaseDao<InventoryItem> {
 
     @Transaction
     @Query("SELECT * FROM my_inventory_table WHERE itemId = :itemId")
-    fun getItemWithBagFromId(itemId: Int): LiveData<ItemWithBag>
+    fun getItemWithBagFromId(itemId: Int): LiveData<ItemWithBagEntity>
 
     @Query("SELECT * FROM my_inventory_table WHERE itemName =:name")
-    fun findItemsByName(name: String): List<InventoryItem>
+    fun findItemsByName(name: String): List<InventoryItemEntity>
 
     @Query("SELECT * FROM my_inventory_table ORDER BY itemName")
-    fun getAllInventoryItemsList(): List<InventoryItem>
+    fun getAllInventoryItemsList(): List<InventoryItemEntity>
 
     @Transaction
     @Query("SELECT * FROM my_inventory_table")
-    fun getItemsWithBagLive(): LiveData<List<ItemWithBag>>
+    fun getItemsWithBagLive(): LiveData<List<ItemWithBagEntity>>
 
     @Transaction
     @Query("SELECT * FROM my_inventory_table")
-    fun getItemsWithBag(): List<ItemWithBag>
+    fun getItemsWithBag(): List<InventoryItemEntity>
 
     @Transaction
     @Query("SELECT * FROM my_inventory_table WHERE itemName LIKE '%' || :searchString || '%' ORDER BY itemName")
-    fun searchItems(searchString: String): List<ItemWithBag>
+    fun searchItems(searchString: String): List<ItemWithBagEntity>
 }

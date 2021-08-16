@@ -1,9 +1,10 @@
-package com.fazemeright.myinventorytracker.domain.database.offline.room.dao
+package com.fazemeright.inventorytracker.database.dao
 
 import androidx.room.*
+import com.fazemeright.inventorytracker.database.models.EntityModel
 
 @Dao
-interface BaseDao<T> {
+interface BaseDao<in T : EntityModel> {
     /**
      * Inserts the given item into the database
      */

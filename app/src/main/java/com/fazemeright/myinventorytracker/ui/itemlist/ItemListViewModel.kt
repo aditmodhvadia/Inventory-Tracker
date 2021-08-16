@@ -37,7 +37,7 @@ class ItemListViewModel @Inject constructor(
         _searchString.value = ""
     }
 
-    val items = _searchString.switchMap {
+    val items: LiveData<List<ItemWithBag>> = _searchString.switchMap {
         if (it.isEmpty()) repository.getItemsWithBagLive()
         else
             liveData {
