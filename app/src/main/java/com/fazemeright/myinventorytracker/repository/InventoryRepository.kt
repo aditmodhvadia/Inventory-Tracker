@@ -1,12 +1,16 @@
 package com.fazemeright.myinventorytracker.repository
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.map
+import com.fazemeright.inventorytracker.database.dao.BagItemDao
+import com.fazemeright.inventorytracker.database.dao.InventoryItemDao
 import com.fazemeright.myinventorytracker.domain.authentication.UserAuthentication
 import com.fazemeright.myinventorytracker.domain.authentication.firebase.FireBaseUserAuthentication
-import com.fazemeright.myinventorytracker.domain.database.offline.room.dao.BagItemDao
-import com.fazemeright.myinventorytracker.domain.database.offline.room.dao.InventoryItemDao
 import com.fazemeright.myinventorytracker.domain.database.online.OnlineDatabaseStore
 import com.fazemeright.myinventorytracker.domain.database.online.firestore.FireBaseOnlineDatabaseStore
+import com.fazemeright.myinventorytracker.domain.mappers.entity.BagItemEntityMapper
+import com.fazemeright.myinventorytracker.domain.mappers.entity.InventoryItemEntityMapper
+import com.fazemeright.myinventorytracker.domain.mappers.entity.ItemWithBagEntityMapper
 import com.fazemeright.myinventorytracker.domain.models.BagItem
 import com.fazemeright.myinventorytracker.domain.models.InventoryItem
 import com.fazemeright.myinventorytracker.domain.models.ItemWithBag
@@ -66,15 +70,20 @@ class InventoryRepository @Inject constructor(
     override suspend fun addBag(newBag: BagItem) {
         withContext(Dispatchers.IO) {
             Timber.d(newBag.toString())
-            val itemId = bagItemDao.insert(newBag)
+            val itemId = bagItemDao.insert(BagItemEntityMapper.mapToEntity(newBag))
 
             val item = bagItemDao.get(itemId)
 
-            item?.let { onlineDatabaseStore.storeBag(it) }
+//            item?.let { onlineDatabaseStore.storeBag(it) }
         }
     }
 
-    override fun getAllBags() = bagItemDao.getAllBags()
+    override fun getAllBags() =
+        bagItemDao.getAllBags().map {
+            it.map { bagItemEntity ->
+                BagItemEntityMapper.mapFromEntity(bagItemEntity)
+            }
+        }
 
     override fun getAllBagNames() = bagItemDao.getAllBagNames()
 
@@ -92,42 +101,51 @@ class InventoryRepository @Inject constructor(
 
     override suspend fun insertInventoryItem(newItem: InventoryItem) {
         withContext(Dispatchers.IO) {
-            val itemId = inventoryItemDao.insert(newItem)
+            val itemId = inventoryItemDao.insert(InventoryItemEntityMapper.mapToEntity(newItem))
 
             val item = inventoryItemDao.getById(itemId.toInt())
 
-            item?.let { onlineDatabaseStore.storeInventoryItem(it) }
+//            item?.let { onlineDatabaseStore.storeInventoryItem(it) }
         }
     }
 
     override fun getItemWithBagFromId(itemId: Int): LiveData<ItemWithBag> =
         inventoryItemDao.getItemWithBagFromId(itemId)
+            .map { ItemWithBagEntityMapper.mapFromEntity(it) }
 
     override suspend fun updateInventoryItem(item: InventoryItem?) {
         withContext(Dispatchers.IO) {
-            item?.let { inventoryItemDao.update(it) }
+            item?.let { inventoryItemDao.update(InventoryItemEntityMapper.mapToEntity(it)) }
         }
     }
 
     override fun getItemsWithBagLive(): LiveData<List<ItemWithBag>> {
-        return inventoryItemDao.getItemsWithBagLive()
+        return inventoryItemDao.getItemsWithBagLive().map {
+            it.map { entity ->
+                ItemWithBagEntityMapper.mapFromEntity(entity)
+            }
+        }
     }
 
     override suspend fun searchInventoryItems(searchText: String): List<ItemWithBag> {
         return withContext(Dispatchers.IO) {
-            inventoryItemDao.searchItems(searchText)
+            inventoryItemDao.searchItems(searchText).map {
+                ItemWithBagEntityMapper.mapFromEntity(it)
+            }
         }
     }
 
     override suspend fun getInventoryItemById(itemId: Int): InventoryItem? {
         return withContext(Dispatchers.IO) {
-            inventoryItemDao.getById(itemId)
+            inventoryItemDao.getById(itemId)?.let {
+                InventoryItemEntityMapper.mapFromEntity(it)
+            }
         }
     }
 
     override suspend fun deleteInventoryItem(item: InventoryItem) {
         withContext(Dispatchers.IO) {
-            inventoryItemDao.deleteItem(item)
+            inventoryItemDao.deleteItem(InventoryItemEntityMapper.mapToEntity(item))
 
             onlineDatabaseStore.deleteInventoryItem(item)
         }
@@ -165,14 +183,16 @@ class InventoryRepository @Inject constructor(
         Timber.d("Sync called")
         withContext(Dispatchers.IO) {
             val bagItemsInLocal = bagItemDao.getAllBagsList()
-            onlineDatabaseStore.batchWriteBags(bagItemsInLocal)
+//            onlineDatabaseStore.batchWriteBags(bagItemsInLocal)
 
             val inventoryItemsInLocal = inventoryItemDao.getAllInventoryItemsList()
-            onlineDatabaseStore.batchWriteInventoryItems(inventoryItemsInLocal)
+//            onlineDatabaseStore.batchWriteInventoryItems(inventoryItemsInLocal)
 
             when (val bagItemsInCloudResult = onlineDatabaseStore.getAllBags()) {
                 is Result.Success -> {
-                    bagItemDao.insertAll(bagItemsInCloudResult.data)
+                    bagItemDao.insertAll(bagItemsInCloudResult.data.map {
+                        BagItemEntityMapper.mapToEntity(it)
+                    })
                 }
                 is Result.Error -> {
                     Timber.e(bagItemsInCloudResult.exception)
@@ -182,7 +202,9 @@ class InventoryRepository @Inject constructor(
 
             when (val inventoryItemsInCloudResult = onlineDatabaseStore.getAllInventoryItems()) {
                 is Result.Success -> {
-                    inventoryItemDao.insertAll(inventoryItemsInCloudResult.data)
+                    inventoryItemDao.insertAll(inventoryItemsInCloudResult.data.map {
+                        InventoryItemEntityMapper.mapToEntity(it)
+                    })
                 }
                 is Result.Error -> {
                     Timber.e(inventoryItemsInCloudResult.exception)

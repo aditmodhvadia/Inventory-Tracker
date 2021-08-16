@@ -21,4 +21,4 @@ data class ItemWithBag(
         entityColumn = "bagId"
     )
     var bag: BagItem
-) : Parcelable
+) : DomainModel, Parcelable

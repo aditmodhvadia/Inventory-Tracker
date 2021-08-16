@@ -41,7 +41,7 @@ interface InventoryItemDao : BaseDao<InventoryItemEntity> {
 
     @Transaction
     @Query("SELECT * FROM my_inventory_table")
-    fun getItemsWithBagLive(): LiveData<List<InventoryItemEntity>>
+    fun getItemsWithBagLive(): LiveData<List<ItemWithBagEntity>>
 
     @Transaction
     @Query("SELECT * FROM my_inventory_table")
@@ -49,5 +49,5 @@ interface InventoryItemDao : BaseDao<InventoryItemEntity> {
 
     @Transaction
     @Query("SELECT * FROM my_inventory_table WHERE itemName LIKE '%' || :searchString || '%' ORDER BY itemName")
-    fun searchItems(searchString: String): List<InventoryItemEntity>
+    fun searchItems(searchString: String): List<ItemWithBagEntity>
 }
