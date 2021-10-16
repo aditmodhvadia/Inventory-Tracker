@@ -94,6 +94,6 @@ dependencies {
     // endregion
 
     // region Timber
-    implementation 'com.jakewharton.timber:timber:$timber'
+    implementation "com.jakewharton.timber:timber:$timber"
     // endregion
 }
