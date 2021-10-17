@@ -4,6 +4,7 @@ import com.example.composetodo.domain.IDomain
 
 data class ToDo(
     val id: Long,
-    val createdAt: String,
-    var isCompleted: Boolean,
+    val createdAt: String = System.currentTimeMillis().toString(),
+    var isCompleted: Boolean = false,
+    var text: String,
 ) : IDomain

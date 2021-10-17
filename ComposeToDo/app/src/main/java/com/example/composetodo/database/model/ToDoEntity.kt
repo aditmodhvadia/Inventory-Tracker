@@ -19,4 +19,6 @@ class ToDoEntity(
     val createdAt: String,
     @ColumnInfo(name = "Is_Completed", index = true)
     var isCompleted: Boolean,
+    @ColumnInfo(name = "Text", index = true)
+    var text: String,
 ) : IEntity

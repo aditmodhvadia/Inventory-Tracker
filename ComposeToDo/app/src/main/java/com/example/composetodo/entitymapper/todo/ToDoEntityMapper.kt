@@ -10,6 +10,7 @@ object ToDoEntityMapper : IEntityMapper<ToDo, ToDoEntity> {
             id = entity.id,
             createdAt = entity.createdAt,
             isCompleted = entity.isCompleted,
+            text = entity.text,
         )
     }
 
@@ -17,6 +18,7 @@ object ToDoEntityMapper : IEntityMapper<ToDo, ToDoEntity> {
         return ToDoEntity(
             createdAt = domain.createdAt,
             isCompleted = domain.isCompleted,
+            text = domain.text,
         )
     }
 }
