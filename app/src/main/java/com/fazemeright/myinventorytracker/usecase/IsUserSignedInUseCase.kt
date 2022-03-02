@@ -3,9 +3,7 @@ package com.fazemeright.myinventorytracker.usecase
 import com.fazemeright.myinventorytracker.domain.models.Result
 import com.fazemeright.myinventorytracker.repository.InventoryRepository
 import com.google.firebase.auth.FirebaseUser
-import dagger.hilt.android.scopes.ViewModelScoped
 import javax.inject.Inject
-import javax.inject.Scope
 
 /**
  * Determine if [FirebaseUser] is logged in with [Result] of [Boolean].

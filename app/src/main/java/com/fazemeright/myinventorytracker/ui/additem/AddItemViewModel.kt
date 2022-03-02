@@ -1,6 +1,5 @@
 package com.fazemeright.myinventorytracker.ui.additem
 
-import android.app.Application
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.fazemeright.myinventorytracker.App

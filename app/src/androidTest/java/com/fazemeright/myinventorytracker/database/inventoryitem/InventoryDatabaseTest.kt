@@ -3,28 +3,26 @@ package com.fazemeright.myinventorytracker.database.inventoryitem
 import android.content.Context
 import android.database.sqlite.SQLiteConstraintException
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.Observer
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.fazemeright.myinventorytracker.domain.database.offline.room.InventoryDatabase
-import com.fazemeright.myinventorytracker.domain.database.offline.room.dao.BagItemDao
-import com.fazemeright.myinventorytracker.domain.database.offline.room.dao.InventoryItemDao
+import com.fazemeright.inventorytracker.database.InventoryDatabase
+import com.fazemeright.inventorytracker.database.dao.BagItemDao
+import com.fazemeright.inventorytracker.database.dao.InventoryItemDao
+import com.fazemeright.myinventorytracker.domain.mappers.entity.BagItemEntityMapper
+import com.fazemeright.myinventorytracker.domain.mappers.entity.InventoryItemEntityMapper
 import com.fazemeright.myinventorytracker.domain.models.InventoryItem
 import com.fazemeright.myinventorytracker.utils.TestUtils
 import junit.framework.AssertionFailedError
 import kotlinx.coroutines.runBlocking
 import org.junit.After
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertTrue
-import org.junit.Assert.assertNotNull
+import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import java.io.IOException
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
-import java.util.concurrent.TimeoutException
 
 @RunWith(AndroidJUnit4::class)
 // @HiltAndroidTest
@@ -56,7 +54,7 @@ class InventoryDatabaseTest {
         val item = InventoryItem(itemId = 1, itemName = "Blazer", bagOwnerId = 0)
         assertTrue(
             assertFails<SQLiteConstraintException> {
-                inventoryItemDao.insert(item)
+                inventoryItemDao.insert(InventoryItemEntityMapper.mapToEntity(item))
             }
         )
     }
@@ -65,9 +63,9 @@ class InventoryDatabaseTest {
     @Throws(Exception::class)
     fun writeBagItemAndReadInList() {
         val item = TestUtils.getBagItem(1)
-        bagItemDao.insert(item)
+        bagItemDao.insert(BagItemEntityMapper.mapToEntity(item))
         val byName = bagItemDao.findItemsByName(item.bagName)
-        assertTrue(byName[0] == item)
+        assertTrue(byName[0] == BagItemEntityMapper.mapToEntity(item))
         bagItemDao.deleteItem(byName[0])
     }
 
@@ -75,15 +73,16 @@ class InventoryDatabaseTest {
     fun writeBagAndItemAssociation() = runBlocking {
         var bag1 = TestUtils.getBagItem(1)
         var bag2 = TestUtils.getBagItem(2)
-        bagItemDao.insert(bag1)
-        bagItemDao.insert(bag2)
+        bagItemDao.insert(BagItemEntityMapper.mapToEntity(bag1))
+        bagItemDao.insert(BagItemEntityMapper.mapToEntity(bag2))
 
-        bag1 = bagItemDao.findItemsByName(bag1.bagName)[0]
-        bag2 = bagItemDao.findItemsByName(bag2.bagName)[0]
+        bag1 = BagItemEntityMapper.mapFromEntity(bagItemDao.findItemsByName(bag1.bagName)[0])
+        bag2 = BagItemEntityMapper.mapFromEntity(bagItemDao.findItemsByName(bag2.bagName)[0])
 
         var item = TestUtils.getInventoryItem(1, bag2.bagId)
-        inventoryItemDao.insert(item)
-        item = inventoryItemDao.findItemsByName("Item 1 inside bag 2")[0]
+        inventoryItemDao.insert(InventoryItemEntityMapper.mapToEntity(item))
+        item =
+            InventoryItemEntityMapper.mapFromEntity(inventoryItemDao.findItemsByName("Item 1 inside bag 2")[0])
         assertNotNull(item)
 
         val itemsInBag2 =

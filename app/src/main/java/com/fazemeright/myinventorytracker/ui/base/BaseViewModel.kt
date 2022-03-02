@@ -6,7 +6,6 @@ import androidx.work.*
 import com.fazemeright.myinventorytracker.App
 import com.fazemeright.myinventorytracker.workmanager.FireBaseSyncWorker
 import dagger.hilt.android.qualifiers.ActivityContext
-import timber.log.Timber
 import java.util.concurrent.TimeUnit
 
 abstract class BaseViewModel constructor(
@@ -17,10 +16,6 @@ abstract class BaseViewModel constructor(
 
     fun getString(@StringRes resId: Int): String {
         return app.getString(resId)
-    }
-
-    open fun logoutClicked() {
-        Timber.d("BaseViewModel")
     }
 
     fun syncLocalAndCloudData() {
