@@ -58,12 +58,12 @@ interface OnlineDatabaseStore {
      *
      * @return Empty [Result] for operation
      */
-    fun batchWriteBags(bagItems: List<BagItem>): Task<Void>
+    suspend fun batchWriteBags(bagItems: List<BagItem>): Task<Void>
 
     /**
      * Batch write [List] of [InventoryItem]
      *
      * @return Empty [Result] for operation
      */
-    fun batchWriteInventoryItems(inventoryItems: List<InventoryItem>): Task<Void>
+    suspend fun batchWriteInventoryItems(inventoryItems: List<InventoryItem>): Task<Void>
 }

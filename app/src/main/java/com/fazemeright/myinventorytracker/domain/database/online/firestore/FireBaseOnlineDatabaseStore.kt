@@ -96,12 +96,16 @@ object FireBaseOnlineDatabaseStore : OnlineDatabaseStore {
         }
     }
 
-    override fun batchWriteBags(bagItems: List<BagItem>): Task<Void> {
-        return batchWriteData(userBagItemsCollection, bagItems)
+    override suspend fun batchWriteBags(bagItems: List<BagItem>): Task<Void> {
+        return withContext(Dispatchers.IO) {
+            batchWriteData(userBagItemsCollection, bagItems)
+        }
     }
 
-    override fun batchWriteInventoryItems(inventoryItems: List<InventoryItem>): Task<Void> {
-        return batchWriteData(userInventoryItemsCollection, inventoryItems)
+    override suspend fun batchWriteInventoryItems(inventoryItems: List<InventoryItem>): Task<Void> {
+        return withContext(Dispatchers.IO) {
+            batchWriteData(userInventoryItemsCollection, inventoryItems)
+        }
     }
 
     /**

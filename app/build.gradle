@@ -51,6 +51,9 @@ android {
     lint {
         abortOnError false
     }
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
 }
 
 dependencies {
