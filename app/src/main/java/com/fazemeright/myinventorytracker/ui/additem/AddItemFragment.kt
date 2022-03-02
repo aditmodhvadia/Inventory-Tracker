@@ -1,43 +1,51 @@
 package com.fazemeright.myinventorytracker.ui.additem
 
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
-import android.view.View
+import android.view.*
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.fazemeright.myinventorytracker.R
 import com.fazemeright.myinventorytracker.databinding.FragmentAddItemBinding
-import com.fazemeright.myinventorytracker.ui.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class AddItemFragment : BaseFragment<FragmentAddItemBinding>(), AdapterView.OnItemSelectedListener {
+class AddItemFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
     private var selectedBagName: String? = null
 
     val viewModel: AddItemViewModel by viewModels()
+    private lateinit var binding: FragmentAddItemBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
     }
 
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        return FragmentAddItemBinding.inflate(inflater).apply {
+            lifecycleOwner = this@AddItemFragment
+            binding = this
+        }.root
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.viewModel = viewModel
         viewModel.navigateBackToItemList.observe(
-            viewLifecycleOwner,
-            { navigate ->
-                if (navigate) {
-                    findNavController().navigate(AddItemFragmentDirections.actionAddItemFragmentToItemListFragment())
-                    viewModel.onNavigationToAddItemFinished()
-                }
+            viewLifecycleOwner
+        ) { navigate ->
+            if (navigate) {
+                findNavController().navigate(AddItemFragmentDirections.actionAddItemFragmentToItemListFragment())
+                viewModel.onNavigationToAddItemFinished()
             }
-        )
+        }
 
         viewModel.bagNames.observe(viewLifecycleOwner) {
             val adapter: ArrayAdapter<String> = ArrayAdapter<String>(
@@ -83,7 +91,4 @@ class AddItemFragment : BaseFragment<FragmentAddItemBinding>(), AdapterView.OnIt
     override fun onItemSelected(p0: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
         selectedBagName = viewModel.bagNames.value?.get(position)
     }
-
-    override fun getViewBinding(): FragmentAddItemBinding =
-        FragmentAddItemBinding.inflate(layoutInflater)
 }

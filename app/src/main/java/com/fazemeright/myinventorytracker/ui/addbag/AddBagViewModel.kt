@@ -1,8 +1,8 @@
 package com.fazemeright.myinventorytracker.ui.addbag
 
-import android.app.Application
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.fazemeright.myinventorytracker.App
 import com.fazemeright.myinventorytracker.domain.models.BagItem
 import com.fazemeright.myinventorytracker.repository.InventoryRepository
 import com.fazemeright.myinventorytracker.ui.base.BaseViewModel
@@ -16,7 +16,7 @@ import javax.inject.Inject
 @HiltViewModel
 class AddBagViewModel @Inject constructor(
     private val repository: InventoryRepository,
-    app: Application
+    app: App
 ) : BaseViewModel(app) {
 
     val navigateBackToItemList = MutableLiveData<Boolean>()

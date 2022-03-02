@@ -4,11 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 
+@Deprecated("Can't use with Hilt anymore.", level = DeprecationLevel.ERROR)
 abstract class BaseFragment<V : ViewDataBinding> :
     Fragment() {
 
@@ -21,21 +20,8 @@ abstract class BaseFragment<V : ViewDataBinding> :
         savedInstanceState: Bundle?
     ): View? {
         super.onCreate(savedInstanceState)
-        binding = getViewBinding()
-        binding.lifecycleOwner = this
+        return getViewBinding().apply {
 
-        return binding.root
-    }
-
-    protected fun Fragment.showToast(msg: String) {
-        Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
-    }
-
-    fun hideToolBar() {
-        (requireActivity() as AppCompatActivity).supportActionBar?.hide()
-    }
-
-    fun showToolBar() {
-        (requireActivity() as AppCompatActivity).supportActionBar?.show()
+        }.root
     }
 }

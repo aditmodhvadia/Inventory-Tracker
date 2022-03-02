@@ -1,9 +1,9 @@
 package com.fazemeright.myinventorytracker.ui.login
 
-import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.fazemeright.myinventorytracker.App
 import com.fazemeright.myinventorytracker.R
 import com.fazemeright.myinventorytracker.domain.models.Result
 import com.fazemeright.myinventorytracker.ui.base.BaseViewModel
@@ -19,7 +19,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    app: Application,
+    app: App,
     private val logInUserWithEmailPassword: LogInUserWithEmailPasswordUseCase,
     private val logInUserWithToken: LogInUserWithTokenUseCase
 ) : BaseViewModel(app) {

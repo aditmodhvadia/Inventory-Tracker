@@ -3,6 +3,7 @@ package com.fazemeright.myinventorytracker.ui.additem
 import android.app.Application
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.fazemeright.myinventorytracker.App
 import com.fazemeright.myinventorytracker.domain.models.InventoryItem
 import com.fazemeright.myinventorytracker.repository.InventoryRepository
 import com.fazemeright.myinventorytracker.ui.base.BaseViewModel
@@ -14,7 +15,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AddItemViewModel @Inject constructor(
-    app: Application,
+    app: App,
     getAllBagNamesUseCase: GetAllBagNamesUseCase,
 //    private val clearAllInventoryItemsUseCase: ClearAllInventoryItemsUseCase,
     private val repository: InventoryRepository

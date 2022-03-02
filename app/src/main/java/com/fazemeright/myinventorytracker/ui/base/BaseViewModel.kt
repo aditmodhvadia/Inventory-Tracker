@@ -1,16 +1,17 @@
 package com.fazemeright.myinventorytracker.ui.base
 
-import android.app.Application
 import androidx.annotation.StringRes
 import androidx.lifecycle.AndroidViewModel
 import androidx.work.*
+import com.fazemeright.myinventorytracker.App
 import com.fazemeright.myinventorytracker.workmanager.FireBaseSyncWorker
+import dagger.hilt.android.qualifiers.ActivityContext
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 
 abstract class BaseViewModel constructor(
 //    @ActivityContext private val context: Context,
-    private val app: Application
+    @ActivityContext private val app: App
 ) :
     AndroidViewModel(app) {
 

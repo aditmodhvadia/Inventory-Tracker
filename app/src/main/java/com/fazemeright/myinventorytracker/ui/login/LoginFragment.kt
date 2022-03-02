@@ -2,24 +2,39 @@ package com.fazemeright.myinventorytracker.ui.login
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.fazemeright.myinventorytracker.R
 import com.fazemeright.myinventorytracker.databinding.FragmentLoginBinding
 import com.fazemeright.myinventorytracker.domain.models.Result
-import com.fazemeright.myinventorytracker.ui.base.BaseFragment
+import com.fazemeright.myinventorytracker.utils.showToast
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
+import javax.inject.Inject
 
 @AndroidEntryPoint
-class LoginFragment : BaseFragment<FragmentLoginBinding>() {
+class LoginFragment @Inject constructor() : Fragment() {
 
     private val viewModel: LoginViewModel by viewModels()
+    private lateinit var binding: FragmentLoginBinding
     private lateinit var gso: GoogleSignInOptions
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        return FragmentLoginBinding.inflate(inflater).apply {
+            lifecycleOwner = this@LoginFragment
+            binding = this
+        }.root
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -38,17 +53,17 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
             googleSignIn()
         }
         viewModel.loginResult.observe(
-            requireActivity(),
-            { result ->
+            requireActivity()
+        ) { result ->
 //            TODO: Hide Loading
-                if (result is Result.Success) {
-                    viewModel.syncLocalAndCloudData()
-                    findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToItemListFragment())
-                } else if (result is Result.Error) {
-                    Timber.e(result.exception)
-                    showToast(result.msg)
-                }
-            })
+            if (result is Result.Success) {
+                viewModel.syncLocalAndCloudData()
+                findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToItemListFragment())
+            } else if (result is Result.Error) {
+                Timber.e(result.exception)
+                showToast(result.msg)
+            }
+        }
     }
 
     private fun googleSignIn() {
@@ -58,7 +73,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
 
     private fun configureGoogleSignIn() {
         gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(getString(R.string.default_web_client_id))
+//            .requestIdToken(getString(R.string.default_web_client_id))
             .requestEmail()
             .build()
     }
@@ -80,10 +95,6 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
                 // ...
             }
         }
-    }
-
-    override fun getViewBinding(): FragmentLoginBinding {
-        return FragmentLoginBinding.inflate(layoutInflater)
     }
 
     companion object {

@@ -3,7 +3,6 @@ package com.fazemeright.myinventorytracker
 import android.app.Application
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.hilt.work.HiltWorkerFactory
 import androidx.preference.PreferenceManager
 import androidx.work.Configuration
 import dagger.hilt.android.HiltAndroidApp
@@ -17,7 +16,7 @@ import javax.inject.Inject
  * @since 2.1.1
  */
 @HiltAndroidApp
-class App : Application(), Configuration.Provider {
+class App @Inject constructor() : Application(), Configuration.Provider {
 
     override fun onCreate() {
         super.onCreate()

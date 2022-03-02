@@ -35,7 +35,7 @@ class InventoryRepository @Inject constructor(
     override fun isUserSignedIn(): Result<Boolean> {
         return if (userAuthentication.isUserSignedIn()) {
             Result.Success(
-                msg = "User is singed in",
+                msg = "User is signed in",
                 data = true
             )
         } else {

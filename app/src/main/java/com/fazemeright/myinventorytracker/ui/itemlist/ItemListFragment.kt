@@ -2,29 +2,39 @@ package com.fazemeright.myinventorytracker.ui.itemlist
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
-import android.view.View
+import android.view.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SearchView
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fazemeright.myinventorytracker.R
 import com.fazemeright.myinventorytracker.databinding.FragmentItemListBinding
-import com.fazemeright.myinventorytracker.ui.base.BaseFragment
 import com.fazemeright.myinventorytracker.ui.settings.SettingsActivity
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
+import javax.inject.Inject
 
 @AndroidEntryPoint
-class ItemListFragment : BaseFragment<FragmentItemListBinding>() {
+class ItemListFragment @Inject constructor() : Fragment() {
 
     val viewModel: ItemListViewModel by viewModels()
+    private lateinit var binding: FragmentItemListBinding
 
     private lateinit var searchView: SearchView
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        return FragmentItemListBinding.inflate(inflater).apply {
+            lifecycleOwner = this@ItemListFragment
+            binding = this
+        }.root
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -48,60 +58,56 @@ class ItemListFragment : BaseFragment<FragmentItemListBinding>() {
         }
 
         viewModel.items.observe(
-            viewLifecycleOwner,
-            {
-                it?.let {
-                    adapter.updateList(it)
-                }
-                Timber.i("received in onCreate: ${it.size}")
+            viewLifecycleOwner
+        ) {
+            it?.let {
+                adapter.updateList(it)
             }
-        )
+            Timber.i("received in onCreate: ${it.size}")
+        }
 
         viewModel.deletedItem.observe(
-            viewLifecycleOwner,
-            { deletedItem ->
-                Snackbar.make(
-                    binding.root, // Parent view
-                    "Item deleted from database.", // Message to show
-                    Snackbar.LENGTH_LONG //
-                ).setAction( // Set an action for snack bar
-                    "Undo" // Action button text
-                ) {
-                    viewModel.undoDeleteItem(deletedItem)
-                }.show()
-            }
-        )
+            viewLifecycleOwner
+        ) { deletedItem ->
+            Snackbar.make(
+                binding.root, // Parent view
+                "Item deleted from database.", // Message to show
+                Snackbar.LENGTH_LONG //
+            ).setAction( // Set an action for snack bar
+                "Undo" // Action button text
+            ) {
+                viewModel.undoDeleteItem(deletedItem)
+            }.show()
+        }
 
         viewModel.navigateToAddItemActivity.observe(
-            viewLifecycleOwner,
-            { navigate ->
-                if (navigate) {
-                    findNavController().navigate(ItemListFragmentDirections.actionItemListFragmentToAddItemFragment())
-                    viewModel.onNavigationToAddItemFinished()
-                }
+            viewLifecycleOwner
+        ) { navigate ->
+            if (navigate) {
+                findNavController().navigate(ItemListFragmentDirections.actionItemListFragmentToAddItemFragment())
+                viewModel.onNavigationToAddItemFinished()
             }
-        )
+        }
 
         viewModel.navigateToItemDetailActivity.observe(
-            viewLifecycleOwner,
-            { itemInBag ->
-                itemInBag?.let {
-                    findNavController().navigate(
-                        ItemListFragmentDirections.actionItemListFragmentToItemDetailFragment(
-                            it.item.itemId.toLong()
-                        )
+            viewLifecycleOwner
+        ) { itemInBag ->
+            itemInBag?.let {
+                findNavController().navigate(
+                    ItemListFragmentDirections.actionItemListFragmentToItemDetailFragment(
+                        it.item.itemId.toLong()
                     )
-                    viewModel.onNavigationToItemDetailFinished()
-                }
+                )
+                viewModel.onNavigationToItemDetailFinished()
             }
-        )
+        }
 
-        viewModel.userLoggedOut.observe(viewLifecycleOwner, { userLoggedOut ->
+        viewModel.userLoggedOut.observe(viewLifecycleOwner) { userLoggedOut ->
             if (userLoggedOut) {
                 findNavController().popBackStack(R.id.splashFragment, false)
                 viewModel.logoutSuccessful()
             }
-        })
+        }
     }
 
     private fun showConfirmationDialog(itemId: Int) {
@@ -158,7 +164,4 @@ class ItemListFragment : BaseFragment<FragmentItemListBinding>() {
         }
         return true
     }
-
-    override fun getViewBinding(): FragmentItemListBinding =
-        FragmentItemListBinding.inflate(layoutInflater)
 }

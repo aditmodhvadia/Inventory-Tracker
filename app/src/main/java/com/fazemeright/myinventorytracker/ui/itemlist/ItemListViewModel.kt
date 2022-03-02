@@ -1,11 +1,9 @@
 package com.fazemeright.myinventorytracker.ui.itemlist
 
-import android.app.Application
 import androidx.lifecycle.*
 import com.fazemeright.myinventorytracker.domain.models.InventoryItem
 import com.fazemeright.myinventorytracker.domain.models.ItemWithBag
 import com.fazemeright.myinventorytracker.repository.InventoryRepository
-import com.fazemeright.myinventorytracker.ui.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -17,8 +15,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ItemListViewModel @Inject constructor(
     private val repository: InventoryRepository,
-    app: Application
-) : BaseViewModel(app) {
+) : ViewModel() {
 
     private val _searchString = MutableLiveData<String>()
 
@@ -91,8 +88,7 @@ class ItemListViewModel @Inject constructor(
         deletedItem?.let { repository.insertInventoryItem(it) }
     }
 
-    override fun logoutClicked() {
-        super.logoutClicked()
+    fun logoutClicked() {
         Timber.d("ItemListViewModel")
         viewModelScope.launch {
             repository.logoutUser()

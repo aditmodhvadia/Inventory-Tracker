@@ -1,24 +1,34 @@
 package com.fazemeright.myinventorytracker.ui.itemdetail
 
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
-import android.view.View
+import android.view.*
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.fazemeright.myinventorytracker.R
 import com.fazemeright.myinventorytracker.databinding.FragmentItemDetailBinding
-import com.fazemeright.myinventorytracker.ui.base.BaseFragment
+import com.fazemeright.myinventorytracker.utils.showToast
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
 @AndroidEntryPoint
-class ItemDetailFragment : BaseFragment<FragmentItemDetailBinding>() {
+class ItemDetailFragment : Fragment() {
 
     val viewModel: ItemDetailViewModel by viewModels()
+    private lateinit var binding: FragmentItemDetailBinding
     private val navArgs by navArgs<ItemDetailFragmentArgs>()
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        return FragmentItemDetailBinding.inflate(inflater).apply {
+            lifecycleOwner = this@ItemDetailFragment
+            binding = this
+        }.root
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -31,34 +41,31 @@ class ItemDetailFragment : BaseFragment<FragmentItemDetailBinding>() {
         viewModel.setNavArguments(navArgs)
 
         viewModel.item.observe(
-            viewLifecycleOwner,
-            { item ->
-                Timber.d("Detail Item: $item")
-                item?.let {
-                    binding.item = it
-                }
+            viewLifecycleOwner
+        ) { item ->
+            Timber.d("Detail Item: $item")
+            item?.let {
+                binding.item = it
             }
-        )
+        }
         viewModel.navigateBackToItemList.observe(
-            viewLifecycleOwner,
-            { navigate ->
-                if (navigate) {
-                    findNavController().navigate(ItemDetailFragmentDirections.actionItemDetailFragmentToItemListFragment())
-                    viewModel.onNavigationToItemListFinished()
-                }
+            viewLifecycleOwner
+        ) { navigate ->
+            if (navigate) {
+                findNavController().navigate(ItemDetailFragmentDirections.actionItemDetailFragmentToItemListFragment())
+                viewModel.onNavigationToItemListFinished()
             }
-        )
+        }
 
         viewModel.onItemDeleteComplete.observe(
-            viewLifecycleOwner,
-            { deleted ->
-                if (deleted) {
-                    showToast(getString(R.string.item_deleted_successfully))
-                    findNavController().navigate(ItemDetailFragmentDirections.actionItemDetailFragmentToItemListFragment())
-                    viewModel.onItemDeleteFinished()
-                }
+            viewLifecycleOwner
+        ) { deleted ->
+            if (deleted) {
+                showToast(getString(R.string.item_deleted_successfully))
+                findNavController().navigate(ItemDetailFragmentDirections.actionItemDetailFragmentToItemListFragment())
+                viewModel.onItemDeleteFinished()
             }
-        )
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -77,9 +84,5 @@ class ItemDetailFragment : BaseFragment<FragmentItemDetailBinding>() {
             }
         }
         return super.onOptionsItemSelected(item)
-    }
-
-    override fun getViewBinding(): FragmentItemDetailBinding {
-        return FragmentItemDetailBinding.inflate(layoutInflater)
     }
 }
