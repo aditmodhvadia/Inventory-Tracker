@@ -1,7 +1,5 @@
 package com.fazemeright.myinventorytracker.domain.authentication
 
-import com.google.android.gms.tasks.Task
-import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseUser
 
 /**
@@ -16,18 +14,18 @@ interface UserAuthentication {
      * @param email user email
      * @param password  user password
      *
-     * @return [Task] with result of [AuthResult]
+     * @return [Result] with result of [AuthenticationResult]
      */
-    suspend fun signIn(email: String, password: String): Task<AuthResult>
+    suspend fun signIn(email: String, password: String): Result<AuthenticationResult>
 
     /**
      * Sign in user with [idToken]
      *
      * @param idToken id token from federated sign in
      *
-     * @return [Task] with result of [AuthResult]
+     * @return [Result] with result of [AuthenticationResult]
      */
-    suspend fun signIn(idToken: String): Task<AuthResult>
+    suspend fun signIn(idToken: String): Result<AuthenticationResult>
 
     /**
      * Register user with [email] and [password]
@@ -35,9 +33,9 @@ interface UserAuthentication {
      * @param email user email
      * @param password  user password
      *
-     * @return [Task] with result of [AuthResult]
+     * @return [Result] with result of [AuthenticationResult]
      */
-    suspend fun register(email: String, password: String): Task<AuthResult>
+    suspend fun register(email: String, password: String): Result<AuthenticationResult>
 
     /**
      * Logout user
@@ -58,7 +56,7 @@ interface UserAuthentication {
      */
     fun isUserSignedIn(): Boolean
 
-    suspend fun sendPasswordResetEmail(): Task<Void>?
+    suspend fun sendPasswordResetEmail(): Result<Void>?
 
     /**
      * Determine if a user has verified email

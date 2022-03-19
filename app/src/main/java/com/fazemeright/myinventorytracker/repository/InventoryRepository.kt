@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.map
 import com.fazemeright.inventorytracker.database.dao.BagItemDao
 import com.fazemeright.inventorytracker.database.dao.InventoryItemDao
+import com.fazemeright.myinventorytracker.domain.authentication.AuthenticationResult
 import com.fazemeright.myinventorytracker.domain.authentication.UserAuthentication
 import com.fazemeright.myinventorytracker.domain.authentication.firebase.FireBaseUserAuthentication
 import com.fazemeright.myinventorytracker.domain.database.online.OnlineDatabaseStore
@@ -46,18 +47,9 @@ class InventoryRepository @Inject constructor(
     override suspend fun registerWithEmailPassword(
         email: String,
         password: String
-    ): Result<FirebaseUser> {
+    ): kotlin.Result<AuthenticationResult> {
         return withContext(Dispatchers.IO) {
-            try {
-                val result = userAuthentication.register(email, password).await()
-                if (result.user != null)
-                    Result.Success(data = result.user!!)
-                else
-                    Result.Error(msg = "Some error occurred")
-            } catch (e: Exception) {
-                Timber.e(e)
-                Result.Error(msg = "")
-            }
+            userAuthentication.register(email, password)
         }
     }
 
@@ -153,13 +145,7 @@ class InventoryRepository @Inject constructor(
 
     override suspend fun performLogin(email: String, password: String): Result<FirebaseUser> {
         return withContext(Dispatchers.IO) {
-            try {
-                val result = userAuthentication.signIn(email, password).await()
-                Result.Success(data = result.user!!, msg = "User Logged in Successfully")
-            } catch (e: Exception) {
-                Timber.e(e)
-                Result.Error(e, "Error occurred, user not logged in")
-            }
+            userAuthentication.signIn(email, password)
         }
     }
 

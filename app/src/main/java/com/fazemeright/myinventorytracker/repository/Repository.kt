@@ -1,6 +1,7 @@
 package com.fazemeright.myinventorytracker.repository
 
 import androidx.lifecycle.LiveData
+import com.fazemeright.myinventorytracker.domain.authentication.AuthenticationResult
 import com.fazemeright.myinventorytracker.domain.models.BagItem
 import com.fazemeright.myinventorytracker.domain.models.InventoryItem
 import com.fazemeright.myinventorytracker.domain.models.ItemWithBag
@@ -27,9 +28,12 @@ interface Repository {
      * @param email user email
      * @param password user password
      *
-     * @return [Result] with registered [FirebaseUser]
+     * @return [Result] with registered [AuthenticationResult]
      */
-    suspend fun registerWithEmailPassword(email: String, password: String): Result<FirebaseUser>
+    suspend fun registerWithEmailPassword(
+        email: String,
+        password: String
+    ): kotlin.Result<AuthenticationResult>
 
     /**
      * Clear all [BagItem] from local.

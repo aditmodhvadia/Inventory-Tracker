@@ -26,8 +26,7 @@ class LoginViewModel @Inject constructor(
 
     private val _loginResult = MutableLiveData<Result<FirebaseUser>>()
 
-    val loginResult: LiveData<Result<FirebaseUser>>
-        get() = _loginResult
+    val loginResult: LiveData<Result<FirebaseUser>> = _loginResult
 
     fun onLoginClicked(email: String, password: String) {
         viewModelScope.launch {
