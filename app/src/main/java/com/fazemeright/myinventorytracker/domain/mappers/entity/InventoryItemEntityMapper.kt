@@ -23,4 +23,6 @@ object InventoryItemEntityMapper : EntityMapper<InventoryItem, InventoryItemEnti
             bagOwnerId = entityModel.bagOwnerId,
         )
     }
+
+    override fun InventoryItem.mapDomainToEntity(): InventoryItemEntity = mapToEntity(this)
 }

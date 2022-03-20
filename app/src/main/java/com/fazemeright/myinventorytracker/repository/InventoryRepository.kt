@@ -27,10 +27,11 @@ import javax.inject.Inject
 class InventoryRepository @Inject constructor(
     private val bagItemDao: BagItemDao,
     private val inventoryItemDao: InventoryItemDao,
+    private val userAuthentication: UserAuthentication = FireBaseUserAuthentication,
+    private val onlineDatabaseStore: OnlineDatabaseStore = FireBaseOnlineDatabaseStore
 //    private val apiService: SampleNetworkInterface
 ) : Repository {
-    private val userAuthentication: UserAuthentication = FireBaseUserAuthentication
-    private val onlineDatabaseStore: OnlineDatabaseStore = FireBaseOnlineDatabaseStore
+
 
     override fun isUserSignedIn(): Result<Boolean> {
         return if (userAuthentication.isUserSignedIn()) {

@@ -17,4 +17,6 @@ object ItemWithBagEntityMapper : EntityMapper<ItemWithBag, ItemWithBagEntity> {
             bag = BagItemEntityMapper.mapFromEntity(entityModel.bag),
         )
     }
+
+    override fun ItemWithBag.mapDomainToEntity(): ItemWithBagEntity = mapToEntity(this)
 }

@@ -21,4 +21,6 @@ object BagItemEntityMapper : EntityMapper<BagItem, BagItemEntity> {
             bagDesc = entityModel.bagDesc
         )
     }
+
+    override fun BagItem.mapDomainToEntity(): BagItemEntity = mapToEntity(this)
 }
