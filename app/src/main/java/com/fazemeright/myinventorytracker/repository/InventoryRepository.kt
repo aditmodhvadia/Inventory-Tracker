@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.map
 import com.fazemeright.inventorytracker.database.dao.BagItemDao
 import com.fazemeright.inventorytracker.database.dao.InventoryItemDao
-import com.fazemeright.myinventorytracker.domain.authentication.AuthenticationResult
 import com.fazemeright.myinventorytracker.domain.authentication.UserAuthentication
 import com.fazemeright.myinventorytracker.domain.authentication.firebase.FireBaseUserAuthentication
 import com.fazemeright.myinventorytracker.domain.database.online.OnlineDatabaseStore
@@ -16,10 +15,10 @@ import com.fazemeright.myinventorytracker.domain.models.BagItem
 import com.fazemeright.myinventorytracker.domain.models.InventoryItem
 import com.fazemeright.myinventorytracker.domain.models.ItemWithBag
 import com.fazemeright.myinventorytracker.domain.models.Result
+import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseUser
 import dagger.hilt.android.scopes.ViewModelScoped
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 import timber.log.Timber
 import javax.inject.Inject
@@ -47,7 +46,7 @@ class InventoryRepository @Inject constructor(
     override suspend fun registerWithEmailPassword(
         email: String,
         password: String
-    ): kotlin.Result<AuthenticationResult> {
+    ): Result<AuthResult> {
         return withContext(Dispatchers.IO) {
             userAuthentication.register(email, password)
         }
@@ -145,15 +144,23 @@ class InventoryRepository @Inject constructor(
 
     override suspend fun performLogin(email: String, password: String): Result<FirebaseUser> {
         return withContext(Dispatchers.IO) {
-            userAuthentication.signIn(email, password)
+            when (val result = userAuthentication.signIn(email, password)) {
+                is Result.Success -> Result.Success(result.data.user!!)
+                is Result.Error -> Result.Error(result.exception, result.msg)
+            }
         }
     }
 
     override suspend fun signInWithToken(idToken: String): Result<FirebaseUser> {
         return withContext(Dispatchers.IO) {
             try {
-                val result = userAuthentication.signIn(idToken).await()
-                Result.Success(data = result.user!!, msg = "User logged in successfully")
+                when (val result = userAuthentication.signIn(idToken)) {
+                    is Result.Success -> Result.Success(
+                        result.data.user!!,
+                        msg = "User logged in successfully"
+                    )
+                    is Result.Error -> Result.Error(result.exception, result.msg)
+                }
             } catch (e: Exception) {
                 Timber.e(e)
                 Result.Error(e, "Error occurred, user not logged in")

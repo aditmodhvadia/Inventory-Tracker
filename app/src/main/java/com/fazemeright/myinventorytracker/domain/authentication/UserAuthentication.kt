@@ -1,5 +1,7 @@
 package com.fazemeright.myinventorytracker.domain.authentication
 
+import com.fazemeright.myinventorytracker.domain.models.Result
+import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseUser
 
 /**
@@ -16,7 +18,7 @@ interface UserAuthentication {
      *
      * @return [Result] with result of [AuthenticationResult]
      */
-    suspend fun signIn(email: String, password: String): Result<AuthenticationResult>
+    suspend fun signIn(email: String, password: String): Result<AuthResult>
 
     /**
      * Sign in user with [idToken]
@@ -25,7 +27,7 @@ interface UserAuthentication {
      *
      * @return [Result] with result of [AuthenticationResult]
      */
-    suspend fun signIn(idToken: String): Result<AuthenticationResult>
+    suspend fun signIn(idToken: String): Result<AuthResult>
 
     /**
      * Register user with [email] and [password]
@@ -35,7 +37,7 @@ interface UserAuthentication {
      *
      * @return [Result] with result of [AuthenticationResult]
      */
-    suspend fun register(email: String, password: String): Result<AuthenticationResult>
+    suspend fun register(email: String, password: String): Result<AuthResult>
 
     /**
      * Logout user

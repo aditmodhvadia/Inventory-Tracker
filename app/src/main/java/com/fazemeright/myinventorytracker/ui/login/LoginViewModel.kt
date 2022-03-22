@@ -49,7 +49,7 @@ class LoginViewModel @Inject constructor(
 
     fun signInWithToken(idToken: String) {
         viewModelScope.launch {
-            _loginResult.value = logInUserWithToken(idToken)
+            _loginResult.value = logInUserWithToken(idToken)!!
         }
     }
 }
