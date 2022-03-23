@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.fazemeright.myinventorytracker.databinding.FragmentLoginBinding
-import com.fazemeright.myinventorytracker.domain.models.Result
 import com.fazemeright.myinventorytracker.utils.showToast
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -56,12 +55,12 @@ class LoginFragment @Inject constructor() : Fragment() {
             requireActivity()
         ) { result ->
 //            TODO: Hide Loading
-            if (result is Result.Success) {
+            result.onSuccess {
                 viewModel.syncLocalAndCloudData()
                 findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToItemListFragment())
-            } else if (result is Result.Error) {
-                Timber.e(result.exception)
-                showToast(result.msg)
+            }.onFailure {
+                Timber.e(it)
+                it.message?.let { it1 -> showToast(it1) }
             }
         }
     }

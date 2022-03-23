@@ -2,7 +2,6 @@ package com.fazemeright.myinventorytracker.domain.database.online
 
 import com.fazemeright.myinventorytracker.domain.models.BagItem
 import com.fazemeright.myinventorytracker.domain.models.InventoryItem
-import com.fazemeright.myinventorytracker.domain.models.Result
 import com.google.android.gms.tasks.Task
 
 /**

@@ -4,7 +4,6 @@ import android.app.Activity
 import com.fazemeright.myinventorytracker.domain.database.online.OnlineDatabaseStore
 import com.fazemeright.myinventorytracker.domain.models.BagItem
 import com.fazemeright.myinventorytracker.domain.models.InventoryItem
-import com.fazemeright.myinventorytracker.domain.models.Result
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.android.gms.tasks.Task
@@ -16,11 +15,11 @@ class MockOnlineDatabaseStoreImpl : OnlineDatabaseStore {
     private var id = 1
 
     override suspend fun getAllBags(): Result<List<BagItem>> {
-        return Result.Success(data = bags.values.toList(), msg = "Success")
+        return Result.success(bags.values.toList())
     }
 
     override suspend fun getAllInventoryItems(): Result<List<InventoryItem>> {
-        return Result.Success(data = inventoryItems.values.toList(), msg = "Success")
+        return Result.success(inventoryItems.values.toList())
     }
 
     override suspend fun storeInventoryItem(item: InventoryItem): Result<Boolean> {
@@ -29,7 +28,7 @@ class MockOnlineDatabaseStoreImpl : OnlineDatabaseStore {
         } else {
             inventoryItems[id.toString()] = item.apply { setOnlineDatabaseStoreId(id++.toString()) }
         }
-        return Result.Success(true)
+        return Result.success(true)
     }
 
     override suspend fun storeBag(item: BagItem): Result<Boolean> {
@@ -38,22 +37,22 @@ class MockOnlineDatabaseStoreImpl : OnlineDatabaseStore {
         } else {
             bags[id.toString()] = item.apply { setOnlineDatabaseStoreId(id++.toString()) }
         }
-        return Result.Success(true)
+        return Result.success(true)
     }
 
     override suspend fun deleteInventoryItem(item: InventoryItem): Result<Boolean> {
         return if (inventoryItems.containsKey(item.onlineId)) {
-            Result.Success(inventoryItems.remove(item.onlineId) != null)
+            Result.success(inventoryItems.remove(item.onlineId) != null)
         } else {
-            Result.Error(msg = "InventoryItem not in db")
+            Result.failure(RuntimeException("InventoryItem not in db"))
         }
     }
 
     override suspend fun deleteBag(bag: BagItem): Result<Boolean> {
         return if (bags.containsKey(bag.onlineId)) {
-            Result.Success(bags.remove(bag.onlineId) != null)
+            Result.success(bags.remove(bag.onlineId) != null)
         } else {
-            Result.Error(msg = "BagItem not in db")
+            Result.failure(RuntimeException("BagItem not in db"))
         }
     }
 

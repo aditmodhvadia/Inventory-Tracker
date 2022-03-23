@@ -6,7 +6,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import androidx.work.*
-import com.fazemeright.myinventorytracker.domain.models.Result
 import com.fazemeright.myinventorytracker.usecase.IsUserSignedInUseCase
 import com.fazemeright.myinventorytracker.workmanager.FireBaseSyncWorker
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,20 +18,16 @@ import javax.inject.Inject
 class SplashViewModel @Inject constructor(
     private val _isUserSignedIn: IsUserSignedInUseCase,
 ) : ViewModel() {
-    /*@Inject
-    lateinit var _isUserSignedIn: IsUserSignedInUseCase
-*/
+
     val isUserSignedIn: LiveData<Boolean> =
         liveData {
             delay(DELAY)
-            when (_isUserSignedIn()) {
-                is Result.Success -> {
-                    emit(true)
-                }
-                is Result.Error -> {
+            _isUserSignedIn().onSuccess {
+                emit(true)
+            }
+                .onFailure {
                     emit(false)
                 }
-            }
         }
 
     val versionName: String

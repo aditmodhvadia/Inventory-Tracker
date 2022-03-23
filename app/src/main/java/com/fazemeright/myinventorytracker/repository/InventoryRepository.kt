@@ -14,7 +14,6 @@ import com.fazemeright.myinventorytracker.domain.mappers.entity.ItemWithBagEntit
 import com.fazemeright.myinventorytracker.domain.models.BagItem
 import com.fazemeright.myinventorytracker.domain.models.InventoryItem
 import com.fazemeright.myinventorytracker.domain.models.ItemWithBag
-import com.fazemeright.myinventorytracker.domain.models.Result
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseUser
 import dagger.hilt.android.scopes.ViewModelScoped
@@ -34,12 +33,9 @@ class InventoryRepository @Inject constructor(
 
     override fun isUserSignedIn(): Result<Boolean> {
         return if (userAuthentication.isUserSignedIn()) {
-            Result.Success(
-                msg = "User is signed in",
-                data = true
-            )
+            Result.success(true)
         } else {
-            Result.Error(msg = "User is not signed in")
+            Result.failure(RuntimeException("User is not signed in"))
         }
     }
 
@@ -144,27 +140,20 @@ class InventoryRepository @Inject constructor(
 
     override suspend fun performLogin(email: String, password: String): Result<FirebaseUser> {
         return withContext(Dispatchers.IO) {
-            when (val result = userAuthentication.signIn(email, password)) {
-                is Result.Success -> Result.Success(result.data.user!!)
-                is Result.Error -> Result.Error(result.exception, result.msg)
-            }
+            userAuthentication.signIn(email, password)
+                .fold(
+                    onSuccess = { Result.success(it.user!!) },
+                    onFailure = { Result.failure(it) })
         }
     }
 
     override suspend fun signInWithToken(idToken: String): Result<FirebaseUser> {
         return withContext(Dispatchers.IO) {
-            try {
-                when (val result = userAuthentication.signIn(idToken)) {
-                    is Result.Success -> Result.Success(
-                        result.data.user!!,
-                        msg = "User logged in successfully"
-                    )
-                    is Result.Error -> Result.Error(result.exception, result.msg)
-                }
-            } catch (e: Exception) {
-                Timber.e(e)
-                Result.Error(e, "Error occurred, user not logged in")
-            }
+            userAuthentication.signIn(idToken).fold(onSuccess = {
+                Result.success(
+                    it.user!!
+                )
+            }, onFailure = { Result.failure(it) })
         }
     }
 
@@ -181,26 +170,23 @@ class InventoryRepository @Inject constructor(
             val inventoryItemsInLocal = inventoryItemDao.getAllInventoryItemsList()
 //            onlineDatabaseStore.batchWriteInventoryItems(inventoryItemsInLocal)
 
-            when (val bagItemsInCloudResult = onlineDatabaseStore.getAllBags()) {
-                is Result.Success -> {
-                    bagItemDao.insertAll(bagItemsInCloudResult.data.map {
-                        BagItemEntityMapper.mapToEntity(it)
+            onlineDatabaseStore.getAllBags().let {
+                if (it.isSuccess) {
+                    bagItemDao.insertAll(it.getOrDefault(emptyList()).map { item ->
+                        BagItemEntityMapper.mapToEntity(item)
                     })
-                }
-                is Result.Error -> {
-                    Timber.e(bagItemsInCloudResult.exception)
+                } else {
+                    Timber.e(it.exceptionOrNull())
                     throw InterruptedException("Did not fetch Bag items from the cloud")
                 }
             }
-
-            when (val inventoryItemsInCloudResult = onlineDatabaseStore.getAllInventoryItems()) {
-                is Result.Success -> {
-                    inventoryItemDao.insertAll(inventoryItemsInCloudResult.data.map {
-                        InventoryItemEntityMapper.mapToEntity(it)
+            onlineDatabaseStore.getAllInventoryItems().let {
+                if (it.isSuccess) {
+                    inventoryItemDao.insertAll(it.getOrDefault(emptyList()).map { item ->
+                        InventoryItemEntityMapper.mapToEntity(item)
                     })
-                }
-                is Result.Error -> {
-                    Timber.e(inventoryItemsInCloudResult.exception)
+                } else {
+                    Timber.e(it.exceptionOrNull())
                     throw InterruptedException("Did not fetch Inventory items from the cloud")
                 }
             }

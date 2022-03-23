@@ -5,7 +5,6 @@ import com.fazemeright.myinventorytracker.domain.database.online.OnlineDatabaseS
 import com.fazemeright.myinventorytracker.domain.models.BagItem
 import com.fazemeright.myinventorytracker.domain.models.InventoryItem
 import com.fazemeright.myinventorytracker.domain.models.OnlineDatabaseStoreObject
-import com.fazemeright.myinventorytracker.domain.models.Result
 import com.google.android.gms.tasks.Task
 import com.google.android.gms.tasks.Tasks
 import com.google.firebase.firestore.CollectionReference
@@ -32,10 +31,10 @@ object FireBaseOnlineDatabaseStore : OnlineDatabaseStore {
             try {
                 val documents = readCollection(collection).await()
                 val bagItems = documents.map { it.toObject<T>() }
-                Result.Success(data = bagItems, msg = "Bags read successfully")
+                Result.success(bagItems)
             } catch (e: Exception) {
                 Timber.e(e)
-                Result.Error(exception = e, msg = "Error occurred")
+                Result.failure(exception = e)
             }
         }
     }
@@ -52,7 +51,6 @@ object FireBaseOnlineDatabaseStore : OnlineDatabaseStore {
         return storeItem(
             item,
             userInventoryItemsCollection,
-            "Inventory Item stored successfully"
         )
     }
 
@@ -60,7 +58,6 @@ object FireBaseOnlineDatabaseStore : OnlineDatabaseStore {
         return storeItem(
             item,
             userBagItemsCollection,
-            "Bag stored successfully"
         )
     }
 
@@ -88,10 +85,10 @@ object FireBaseOnlineDatabaseStore : OnlineDatabaseStore {
         return withContext(Dispatchers.IO) {
             try {
                 deleteDocument(collection.document(data.getOnlineDatabaseStoreId()!!)).await()
-                Result.Success(data = true, msg = "Item deleted")
+                Result.success(true)
             } catch (e: Exception) {
                 Timber.e(e)
-                Result.Error(exception = e, msg = "Error occurred")
+                Result.failure(e)
             }
         }
     }
@@ -114,7 +111,6 @@ object FireBaseOnlineDatabaseStore : OnlineDatabaseStore {
     private suspend fun <T : OnlineDatabaseStoreObject> storeItem(
         item: T,
         collectionRef: CollectionReference?,
-        successMsg: String
     ): Result<Boolean> {
         require(collectionRef != null) {
             "User not logged in"
@@ -122,10 +118,10 @@ object FireBaseOnlineDatabaseStore : OnlineDatabaseStore {
         return withContext(Dispatchers.IO) {
             try {
                 writeData(item, collectionRef).await()
-                Result.Success(data = true, msg = successMsg)
+                Result.success(true)
             } catch (e: Exception) {
                 Timber.e(e)
-                Result.Error(exception = e, msg = "Error occurred")
+                Result.failure(exception = e)
             }
         }
     }

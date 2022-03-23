@@ -1,7 +1,6 @@
 package com.fazemeright.myinventorytracker.domain.authentication.firebase
 
 import com.fazemeright.myinventorytracker.domain.authentication.UserAuthentication
-import com.fazemeright.myinventorytracker.domain.models.Result
 import com.fazemeright.myinventorytracker.utils.Validator.isEmailValid
 import com.fazemeright.myinventorytracker.utils.Validator.isPasswordValid
 import com.google.firebase.auth.AuthResult
@@ -27,9 +26,9 @@ object FireBaseUserAuthentication : UserAuthentication {
         return withContext(Dispatchers.IO) {
             try {
                 val task = Firebase.auth.signInWithEmailAndPassword(email, password).await()
-                Result.Success(task)
+                Result.success(task)
             } catch (e: Exception) {
-                Result.Error(e, "Authentication Failed")
+                Result.failure(e)
             }
         }
     }
@@ -40,9 +39,9 @@ object FireBaseUserAuthentication : UserAuthentication {
                 val credential = GoogleAuthProvider.getCredential(idToken, null)
 
                 val task = Firebase.auth.signInWithCredential(credential).await()
-                Result.Success(task)
+                Result.success(task)
             } catch (e: Exception) {
-                Result.Error(e, "Sign In Failed")
+                Result.failure(e)
             }
         }
     }
@@ -62,10 +61,10 @@ object FireBaseUserAuthentication : UserAuthentication {
                     password
                 ).await()
                     /*)*/.let {
-                        Result.Success(it)
+                        Result.success(it)
                     }
             } catch (e: Exception) {
-                Result.Error(e, "New User registration failed")
+                Result.failure(e)
             }
         }
     }
@@ -86,11 +85,11 @@ object FireBaseUserAuthentication : UserAuthentication {
         return withContext(Dispatchers.IO) {
             try {
                 currentUser()?.sendEmailVerification()?.await()?.let {
-                    Result.Success(it)
+                    Result.success(it)
                 }
                     ?: throw java.lang.Exception("Failed to send email verification: No user signed in!")
             } catch (e: Exception) {
-                Result.Error(e, "Send Password reset email failed")
+                Result.failure(e)
             }
         }
     }

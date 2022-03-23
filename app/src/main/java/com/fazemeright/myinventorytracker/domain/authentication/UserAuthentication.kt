@@ -1,6 +1,5 @@
 package com.fazemeright.myinventorytracker.domain.authentication
 
-import com.fazemeright.myinventorytracker.domain.models.Result
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseUser
 

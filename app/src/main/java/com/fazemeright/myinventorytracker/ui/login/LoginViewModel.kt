@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.fazemeright.myinventorytracker.App
 import com.fazemeright.myinventorytracker.R
-import com.fazemeright.myinventorytracker.domain.models.Result
 import com.fazemeright.myinventorytracker.ui.base.BaseViewModel
 import com.fazemeright.myinventorytracker.usecase.LogInUserWithEmailPasswordUseCase
 import com.fazemeright.myinventorytracker.usecase.LogInUserWithTokenUseCase
@@ -31,14 +30,11 @@ class LoginViewModel @Inject constructor(
     fun onLoginClicked(email: String, password: String) {
         viewModelScope.launch {
             _loginResult.value = when {
-                !email.isEmailValid() -> Result.Error(
-                    exception = InvalidParameterException("Invalid Email"),
-                    msg = getString(R.string.invalid_email_msg)
+                !email.isEmailValid() -> Result.failure(
+                    exception = InvalidParameterException(getString(R.string.invalid_email_msg)),
                 )
-
-                !password.isPasswordValid() -> Result.Error(
-                    exception = InvalidParameterException("Invalid Password"),
-                    msg = getString(R.string.invalid_password_msg)
+                !password.isPasswordValid() -> Result.failure(
+                    exception = InvalidParameterException(getString(R.string.invalid_password_msg)),
                 )
                 else -> {
                     logInUserWithEmailPassword(email, password)
