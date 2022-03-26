@@ -60,11 +60,11 @@ dependencies {
     implementation project(':modules:database')
     def lifecycle_version = "2.4.1"
 
-    implementation 'androidx.preference:preference-ktx:1.2.0'
+    implementation deps.preferences.ktx
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.6.10'
-    implementation 'org.jetbrains.kotlin:kotlin-reflect:1.6.10'
+    implementation deps.kotlin.stdlib
+    implementation deps.kotlin.reflect
     implementation 'androidx.appcompat:appcompat:1.4.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.3'
     implementation 'com.google.android.material:material:1.5.0'
@@ -74,7 +74,7 @@ dependencies {
     debugImplementation "androidx.fragment:fragment-testing:1.4.1"
 
     // Timber
-    implementation 'com.jakewharton.timber:timber:5.0.1'
+    implementation deps.timber.timber
 
     // Room and Lifecycle dependencies
     implementation "androidx.room:room-runtime:2.4.2"
@@ -170,11 +170,11 @@ dependencies {
     androidTestImplementation 'androidx.work:work-testing:2.8.0-alpha01'
 
     //  FireBase
-    implementation 'com.google.firebase:firebase-analytics:20.1.0'      // Analytics
-    implementation 'com.google.firebase:firebase-auth:21.0.1'           //  Auth
-    implementation 'com.google.firebase:firebase-auth-ktx:21.0.1'       //  Auth KTX
+    implementation 'com.google.firebase:firebase-analytics:20.1.1'      // Analytics
+    implementation 'com.google.firebase:firebase-auth:21.0.2'           //  Auth
+    implementation 'com.google.firebase:firebase-auth-ktx:21.0.2'       //  Auth KTX
     implementation 'com.google.android.gms:play-services-auth:20.1.0'   //  Google SSO
-    implementation 'com.google.firebase:firebase-firestore:24.0.1'      //  FireStore
-    implementation 'com.google.firebase:firebase-firestore-ktx:24.0.1'  //  FireStore ktx
+    implementation 'com.google.firebase:firebase-firestore:24.0.2'      //  FireStore
+    implementation 'com.google.firebase:firebase-firestore-ktx:24.0.2'  //  FireStore ktx
 
 }

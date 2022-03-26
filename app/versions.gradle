@@ -1,0 +1,28 @@
+ext.deps = [:]
+def deps = [:]
+def versions = [:]
+
+versions.timber = "5.0.1"
+versions.timber = "1.6.10"
+versions.preferences = "1.2.0"
+
+ext.versions = versions
+
+def timber = [:]
+timber.timber = "com.jakewharton.timber:timber:$versions.timber"
+
+deps.timber = timber
+
+def kotlin = [:]
+kotlin.stdlib = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$versions.kotlin"
+kotlin.reflect = "org.jetbrains.kotlin:kotlin-reflect:$versions.kotlin"
+
+deps.kotlin = kotlin
+
+def preferences = [:]
+preferences.ktx = "androidx.preference:preference-ktx:$versions.preferences"
+
+deps.preferences = preferences
+
+
+ext.deps = deps
