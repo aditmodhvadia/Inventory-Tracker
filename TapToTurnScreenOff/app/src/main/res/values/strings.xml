@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">TapToTurnScreenOff</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
+    <string name="app_widget_description">Click to turn screen off</string>
+</resources>

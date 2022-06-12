@@ -1,6 +1,7 @@
 package com.example.composetodo.di
 
 import com.example.composetodo.database.ToDoDatabase
+import com.example.composetodo.repository.InMemoryRepository
 import com.example.composetodo.repository.Repository
 import com.example.composetodo.repository.ToDoRepository
 import dagger.Module
@@ -12,8 +13,13 @@ import dagger.hilt.components.SingletonComponent
 @InstallIn(SingletonComponent::class)
 object AppModule {
 
-    @Provides
+    /*@Provides
     fun provideToDoRepository(database: ToDoDatabase): Repository {
         return ToDoRepository(database)
+    }*/
+
+    @Provides
+    fun provideInMemoryToDoRepository(): Repository {
+        return InMemoryRepository
     }
 }

@@ -48,7 +48,7 @@ fun ToDoView(toDo: ToDo, isCheckClicked: (Boolean) -> Unit) {
     }
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 fun ToDoViewNotCheckedPreview() {
     ToDoView(toDo = ToDo(1L, text = "Preview text")) {
@@ -56,7 +56,7 @@ fun ToDoViewNotCheckedPreview() {
     }
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 fun ToDoViewCheckedPreview() {
     ToDoView(toDo = ToDo(1L, text = "Preview text", isCompleted = true)) {
